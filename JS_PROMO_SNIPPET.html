@@ -1,0 +1,31 @@
+<script>
+    // Frontend Promo Integration Script
+    // Place this at the bottom of your index.html / details-cv.html
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Check for Active Promo Banner
+            const response = await fetch('api/check_promo.php?action=get_active');
+            const data = await response.json();
+
+            if (data.active) {
+                // 1. Show Banner on Landing Page
+                const header = document.querySelector('header');
+                if (header) {
+                    const banner = document.createElement('div');
+                    banner.className = 'bg-gradient-to-r from-red-600 to-orange-500 text-white text-center py-2 px-4 font-bold text-sm animate-pulse shadow-lg';
+                    banner.innerHTML = `🔥 OFFRE SPÉCIALE : -${data.percent}% avec le code <span class="bg-white text-red-600 px-2 py-0.5 rounded mx-1 select-all font-mono">${data.code}</span> !`;
+                    header.parentNode.insertBefore(banner, header);
+                }
+
+                // 2. Auto-Apply Logic (Optional: Save to local storage for checkout)
+                localStorage.setItem('activePromo', data.code);
+            } else {
+                localStorage.removeItem('activePromo');
+            }
+
+        } catch (e) {
+            console.warn('Promo check failed', e);
+        }
+    });
+</script>
