@@ -318,34 +318,79 @@
         const formContent = document.getElementById('formContent');
         const successMessage = document.getElementById('successMessage');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Simulate processing
+            // UI Loading State
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-
+            const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Envoi en cours...`;
+            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Traitement...`;
 
-            setTimeout(() => {
-                // Get data to pass forward
-                const name = document.getElementById('fullName').value;
-                const email = document.getElementById('email').value;
-                const params = new URLSearchParams({ name: name, email: email });
+            try {
+                // Collect Data
+                const formData = new FormData();
+                formData.append('name', document.getElementById('fullName').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('transactionId', document.getElementById('transactionId').value);
 
-                // Success State and Redirect
-                formContent.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-                submitBtn.classList.add('hidden');
-                successMessage.scrollIntoView({ behavior: 'smooth' });
+                const method = document.querySelector('input[name="paymentMethod"]:checked');
+                if (method) formData.append('paymentMethod', method.value);
 
-                // Auto-redirect after short delay
-                setTimeout(() => {
-                    window.location.href = 'details-cv.html?' + params.toString();
-                }, 2000);
+                const fileInput = document.getElementById('proofFile');
+                if (fileInput.files.length > 0) {
+                    formData.append('proofFile', fileInput.files[0]);
+                }
 
-            }, 1500);
+                // Get Amount from URL if present
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('amount')) {
+                    formData.append('amount', urlParams.get('amount'));
+                }
+
+                // Send to Backend
+                const response = await fetch('save-order.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // Check for non-JSON responses (e.g., PHP warnings/errors in HTML)
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const text = await response.text();
+                    console.error("Non-JSON Response:", text);
+                    throw new Error("Erreur serveur : Réponse inattendue.");
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Success UI
+                    formContent.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    submitBtn.classList.add('hidden');
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+
+                    // Redirect logic
+                    const nextParams = new URLSearchParams({
+                        name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = 'details-cv.html?' + nextParams.toString();
+                    }, 2000);
+
+                } else {
+                    throw new Error(result.message || "Erreur inconnue.");
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert("Désolé, une erreur est survenue : " + error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+            }
         });
     </script>
 </body>

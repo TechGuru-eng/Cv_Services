@@ -1,3 +1,6 @@
+ErrorDocument 404 /error.html
+ErrorDocument 500 /error.html
+ErrorDocument 403 /error.html
 # Security Headers & Configuration
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"

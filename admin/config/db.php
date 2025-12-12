@@ -2,9 +2,9 @@
 // admin/config/db.php
 
 $host = 'localhost';
-$dbname = 'hireme_db'; // CHANGE THIS
-$username = 'root';    // CHANGE THIS
-$password = '';        // CHANGE THIS
+$dbname = 'u158764452_hireme_db'; // CHANGE THIS
+$username = 'u158764452_root';    // CHANGE THIS
+$password = 'Dreamer.Sophia#27';        // CHANGE THIS
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin'] = true; // For compatibility
         $_SESSION['admin_id'] = $admin['id'];
         header('Location: index.php');
         exit;
