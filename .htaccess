@@ -1,33 +1,64 @@
-# Security Headers & Configuration
+# 1. Enable Rewriting
+Options +FollowSymLinks -MultiViews
+RewriteEngine On
+DirectoryIndex index.html index.php
+
+# 2. Force HTTPS (Optional but recommended for deployment)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !=localhost
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 3. Canonicalize: Remove .php extension (Redirect /file.php to /file)
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# 4. Handle Root URL
+RewriteRule ^$ index.html [NC,L]
+
+# 5. Handle Extension-less URLs (Internal Rewrite /file to /file.html or .php)
+# If the request is not a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# And the file.html exists, rewrite to .html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L,QSA]
+
+# If the request is not a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# And the file.php exists, rewrite to .php
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L,QSA]
+
+
+
+# 5. Security Headers
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-    # Strict-Transport-Security (HSTS) - Uncomment if you have HTTPS
-    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header set X-Content-Type-Options "nosniff"
 </IfModule>
 
-# Prevent directory listing
-Options -Indexes
+# 6. Cache Control (for performance)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    
+    # DISABLE CACHING FOR EVERYTHING
+    <FilesMatch "\.(html|htm|js|css|php|jpg|jpeg|gif|png|ico|woff|woff2|ttf|svg)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+    </FilesMatch>
 
-# Protect sensitive files
-<FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+    ExpiresDefault "access plus 0 seconds"
+</IfModule>
 
-<Files "composer.json">
-    Order allow,deny
-    Deny from all
-</Files>
-
-<Files "composer.lock">
-    Order allow,deny
-    Deny from all
-</Files>
-
-<Files "package.json">
-    Order allow,deny
-    Deny from all
-</Files>
+# 7. Custom Error Pages
+ErrorDocument 400 /error.php
+ErrorDocument 401 /error.php
+ErrorDocument 403 /error.php
+ErrorDocument 404 /error.php
+ErrorDocument 500 /error.php

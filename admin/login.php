@@ -2,8 +2,8 @@
 // admin/login.php
 session_start();
 require_once 'config/db.php';
-
 require_once 'includes/csrf.php';
+require_once 'includes/activity_helper.php';
 
 $error = '';
 
@@ -23,53 +23,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin'] = true; // For compatibility
         $_SESSION['admin_id'] = $admin['id'];
+        $_SESSION['admin_email'] = $admin['email'];
+        log_activity("Connexion réussie", "L'administrateur " . $admin['email'] . " s'est connecté.");
         header('Location: index.php');
         exit;
     } else {
+        if (class_exists('Security')) {
+            Security::logSuspicious("Failed login - Email: " . htmlspecialchars($email));
+        }
+        log_activity("Échec de connexion", "Tentative échouée avec l'email: " . htmlspecialchars($email));
         $error = "Identifiants incorrects.";
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - HireMe</title>
+    <title>Connexion Admin — HireMe</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="../assets/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .mesh-bg {
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(222,47%,11%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(217,91%,60%,0.2) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(222,47%,11%,1) 0, transparent 50%);
+        }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); }
+    </style>
 </head>
+<body class="mesh-bg min-h-screen flex items-center justify-center p-6 text-slate-200">
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Connexion Admin</h2>
+    <div class="w-full max-w-md animate-in fade-in zoom-in duration-500">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/20 mb-6">
+                <i data-lucide="shield-check" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-3xl font-black tracking-tight text-white mb-2">HireMe Admin</h1>
+            <p class="text-slate-400 font-medium">Connexion sécurisée au panneau de gestion</p>
+        </div>
 
-        <?php if ($error): ?>
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
-                <?= htmlspecialchars($error) ?>
-            </div>
-        <?php endif; ?>
+        <div class="glass border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
+            <?php if ($error): ?>
+                <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex items-center gap-2 animate-shake">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i> <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
 
-        <form method="POST">
-            <?php csrf_field(); ?>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" name="email" required
-                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
-                <input type="password" name="password" required
-                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <button type="submit"
-                class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
-                Se connecter
-            </button>
-        </form>
-        <p class="text-center text-xs text-gray-400 mt-4">HireMe CV Services &copy; 2024</p>
+            <form method="POST" class="space-y-6">
+                <?php csrf_field(); ?>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Adresse Email</label>
+                    <div class="relative group">
+                        <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition-colors"></i>
+                        <input type="email" name="email" required class="w-full pl-12 pr-4 py-4 bg-slate-800/50 border-2 border-transparent focus:border-blue-500 focus:bg-slate-800 rounded-2xl outline-none transition-all placeholder-slate-600 text-white" placeholder="admin@hireme.com">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Mot de passe</label>
+                    <div class="relative group">
+                        <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition-colors"></i>
+                        <input type="password" name="password" required class="w-full pl-12 pr-4 py-4 bg-slate-800/50 border-2 border-transparent focus:border-blue-500 focus:bg-slate-800 rounded-2xl outline-none transition-all placeholder-slate-600 text-white" placeholder="••••••••">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-blue-500 hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-blue-500/20 flex items-center justify-center gap-2">
+                    Lancer la session <i data-lucide="log-in" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+        
+        <p class="text-center mt-8 text-xs font-bold uppercase tracking-widest text-slate-600">
+            HireMe CV Services &bull; Build with &hearts;
+        </p>
     </div>
-</body>
 
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
 </html>

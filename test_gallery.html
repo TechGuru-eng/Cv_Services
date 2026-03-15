@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery Test</title>
+</head>
+
+<body style="background: #eee; padding: 50px; text-align: center;">
+    <h1>Gallery Path Test</h1>
+    <p>Trying to load: uploads/designs/design-1768120835-69636203c26da.png</p>
+
+    <!-- Hardcoded Check -->
+    <div style="border: 2px solid red; display: inline-block;">
+        <img src="uploads/designs/design-1768120835-69636203c26da.png" alt="Direct Path Test" style="max-width: 300px;">
+    </div>
+
+    <hr>
+
+    <h2>API Test (JS)</h2>
+    <div id="apiResult" style="border: 2px solid blue; min-height: 100px; padding: 20px;">
+        Loading...
+    </div>
+
+    <script>
+        fetch('api/get_designs.php')
+            .then(res => res.json())
+            .then(data => {
+                const div = document.getElementById('apiResult');
+                if (data.success && data.designs.length > 0) {
+                    const imgPath = data.designs[0].image_path_clean;
+                    div.innerHTML = `<p>API says: ${imgPath}</p><img src="${imgPath}" style="max-width: 300px;">`;
+                } else {
+                    div.innerHTML = `<p>No designs found or API error: ${JSON.stringify(data)}</p>`;
+                }
+            })
+            .catch(err => {
+                document.getElementById('apiResult').innerHTML = '<p style="color:red">Fetch Error: ' + err.message + '</p>';
+            });
+    </script>
+</body>
+
+</html>

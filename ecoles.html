@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireMe Écoles — Partenaire Carrière des Institutions</title>
+    <meta name="description"
+        content="Offrez à vos étudiants des CV professionnels en volume. Augmentez l'insertion professionnelle de votre établissement avec HireMe.">
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/favicons/favicon-32.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9', // HireMe Blue
+                        accent: '#22c55e',  // HireMe Green
+                        neutral: '#111827',
+                        bg: '#f8fafc'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg text-gray-800 antialiased font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary tracking-tight">HireMe</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#solutions"
+                        class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Notre
+                        Solution</a>
+                    <a href="#pricing"
+                        class="text-sm font-medium text-gray-500 hover:text-primary transition-colors">Tarifs
+                        Institutions</a>
+                    <a href="#contact"
+                        class="px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-gray-800 transition-all">Devenir
+                        Partenaire</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                            <span class="block xl:inline">Offrez à vos étudiants</span>
+                            <span class="block text-accent">une carrière, pas juste un diplôme.</span>
+                        </h1>
+                        <p
+                            class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            HireMe accompagne les établissements dans l’amélioration de l’insertion professionnelle
+                            grâce à la création de CV professionnels en volume.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="#contact"
+                                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
+                                    Demander une proposition
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center">
+            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90"
+                src="assets/img/hero-students.jpg" alt="Étudiants africains connectés sur le campus">
+        </div>
+    </header>
+
+    <!-- Why This Matters -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    L'infrastructure carrière de votre école
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Le diplôme ne suffit plus. Vos diplômés sont jugés sur leur image professionnelle dès la sortie.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-accent mb-6">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Meilleure insertion professionnelle</h3>
+                    <p class="mt-2 text-base text-gray-500">Augmentez vos taux de placement grâce à des candidats aux
+                        standards internationaux.</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-accent mb-6">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Image moderne de l’établissement</h3>
+                    <p class="mt-2 text-base text-gray-500">Montrez aux parents et entreprises que vous investissez
+                        concrètement dans l'avenir.</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-accent mb-6">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Avantage concurrentiel</h3>
+                    <p class="mt-2 text-base text-gray-500">Un argument fort pour attirer les meilleurs étudiants lors
+                        des inscriptions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions -->
+    <section id="solutions" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-24 lg:items-center">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+                        Une coordination institutionnelle
+                    </h2>
+                    <p class="mt-4 max-w-2xl text-lg text-gray-500">
+                        Nous ne vendons pas des CV, nous déployons une solution d'employabilité pour votre promotion
+                        entière.
+                    </p>
+                    <ul class="mt-8 space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <p class="ml-3 text-base text-gray-500">Création de masse (Bulk CV Creation)</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <p class="ml-3 text-base text-gray-500">Formatage professionnel moderne</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <p class="ml-3 text-base text-gray-500">Adaptation par filière (Génie Civil, Finance, IT...)
+                            </p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="h-6 w-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <p class="ml-3 text-base text-gray-500">Livraison groupée pour l'administration</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-10 lg:mt-0 relative">
+                    <div class="absolute -inset-4 bg-accent/10 rounded-xl blur-lg transform rotate-2"></div>
+                    <div class="relative bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            alt="Professionnel RH examinant des CV" class="w-full h-auto rounded-lg shadow-sm mb-4">
+                        <p class="text-center text-xs text-gray-400 mt-2 uppercase tracking-widest font-semibold">
+                            Standardisation Professionnelle</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20 bg-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Investissement Stratégique
+                </h2>
+                <p class="mt-4 text-xl text-gray-300">
+                    Des tarifs adaptés au volume pour maximiser votre ROI.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <!-- Pack École (Standard) -->
+                <div class="bg-white rounded-2xl p-8 flex flex-col shadow-lg border-2 border-primary">
+                    <h3 class="text-xl font-bold text-gray-900">Pack École</h3>
+                    <p class="mt-4 text-sm text-gray-500">Qualité maximale pour petits groupes.</p>
+                    <div class="my-6">
+                        <span class="text-4xl font-extrabold text-gray-900">1 200</span>
+                        <span class="text-base font-medium text-gray-500">FCFA / étudiant</span>
+                    </div>
+                    <p class="text-xs font-semibold text-accent uppercase tracking-wide mb-6">50 – 150 étudiants</p>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            CV Professionnel PDF
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Design Premium (3 Choix)
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Correction Approfondie
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Livraison Prioritaire
+                        </li>
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full bg-primary text-white font-bold py-3 rounded-lg text-center hover:bg-blue-600 transition-colors">
+                        Choisir ce Pack
+                    </a>
+                </div>
+
+                <!-- Pack Campus (Basic) -->
+                <div
+                    class="bg-white rounded-2xl p-8 flex flex-col relative transform lg:-translate-y-4 shadow-xl border border-gray-100">
+                    <div
+                        class="absolute top-0 right-0 bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg uppercase">
+                        Économique
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Pack Campus</h3>
+                    <p class="mt-4 text-sm text-gray-500">L'essentiel pour grandes promotions.</p>
+                    <div class="my-6">
+                        <span class="text-4xl font-extrabold text-accent">900</span>
+                        <span class="text-base font-medium text-gray-500">FCFA / étudiant</span>
+                    </div>
+                    <p class="text-xs font-semibold text-accent uppercase tracking-wide mb-6">150 – 400 étudiants</p>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            CV Professionnel PDF
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Design Standard (1 Choix)
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Correction Automatique
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-gray-300 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            <span class="text-gray-400 line-through">Livraison Prioritaire</span>
+                        </li>
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full bg-gray-100 text-gray-800 font-bold py-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                        Choisir ce Pack
+                    </a>
+                </div>
+
+                <!-- Pack Université -->
+                <div class="bg-white rounded-2xl p-8 flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-900">Pack Université</h3>
+                    <p class="mt-4 text-sm text-gray-500">Partenariat stratégique.</p>
+                    <div class="my-6">
+                        <span class="text-lg font-bold text-gray-900">Sur Devis</span>
+                        <span class="block text-sm text-gray-400">(dès 700 FCFA/étudiant)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-accent uppercase tracking-wide mb-6">400+ étudiants</p>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-success mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            CV + Lettre de Motivation
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-success mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Tableau de suivi étudiants
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-accent mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Badge "Partenaire HireMe"
+                        </li>
+                        <li class="flex items-center text-sm text-gray-600">
+                            <svg class="h-5 w-5 text-success mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Support Dédié
+                        </li>
+                    </ul>
+                    <a href="#contact"
+                        class="block w-full bg-gray-100 text-primary font-bold py-3 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                        Contacter l'Équipe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-900">Devenir Établissement Partenaire</h2>
+                    <p class="mt-4 text-gray-500">Remplissez ce formulaire pour recevoir une proposition adaptée à votre
+                        volume.</p>
+                </div>
+
+                <form id="schoolForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="school_name" class="block text-sm font-medium text-gray-700 mb-1">Nom de
+                                l'Établissement</label>
+                            <input type="text" id="school_name" name="school_name" required
+                                placeholder="Ex: Institut Saint-Paul" title="Nom de l'établissement"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                            <input type="text" id="city" name="city" required placeholder="Ex: Douala" title="Ville"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="students_count" class="block text-sm font-medium text-gray-700 mb-1">Nombre
+                                d'étudiants
+                                (estimé)</label>
+                            <input type="number" id="students_count" name="students_count" min="10" required
+                                placeholder="Ex: 150" title="Nombre d'étudiants"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                        <div>
+                            <label for="contact_name" class="block text-sm font-medium text-gray-700 mb-1">Nom du
+                                Responsable</label>
+                            <input type="text" id="contact_name" name="contact_name" required
+                                placeholder="Ex: M. Dupont" title="Nom du contact"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone /
+                                WhatsApp</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="Ex: 654 250 688"
+                                title="Numéro de téléphone"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email
+                                Professionnel</label>
+                            <input type="email" id="email" name="email" required placeholder="moncvpro@hiremeguide.com"
+                                title="Email professionnel"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 px-4">
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" id="submitBtn"
+                            class="w-full flex justify-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all">
+                            Recevoir une Proposition
+                        </button>
+                    </div>
+                </form>
+
+                <div id="successMessage"
+                    class="hidden mt-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                    <p class="text-green-800 font-bold">Demande reçue avec succès !</p>
+                    <p class="text-green-600 text-sm mt-1">Un responsable partenariat vous contactera sous 24h.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">© 2026 HireMe. Tous droits réservés.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <span
+                    class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    Accord signé en 24h
+                </span>
+                <span
+                    class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    Accompagnement Personnalisé
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('schoolForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = 'Traitement en cours...';
+            btn.disabled = true;
+
+            const formData = {
+                school_name: e.target.school_name.value,
+                city: e.target.city.value,
+                students_count: e.target.students_count.value,
+                contact_name: e.target.contact_name.value,
+                phone: e.target.phone.value,
+                email: e.target.email.value
+            };
+
+            try {
+                const response = await fetch('api/save_school_lead.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('schoolForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                } else {
+                    alert('Erreur: ' + result.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Une erreur est survenue.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

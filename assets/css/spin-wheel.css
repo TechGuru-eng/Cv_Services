@@ -1,0 +1,245 @@
+/* Spin Wheel Modal Styles */
+#spinWheelModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    /* Darker backdrop for drama */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+#spinWheelModal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.spin-modal-content {
+    background: transparent;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    max-width: 95vw;
+    width: 500px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Choice View */
+.choice-view {
+    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.choice-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.choice-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.choice-text {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.choice-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-play {
+    background: linear-gradient(to right, #0ea5e9, #2563eb);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+.btn-play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+.btn-decline {
+    background: transparent;
+    color: #9ca3af;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.btn-decline:hover {
+    color: #6b7280;
+}
+
+/* Wheel View */
+.wheel-view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wheel-container {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+}
+
+canvas#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+    /* Initial state */
+    transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 0.99);
+    /* Custom easing for spin */
+}
+
+/* Marker/Picker */
+.wheel-marker {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #ef4444;
+    /* Red Marker */
+    z-index: 10;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+.spin-btn-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: #0ea5e9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 5;
+    border: 4px solid #f0f9ff;
+}
+
+/* Result View */
+.result-view {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    animation: popIn 0.3s ease;
+}
+
+.result-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+.result-value {
+    font-size: 48px;
+    font-weight: 900;
+    color: #22c55e;
+    margin: 20px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.coupon-box {
+    background: #f3f4f6;
+    border: 2px dashed #d1d5db;
+    padding: 15px;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: #374151;
+    margin-bottom: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.coupon-box:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+}
+
+.copy-hint {
+    font-size: 12px;
+    color: #9ca3af;
+    display: block;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+/* Confetti (Simple CSS implementation or use JS) */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+@media (max-width: 480px) {
+    .wheel-container {
+        width: 300px;
+        height: 300px;
+    }
+}

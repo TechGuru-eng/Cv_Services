@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Debug Images</title>
+</head>
+
+<body>
+    <h1>Debug Images</h1>
+    <p>Testing access to uploads/designs folder.</p>
+
+    <h2>Direct Image Access</h2>
+    <!-- I'll hardcode the filenames I saw in the list_dir output -->
+    <div>
+        <h3>design-1768120835-69636203c26da.png</h3>
+        <img src="uploads/designs/design-1768120835-69636203c26da.png" style="max-width:300px; border: 2px solid red;">
+        <p>Path: uploads/designs/design-1768120835-69636203c26da.png</p>
+    </div>
+
+    <div>
+        <h3>design-1768121989-69636685d0457.png</h3>
+        <img src="uploads/designs/design-1768121989-69636685d0457.png" style="max-width:300px; border: 2px solid red;">
+        <p>Path: uploads/designs/design-1768121989-69636685d0457.png</p>
+    </div>
+
+    <div>
+        <h3>Test with full relative path from root</h3>
+        <img src="./uploads/designs/design-1768120835-69636203c26da.png"
+            style="max-width:300px; border: 2px solid blue;">
+    </div>
+</body>
+
+</html>

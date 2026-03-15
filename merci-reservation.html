@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation Confirmée — HireMe CV Services</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center border border-slate-100">
+        <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+
+        <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Félicitations <span id="userName"
+                class="text-primary">!</span></h1>
+        <p class="text-slate-500 mb-8">Votre réservation a bien été enregistrée. Un expert a été notifié et vous
+            contactera très prochainement.</p>
+
+        <div class="bg-slate-50 rounded-2xl p-6 mb-8 text-left">
+            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Prochaines étapes :</h2>
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span
+                        class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">1</span>
+                    <p class="text-sm text-slate-600">Confirmation de la date sur WhatsApp.</p>
+                </li>
+                <li class="flex items-start">
+                    <span
+                        class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">2</span>
+                    <p class="text-sm text-slate-600">Rédaction de votre CV par nos experts.</p>
+                </li>
+                <li class="flex items-start">
+                    <span
+                        class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">3</span>
+                    <p class="text-sm text-slate-600">Paiement et livraison le jour convenu.</p>
+                </li>
+            </ul>
+        </div>
+
+        <a id="waLink" href="https://wa.me/237654250688"
+            class="block w-full bg-[#25D366] text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-green-200 hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M.057 24l1.687-6.163c-6.912-11.975 1.701-26.241 15.688-26.241 8.528 0 15.467 6.938 15.467 15.466 0 8.527-6.939 15.466-15.468 15.466-4.088 0-7.947-1.585-10.957-4.469l-6.417 1.687zm9.648-9.982c-2.617-1.125-2.731-1.378-2.67-1.637.07-.3.738-1.527 1.258-1.848.514-.32.61-.267 1.053-.08.437.186 2.76.997 2.898 1.155.138.16.29.69.043 1.082-.246.392-.511.666-.889.85-.377.183-1.691.564-4.821-2.029-3.13-2.592-3.832-3.805-4.04-4.22-.208-.415-.06-.599.123-.781.183-.183.398-.291.603-.43.204-.138.384-.33.585-.544.199-.214.288-.358.418-.616.128-.258.07-.638-.179-1.23-.243-.591-1.31-3.155-1.742-3.486-.432-.33-.614-.234-.848-.052-.234.181-.782.529-1.157.94-.374.412-1.428 1.638-1.428 4.226 0 2.589 1.93 5.378 2.163 5.7.234.321 3.535 5.869 8.785 7.973 5.251 2.106 5.251 1.404 6.182 1.346.931-.059 3.016-1.23 3.447-2.433.432-1.203.432-2.228.307-2.433-.124-.204-.455-.325-.939-.567z" />
+            </svg>
+            Confirmer sur WhatsApp
+        </a>
+
+        <p class="mt-6 text-xs text-slate-400">HireMe CV Services — L'excellence au service de votre carrière.</p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        if (name) {
+            document.getElementById('userName').textContent = name + " !";
+            const waMsg = encodeURIComponent(`Bonjour HireMe ! Je m'appelle ${name} et je viens d'enregistrer ma réservation pour un CV. Pouvez-vous me confirmer la prise en compte ?`);
+            document.getElementById('waLink').href = `https://wa.me/237654250688?text=${waMsg}`;
+        }
+    </script>
+</body>
+
+</html>

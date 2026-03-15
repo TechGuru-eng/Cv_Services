@@ -20,8 +20,8 @@
 *Cible : Conversion et détail des offres.*
 
 *   **Title (58 car.)** : Tarifs CV Pro – Packs Étudiant, Expert & International
-*   **Description (158 car.)** : De 8000 à 35000 FCFA. Packs CV, Lettre de motivation et LinkedIn. Solutions adaptées pour étudiants, pros et cadres internationaux. Livraison rapide 48h.
-*   **Keywords** : resume pricing, tarifs redaction cv, cheap resume writing, cv professionnel prix, linkedin optimization cost
+*   **Description (158 car.)** : De 5000 à 30000 FCFA. Packs CV, Portfolio, Lettre de motivation et LinkedIn. Solutions adaptées pour étudiants, pros et cadres internationaux. Livraison rapide 48h.
+*   **Keywords** : resume pricing, tarifs redaction cv, cheap resume writing, cv professionnel prix, portfolio building, linkedin optimization cost
 *   **Canonical** : `<link rel="canonical" href="https://moncvpro.hiremeguide.com/packages" />`
 
 ### C. Formulaire de commande (`/order`)
@@ -132,7 +132,7 @@
     {
       "@type": "Offer",
       "name": "Pack Pro CV + Lettre",
-      "price": "15000",
+      "price": "10000",
       "priceCurrency": "XAF",
       "url": "https://moncvpro.hiremeguide.com/packages",
       "category": "Resume Writing",

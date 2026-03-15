@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Premium – HireMe CV Services</title>
+    <meta name="description"
+        content="Découvrez nos packs premium pour booster votre carrière : CV, Lettres de Motivation, et Guides Recruteurs.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9',
+                        accent: '#22c55e',
+                        danger: '#ef4444',
+                        neutral: '#111827',
+                        bg: '#f8fafc'
+                    },
+                    animation: {
+                        'gradient': 'gradient 8s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card-glow:hover {
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.1);
+        }
+
+        /* Custom Element for Widget Isolation */
+        chariow-widget-item {
+            display: block;
+            min-height: 48px;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 1s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-bg text-neutral font-sans selection:bg-primary/30 antialiased overflow-x-hidden">
+    <!-- Background -->
+    <div class="fixed inset-0 -z-10 bg-bg">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[128px]"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[128px]"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-black tracking-tighter flex items-center gap-2 group">
+                <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">HireMe<span
+                        class="text-neutral">CV</span></span>
+                <span
+                    class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-widest font-bold">International</span>
+            </a>
+            <a href="index.html"
+                class="text-sm font-bold bg-primary text-white px-5 py-2 rounded-full hover:bg-primary/90 transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Retour
+            </a>
+        </div>
+    </header>
+
+    <main class="relative">
+        <!-- Hero Section -->
+        <section class="py-12 md:py-20 px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight text-neutral">
+                    Propulsez votre <span class="text-primary">Carrière</span> vers le futur.
+                </h1>
+                <p class="text-base md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                    Accédez aux meilleurs outils de recrutement conçus par des experts pour multiplier vos entretiens et
+                    décrocher le job de vos rêves.
+                </p>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section id="packs" class="pb-32 px-4">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- 1. PACK ETUDIANT -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-white/5 hover:border-primary/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral">PACK ETUDIANT</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">Idéal pour les stages, jobs d'été ou un premier
+                        emploi. Un CV clair, moderne et impactant.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-neutral">2 600</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Design Moderne & Sobre</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Optimisation ATS Basique</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Livraison 48h</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_ndyksp" data-locale="en" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="Get the offer">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+                <!-- 2. Pack Pro -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-gray-100 hover:border-primary/30 relative overflow-hidden">
+                    <div
+                        class="absolute top-4 right-4 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
+                        POPULAIRE</div>
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral">Pack Pro</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">Pour les professionnels confirmés. Une mise en
+                        valeur stratégique de votre parcours.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-neutral">5 100</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Tout du Pack Étudiant</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Design Premium Executive</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Accroche Personnalisée</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_ygkdao" data-locale="en" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="Get the offer">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+                <!-- 3. Pack Senior -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-gray-100 hover:border-purple-500/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 text-purple-600 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral">Pack Senior</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">Experts & Managers. Optimisation LinkedIn incluse
+                        pour une visibilité maximale.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-neutral">11 000</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Tout du Pack Pro</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Optimisation LinkedIn</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Priorité de traitement</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_bbsebv" data-locale="en" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="Get the offer">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+                <!-- 4. PACK EXPERT -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-gray-100 hover:border-amber-500/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6 text-amber-600 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral">PACK EXPERT</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">Carrière Internationale. Un dossier complet en
+                        Français et en Anglais.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-neutral">90 000</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>CV Bilingue (FR/EN)</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Lettre de Motivation Premium</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Accompagnement VIP</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_7tmh7l" data-locale="en" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="Get the offer">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+                <!-- 5. Pack Réussite Emploi -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-gray-100 hover:border-emerald-500/30">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-6 text-emerald-600 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral leading-tight">Pack Réussite Emploi</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">La Bible des Recruteurs incluse. Boostez vos chances
+                        de réponse instantanément.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-neutral">15 000</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Bible des Recruteurs (Contacts)</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>300+ Lettres de Motivation</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Guide de l'Entretien</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_nun0gx" data-locale="en" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="Get the offer">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+                <!-- 6. Coffre-Fort Carrière -->
+                <div
+                    class="glass p-8 rounded-[2.5rem] flex flex-col group card-glow transition-all duration-500 border-gray-100 hover:border-primary/20">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-3 text-neutral leading-tight">Coffre-Fort Carrière</h3>
+                    <p class="text-gray-500 text-sm mb-6 flex-grow">L'ultime ressource gratuite pour tout chercheur
+                        d'emploi sérieux. 300+ Lettres d'Élite.</p>
+                    <div class="mb-8">
+                        <span class="text-3xl font-black text-primary">OFFERT</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>300+ Modèles de Lettres</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Libre d'accès</li>
+                        <li class="flex items-center gap-3"><svg class="w-4 h-4 text-accent" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>Téléchargement Immédiat</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <chariow-widget-item data-product-id="prd_805091" data-locale="fr" data-primary-color="#0ea5e9"
+                            data-custom-cta-text="">
+                        </chariow-widget-item>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Trust / Features Section -->
+        <section class="py-24 bg-gray-50/50">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div class="space-y-4">
+                    <div
+                        class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-neutral">Paiement Sécurisé</h4>
+                    <p class="text-gray-500 text-sm">Vos transactions sont protégées par le système sécurisé de Chariow.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div
+                        class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto text-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-neutral">Livraison Rapide</h4>
+                    <p class="text-gray-500 text-sm">Réception de vos documents numériques sous 48h maximum ou
+                        immédiatement.</p>
+                </div>
+                <div class="space-y-4">
+                    <div
+                        class="w-16 h-16 bg-premium/10 rounded-full flex items-center justify-center mx-auto text-premium">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-neutral">Support Dédié</h4>
+                    <p class="text-gray-500 text-sm">Une équipe à votre écoute sur WhatsApp pour vous accompagner.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-gray-400">&copy; 2024 HireMe CV Services. Propulsé par Chariow.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Custom Element for Chariow Widget Isolation
+        class ChariowWidgetItem extends HTMLElement {
+            connectedCallback() {
+                const productId = this.getAttribute('data-product-id');
+                const locale = this.getAttribute('data-locale') || 'en';
+                const primaryColor = this.getAttribute('data-primary-color') || '#0ea5e9';
+                const ctaText = this.getAttribute('data-custom-cta-text') || '';
+
+                // Create Shadow Root
+                const shadow = this.attachShadow({ mode: 'open' });
+
+                // Create container
+                const container = document.createElement('div');
+                container.id = 'chariow-widget';
+                container.className = 'chariow-widget';
+                container.setAttribute('data-product-id', productId);
+                container.setAttribute('data-store-domain', 'boutique.hiremeguide.com');
+                container.setAttribute('data-style', 'tap');
+                container.setAttribute('data-border-style', 'rounded');
+                container.setAttribute('data-cta-width', 'xs');
+                container.setAttribute('data-cta-animation', 'shine');
+                container.setAttribute('data-locale', locale);
+                container.setAttribute('data-primary-color', primaryColor);
+                container.setAttribute('data-background-color', '#FFFFFF');
+                if (ctaText) {
+                    container.setAttribute('data-custom-cta-text', ctaText);
+                }
+
+                shadow.appendChild(container);
+
+                // Load Library INSIDE shadow
+                const script = document.createElement('script');
+                script.src = 'https://js.chariow.com/v1/widget.min.js';
+                script.async = true;
+                shadow.appendChild(script);
+
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://js.chariow.com/v1/widget.min.css';
+                shadow.appendChild(link);
+            }
+        }
+        customElements.define('chariow-widget-item', ChariowWidgetItem);
+
+        // Track View
+        fetch('api/track.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event_name: 'boutique_page_view' })
+        }).catch(err => console.error(err));
+    </script>
+</body>
+
+</html>

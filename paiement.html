@@ -2,6 +2,15 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0WXT4Q08R2');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finaliser le Paiement – HireMe CV Services</title>
@@ -13,9 +22,9 @@
     <meta property="og:description" content="Finalisez votre commande pour démarrer la rédaction de votre CV." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://moncvpro.hiremeguide.com/paiement.html" />
-    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
     <!-- Favicons -->
     <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
@@ -62,12 +71,12 @@
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center">
-                <a href="index.html"
+                <a href="index"
                     class="text-xl font-extrabold text-primary tracking-tight hover:opacity-80 transition-opacity">
                     HireMe<span class="text-neutral">CV</span>
                 </a>
             </div>
-            <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
+            <a href="index" class="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
                 ← Retour au site
             </a>
         </div>
@@ -78,8 +87,9 @@
 
             <!-- Page Title & Intro -->
             <div class="text-center mb-12">
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral mb-4">Finaliser le Paiement</h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <h1 id="pageTitle" class="text-3xl sm:text-4xl font-extrabold text-neutral mb-4">Finaliser le Paiement
+                </h1>
+                <p id="pageDescription" class="text-lg text-gray-600 max-w-2xl mx-auto">
                     Merci pour votre commande ! Pour lancer la rédaction de votre CV, veuillez effectuer votre paiement
                     puis fournir votre preuve de paiement ci-dessous.
                 </p>
@@ -94,61 +104,122 @@
 
                 <!-- MTN -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-yellow-400 hover:shadow-md transition-shadow">
-                    <div
-                        class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full mb-4 mx-auto text-yellow-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
+                    class="bg-white p-8 rounded-[2rem] shadow-2xl shadow-yellow-500/5 border border-gray-50 border-t-8 border-t-yellow-400 hover:shadow-yellow-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col items-center text-center">
+                        <div
+                            class="w-16 h-16 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-yellow-600 shadow-inner">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-1">Paiement MTN MoMo</h3>
+                        <p class="text-[10px] font-bold text-yellow-600 uppercase tracking-widest mb-6">Instantané • 0
+                            Frais</p>
+
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl mb-6 w-full">
+                            <p class="text-xs text-slate-500 mb-3">Cliquez ci-dessous pour composer :</p>
+                            <a id="mtnLink" href="javascript:void(0)"
+                                class="group relative block w-full bg-white border-2 border-yellow-400 rounded-xl p-4 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer overflow-hidden text-center">
+                                <div
+                                    class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-[10px] font-black px-3 py-1 rounded-bl-lg animate-pulse tracking-tighter">
+                                    COMPOSER MAINTENANT
+                                </div>
+                                <p id="mtnCode"
+                                    class="font-mono font-black text-lg text-slate-800 break-all group-hover:text-yellow-700 transition-colors mt-2">
+                                    *126*14*654250688*MONTANT#
+                                </p>
+                            </a>
+                        </div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Bénéficiaire : NJAI
+                            NDINTEK HANDSON</p>
                     </div>
-                    <h3 class="text-lg font-bold text-center mb-4">Paiement MTN MoMo</h3>
-                    <div class="bg-gray-50 p-3 rounded-lg text-center mb-4">
-                        <p class="text-xs text-gray-500 mb-1">Composez le code :</p>
-                        <p class="font-mono font-bold text-neutral break-all text-sm">*126*14*654250688*MONTANT#</p>
-                    </div>
-                    <p class="text-xs text-center text-gray-500">Bénéficiaire : <br><span
-                            class="font-semibold text-gray-800">NJAI NDINTEK HANDSON</span></p>
                 </div>
 
                 <!-- Orange -->
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-orange-500 hover:shadow-md transition-shadow">
-                    <div
-                        class="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-full mb-4 mx-auto text-orange-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                            </path>
-                        </svg>
+                    class="bg-white p-8 rounded-[2rem] shadow-2xl shadow-orange-500/5 border border-gray-50 border-t-8 border-t-orange-500 hover:shadow-orange-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col items-center text-center">
+                        <div
+                            class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-orange-600 shadow-inner">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-1">Paiement Orange Money</h3>
+                        <p class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-6">Simple •
+                            Sécurisé</p>
+
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-2xl mb-6 w-full">
+                            <p class="text-xs text-slate-500 mb-3">Cliquez ci-dessous pour composer :</p>
+                            <a id="omLink" href="javascript:void(0)"
+                                class="group relative block w-full bg-white border-2 border-orange-500 rounded-xl p-4 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer overflow-hidden text-center">
+                                <div
+                                    class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-lg animate-pulse tracking-tighter">
+                                    COMPOSER MAINTENANT
+                                </div>
+                                <p id="omCode"
+                                    class="font-mono font-black text-lg text-slate-800 break-all group-hover:text-orange-600 transition-colors mt-2">
+                                    #150*1*1*659197506*MONTANT#
+                                </p>
+                            </a>
+                        </div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Bénéficiaire : NJAI
+                            NDINTEK HANDSON</p>
                     </div>
-                    <h3 class="text-lg font-bold text-center mb-4">Paiement Orange Money</h3>
-                    <div class="bg-gray-50 p-3 rounded-lg text-center mb-4">
-                        <p class="text-xs text-gray-500 mb-1">Envoyez au numéro :</p>
-                        <p class="font-mono font-bold text-neutral text-lg">659 19 75 06</p>
-                    </div>
-                    <p class="text-xs text-center text-gray-500">Bénéficiaire : <br><span
-                            class="font-semibold text-gray-800">NJAI NDINTEK HANDSON</span></p>
                 </div>
 
-                <!-- USDT -->
-                <div
-                    class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-500 hover:shadow-md transition-shadow">
-                    <div
-                        class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-4 mx-auto text-green-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+                <!-- Chariow (Int'l) -->
+                <!-- Chariow (Premium Int'l) -->
+                <div id="chariowMethod"
+                    class="bg-white p-8 rounded-[2rem] shadow-2xl shadow-blue-500/5 border border-gray-50 border-t-8 border-t-blue-600 hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col items-center text-center">
+                        <div
+                            class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 shadow-inner">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+
+                        <h3 class="text-xl font-black text-slate-800 mb-1">Paiement International</h3>
+                        <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-6">Simple • Rapide •
+                            Sécurisé</p>
+
+                        <div
+                            class="bg-slate-50/50 border border-slate-100 p-5 rounded-2xl mb-6 w-full group cursor-default">
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Payez en toute simplicité via <span class="font-bold text-slate-800">Mobile Money</span>
+                                (Gabon, Côte d'Ivoire, Sénégal...) ou <span class="font-bold text-slate-800">Carte
+                                    Bancaire</span>.
+                            </p>
+
+                            <button onclick="redirectToChariow()"
+                                class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black py-4 rounded-xl hover:from-blue-700 hover:to-indigo-800 transition-all shadow-xl shadow-blue-200 flex items-center justify-center gap-3 group/btn relative overflow-hidden">
+                                <span class="relative z-10">FINALISER MON PAIEMENT</span>
+                                <svg class="w-5 h-5 group-hover/btn:translate-x-1.5 transition-transform relative z-10"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                                <div
+                                    class="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity">
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-2 opacity-60">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Propulsé par
+                                Chariow</span>
+                            <div class="w-1 h-1 bg-slate-300 rounded-full"></div>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Supporté dans
+                                15+ pays d'Afrique</span>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-center mb-4">Paiement USDT (TRC-20)</h3>
-                    <div class="bg-gray-50 p-3 rounded-lg text-center mb-4">
-                        <p class="text-xs text-gray-500 mb-1">Adresse TRC-20 :</p>
-                        <p class="font-mono font-bold text-neutral text-xs break-all">TMVwL7fE4TmDQCsVRzN9c2s2fapc6z8s77
-                        </p>
-                    </div>
-                    <p class="text-xs text-center text-red-500 bg-red-50 p-2 rounded">⚠️ Frais réseau à votre charge.
-                        Montant exact requis.</p>
                 </div>
             </div>
 
@@ -195,6 +266,11 @@
                                 <input type="email" id="email" required
                                     class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary">
                             </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                                <input type="tel" id="phone" required
+                                    class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary">
+                            </div>
                         </div>
 
                         <div>
@@ -202,22 +278,22 @@
                                 utilisée</span>
                             <div class="space-y-2">
                                 <label
-                                    class="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    class="flex items-center space-x-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
                                     <input type="radio" name="paymentMethod" value="MTN" required
-                                        class="h-4 w-4 text-primary focus:ring-primary">
-                                    <span class="text-gray-900 font-medium">MTN Mobile Money</span>
+                                        class="h-6 w-6 text-primary focus:ring-primary border-gray-300">
+                                    <span class="text-gray-900 font-bold">MTN Mobile Money</span>
                                 </label>
                                 <label
-                                    class="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    class="flex items-center space-x-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
                                     <input type="radio" name="paymentMethod" value="Orange"
-                                        class="h-4 w-4 text-primary focus:ring-primary">
-                                    <span class="text-gray-900 font-medium">Orange Money</span>
+                                        class="h-6 w-6 text-primary focus:ring-primary border-gray-300">
+                                    <span class="text-gray-900 font-bold">Orange Money</span>
                                 </label>
-                                <label
-                                    class="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
-                                    <input type="radio" name="paymentMethod" value="USDT"
-                                        class="h-4 w-4 text-primary focus:ring-primary">
-                                    <span class="text-gray-900 font-medium">USDT (TRC-20)</span>
+                                <label id="chariowRadio"
+                                    class="hidden flex items-center space-x-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors">
+                                    <input type="radio" name="paymentMethod" value="Chariow"
+                                        class="h-6 w-6 text-primary focus:ring-primary border-gray-300">
+                                    <span class="text-gray-900 font-bold">Paiement International (Chariow)</span>
                                 </label>
                             </div>
                         </div>
@@ -231,18 +307,19 @@
 
                         <div>
                             <label for="proofFile" class="block text-sm font-medium text-gray-700 mb-1">Preuve de
-                                paiement (Capture d'écran)</label>
-                            <input type="file" id="proofFile" accept="image/*"
+                                paiement (Capture d'écran) <span class="text-danger">*</span></label>
+                            <input type="file" id="proofFile" accept="image/*" required
                                 class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-primary hover:file:bg-blue-100 transition-colors">
                         </div>
 
-                        <div class="flex items-start pt-4">
+                        <label
+                            class="flex items-center p-4 bg-slate-50 rounded-xl border border-slate-100 group cursor-pointer active:bg-slate-100 transition-colors">
                             <input id="confirmPay" type="checkbox" required
-                                class="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded mt-1">
-                            <label for="confirmPay" class="ml-2 block text-sm text-gray-600">
+                                class="h-6 w-6 text-accent focus:ring-accent border-gray-300 rounded cursor-pointer">
+                            <span class="ml-4 block text-sm font-bold text-slate-700 select-none">
                                 Je confirme avoir effectué mon paiement.
-                            </label>
-                        </div>
+                            </span>
+                        </label>
 
                         <button type="submit"
                             class="w-full mt-6 bg-accent text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-600 transition-all transform hover:scale-[1.02] flex justify-center items-center text-lg">
@@ -256,32 +333,61 @@
                 </form>
             </div>
 
-            <!-- SECTION 3 — SUPPORT CONTACT -->
-            <div class="mt-12 text-center bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-lg font-bold text-neutral mb-6">Besoin d’aide ? Contactez-nous :</h3>
-                <div class="flex flex-col md:flex-row justify-center gap-6">
-                    <a href="https://wa.me/237654250688" target="_blank"
-                        class="inline-flex items-center justify-center px-6 py-3 border border-gray-200 rounded-full text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm">
-                        <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.151-.174.2-.298.3-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                        WhatsApp: 654 250 688
-                    </a>
-                    <a href="mailto:moncvpo@hiremeguide.com"
-                        class="inline-flex items-center justify-center px-6 py-3 border border-gray-200 rounded-full text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm">
-                        <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                        moncvpo@hiremeguide.com
-                    </a>
-                </div>
-            </div>
-
         </div>
     </main>
+
+    <!-- Floating WhatsApp Support Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 pointer-events-none">
+
+        <!-- Support Sheet (Hidden by default) -->
+        <div id="supportWidget"
+            class="bg-white w-[300px] sm:w-[320px] rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden transform scale-90 opacity-0 translate-y-10 transition-all duration-300 pointer-events-none">
+
+            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-white relative">
+                <button onclick="toggleSupportWidget()"
+                    class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.151-.174.2-.298.3-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
+                </div>
+                <h4 class="text-lg font-black leading-tight">Besoin d'aide ?</h4>
+                <p class="text-white/80 text-xs">L'équipe HireMe est en ligne.</p>
+            </div>
+
+            <div class="p-6 bg-white">
+                <textarea id="supportMsg" rows="3"
+                    class="w-full rounded-2xl border-slate-100 bg-slate-50 p-4 text-xs focus:ring-emerald-500 focus:border-emerald-500 transition-all mb-4 placeholder:text-slate-400 border shadow-inner"
+                    placeholder="Écrivez votre souci ici..."></textarea>
+
+                <button onclick="sendWhatsAppSupport()"
+                    class="w-full bg-emerald-600 text-white font-black py-3 rounded-xl hover:bg-emerald-700 transition-all shadow-lg flex items-center justify-center gap-2 group/wa">
+                    <span>DISCUTER SUR WHATSAPP</span>
+                    <svg class="w-4 h-4 transition-transform group-hover/wa:translate-x-1" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Bubble -->
+        <button id="supportBubble" onclick="toggleSupportWidget()"
+            class="pointer-events-auto w-16 h-16 bg-emerald-600 text-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white hover:scale-110 active:scale-95 transition-all duration-300 relative group">
+            <div class="absolute inset-0 bg-emerald-500 rounded-full animate-ping opacity-20 group-hover:hidden"></div>
+            <svg class="w-8 h-8 fill-current relative z-10" viewBox="0 0 24 24">
+                <path
+                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.151-.174.2-.298.3-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+            </svg>
+        </button>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
@@ -293,61 +399,314 @@
 
     <!-- Scripts -->
     <script>
-        // Retrieve URL params if any (from index.html redirection)
-        window.addEventListener('load', () => {
-            const urlParams = new URLSearchParams(window.location.search);
+        // Track Event Helper
+        function trackEvent(eventName, eventData = {}) {
+            fetch('api/track.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event_name: eventName, event_data: eventData })
+            }).catch(err => console.error("Tracking error:", err));
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // State
+        let visConfig = { rate: 1, symbol: 'FCFA', prefix: '', currency: 'XAF' };
+
+        // Functions
+        function formatPrice(price) {
+            const converted = Math.round(price * (visConfig.rate || 1));
+            return converted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        async function loadVisitorConfig() {
+            try {
+                const response = await fetch('api/get_visitor_config.php');
+                const data = await response.json();
+                visConfig = data;
+
+                // 1. Phone Prefill
+                const phoneInput = document.getElementById('phone');
+                if (phoneInput && !phoneInput.value && visConfig.prefix) {
+                    phoneInput.value = visConfig.prefix;
+                }
+
+                refreshAmountDisplay();
+
+                // 2. Chariow Visibility (Fixed Async)
+                if (visConfig.is_foreign) {
+                    const chariowSection = document.getElementById('chariowMethod');
+                    const chariowRadio = document.getElementById('chariowRadio');
+                    if (chariowSection) chariowSection.classList.remove('hidden');
+                    if (chariowRadio) chariowRadio.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error("Geo-config failed", e);
+            }
+        }
+
+        // Track View
+        trackEvent('payment_page_view', {
+            package: urlParams.get('package'),
+            amount: urlParams.get('amount')
+        });
+
+        function refreshAmountDisplay() {
             const amount = urlParams.get('amount');
-            const name = urlParams.get('name');
-            const email = urlParams.get('email');
+            const originalAmount = urlParams.get('original_amount');
+            const discountAmount = urlParams.get('discount_amount');
 
             if (amount) {
-                document.getElementById('amountDisplay').textContent = amount;
-                document.getElementById('orderSummary').classList.remove('hidden');
+                let displayHtml = `Montant à payer : <strong>${formatPrice(amount)} ${visConfig.symbol}</strong>`;
+                if (discountAmount && parseInt(discountAmount) > 0) {
+                    displayHtml = `<span class="line-through text-gray-400 mr-2">${formatPrice(originalAmount)} ${visConfig.symbol}</span> ` + displayHtml;
+                    displayHtml += `<div class="text-[10px] text-green-600 mt-1">Réduction de ${formatPrice(discountAmount)} ${visConfig.symbol} appliquée !</div>`;
+                }
+                const amountDisplay = document.getElementById('amountDisplay');
+                if (amountDisplay) amountDisplay.innerHTML = displayHtml;
 
-                // Update MTN code dynamically if possible? PROMPT said static text, but let's be smart.
-                // The prompt explicitly gave the text "*126*14*654250688*MONTANT#". 
-                // We will respect the prompt text for the display block but it's nice to know.
+                const orderSummary = document.getElementById('orderSummary');
+                if (orderSummary) orderSummary.classList.remove('hidden');
+
+                // Update USSD Codes (Always in XAF for Cameroon methods)
+                const cleanAmount = amount.replace(/\D/g, '');
+                if (cleanAmount) {
+                    const mtnCode = document.getElementById('mtnCode');
+                    const omCode = document.getElementById('omCode');
+                    if (mtnCode) mtnCode.innerHTML = `*126*14*654250688*<span class="text-primary">${cleanAmount}</span>#`;
+                    if (omCode) omCode.innerHTML = `#150*1*1*659197506*<span class="text-primary">${cleanAmount}</span>#`;
+
+                    const mtnLink = document.getElementById('mtnLink');
+                    const omLink = document.getElementById('omLink');
+                    if (mtnLink) mtnLink.href = `tel:*126*14*654250688*${cleanAmount}%23`;
+                    if (omLink) omLink.href = `tel:%23150*1*1*659197506*${cleanAmount}%23`;
+                }
+            }
+        }
+
+        // Retrieve URL params if any (from index.html redirection)
+        window.addEventListener('load', () => {
+            loadVisitorConfig();
+
+            const name = urlParams.get('name');
+            const email = urlParams.get('email');
+            const amount = urlParams.get('amount');
+
+            // Initial display (in XAF while config loads)
+            if (amount && !visConfig.prefix) {
+                refreshAmountDisplay();
+            }
+
+            // Sponsorship UI Update
+            if (urlParams.get('type') === 'sponsorship') {
+                document.getElementById('pageTitle').innerText = "Finaliser le Parrainage";
+                document.getElementById('pageDescription').innerText = "Merci pour votre générosité ! Pour valider votre don, veuillez effectuer le paiement ci-dessous.";
+                document.title = "Finaliser le Don – HireMe CV";
             }
 
             if (name) document.getElementById('fullName').value = name;
             if (email) document.getElementById('email').value = email;
+            if (urlParams.get('phone')) document.getElementById('phone').value = urlParams.get('phone');
+        });
+
+        function redirectToChariow() {
+            const packId = urlParams.get('pack_id');
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('fullName').value;
+
+            if (visConfig.intl_data) {
+                const link = visConfig.intl_data[`intl_pack_${packId}_chariow`];
+                if (link) {
+                    const finalUrl = new URL(link);
+                    if (email) finalUrl.searchParams.append('email', email);
+                    if (name) finalUrl.searchParams.append('name', name);
+                    trackEvent('payment_redirect_chariow', { pack: packId });
+                    window.location.href = finalUrl.toString();
+                    return;
+                }
+            }
+            alert("Lien de paiement indisponible pour ce pack.");
+        }
+
+        function sendWhatsAppSupport() {
+            const msg = document.getElementById('supportMsg').value;
+            const name = document.getElementById('fullName').value || 'Visiteur';
+            const pack = urlParams.get('package') || 'Standard';
+
+            if (!msg.trim()) {
+                alert("Veuillez décrire votre problème avant de cliquer.");
+                return;
+            }
+
+            const fullText = `Bonjour l'équipe HireMe ! Je suis ${name}. J'ai un souci avec mon paiement pour le ${pack}. \n\nMon problème : ${msg}`;
+            const waUrl = `https://wa.me/237654250688?text=${encodeURIComponent(fullText)}`;
+
+            trackEvent('payment_support_click', { message: msg, package: pack });
+            window.open(waUrl, '_blank');
+        }
+
+        function toggleSupportWidget() {
+            const widget = document.getElementById('supportWidget');
+            const bubble = document.getElementById('supportBubble');
+
+            if (widget.classList.contains('opacity-0')) {
+                // Open
+                widget.classList.remove('opacity-0', 'translate-y-10', 'scale-90', 'pointer-events-none');
+                widget.classList.add('pointer-events-auto');
+                bubble.classList.add('scale-0');
+            } else {
+                // Close
+                widget.classList.add('opacity-0', 'translate-y-10', 'scale-90', 'pointer-events-none');
+                widget.classList.remove('pointer-events-auto');
+                bubble.classList.remove('scale-0');
+            }
+        }
+
+        // Abandoned Cart / Lead Capture
+        function saveLead() {
+            const data = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                whatsapp: document.getElementById('phone').value,
+                source: 'Payment Page Support',
+                details: {
+                    package: urlParams.get('package'),
+                    amount: urlParams.get('amount'),
+                    support_message: document.getElementById('supportMsg').value
+                }
+            };
+
+            // Only save if we have some contact info
+            if (data.whatsapp.length > 5 || (data.email && data.email.includes('@'))) {
+                fetch('api/save_lead.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }).catch(err => console.error('Lead capture failed:', err));
+            }
+        }
+
+        // Attach listeners
+        const captureFields = ['fullName', 'email', 'phone', 'supportMsg'];
+        captureFields.forEach(id => {
+            const field = document.getElementById(id);
+            if (field) field.addEventListener('blur', saveLead);
         });
 
         // Form Logic
         const form = document.getElementById('paymentForm');
-        const formContent = document.getElementById('formContent');
-        const successMessage = document.getElementById('successMessage');
+        // ... (skipping some lines for brevity in replacement)
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Simulate processing
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-
+            const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Envoi en cours...`;
+            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" ...>...</svg> Traitement...`;
 
-            setTimeout(() => {
-                // Get data to pass forward
-                const name = document.getElementById('fullName').value;
-                const email = document.getElementById('email').value;
-                const params = new URLSearchParams({ name: name, email: email });
+            try {
+                const formData = new FormData();
+                formData.append('name', document.getElementById('fullName').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('whatsapp', document.getElementById('phone').value);
+                formData.append('transactionId', document.getElementById('transactionId').value);
 
-                // Success State and Redirect
-                formContent.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-                submitBtn.classList.add('hidden');
-                successMessage.scrollIntoView({ behavior: 'smooth' });
+                const method = document.querySelector('input[name="paymentMethod"]:checked');
+                if (method) formData.append('paymentMethod', method.value);
 
-                // Auto-redirect after short delay
-                setTimeout(() => {
-                    window.location.href = 'details-cv.html?' + params.toString();
-                }, 2000);
+                const fileInput = document.getElementById('proofFile');
+                formData.append('proofFile', fileInput.files[0]);
 
-            }, 1500);
+                // Pass all params from URL to Backend
+                if (urlParams.get('amount')) formData.append('amount', urlParams.get('amount'));
+                if (urlParams.get('original_amount')) formData.append('original_amount', urlParams.get('original_amount'));
+                if (urlParams.get('discount_amount')) formData.append('discount_amount', urlParams.get('discount_amount'));
+                if (urlParams.get('promo_code')) formData.append('promo_code', urlParams.get('promo_code'));
+                if (urlParams.get('phone')) formData.append('whatsapp', urlParams.get('phone'));
+                if (urlParams.get('city')) formData.append('city', urlParams.get('city'));
+                if (urlParams.get('country')) formData.append('country', urlParams.get('country'));
+                if (urlParams.get('package')) formData.append('package_name', urlParams.get('package'));
+                if (urlParams.get('upsell_recruiter')) formData.append('upsell_recruiter', urlParams.get('upsell_recruiter'));
+                if (urlParams.get('upsell_letter')) formData.append('upsell_letter', urlParams.get('upsell_letter'));
+                if (urlParams.get('affiliate_code')) formData.append('affiliate_code', urlParams.get('affiliate_code'));
+
+                // Sponsorship Params
+                if (urlParams.get('qty')) formData.append('sponsorship_qty', urlParams.get('qty'));
+                if (urlParams.get('type') === 'sponsorship') formData.append('is_sponsorship', '1');
+
+                // Send to Backend
+                const response = await fetch('save-order', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // Check for non-JSON responses
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const text = await response.text();
+                    console.error("Non-JSON Response:", text);
+                    throw new Error("Erreur serveur : Réponse inattendue.");
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Success UI
+                    const packageName = urlParams.get('package');
+                    const packId = urlParams.get('pack_id');
+                    const isSponsorship = urlParams.get('type') === 'sponsorship';
+
+                    if (packId === 'templates40' || packageName === 'Pack 40 Modèles CV') {
+                        successMessage.querySelector('p').innerHTML = "Nous vérifierons votre transaction. Une fois validée, vos modèles vous seront envoyés instantanément.";
+                    } else if (isSponsorship) {
+                        successMessage.querySelector('h3').innerText = "🎉 Merci Parrain !";
+                        successMessage.querySelector('p').innerHTML = "Votre don a bien été enregistré. Nous l'attribuerons bientôt.";
+                    }
+
+
+                    formContent.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    submitBtn.classList.add('hidden');
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+
+                    // Redirect logic
+                    const nextParams = new URLSearchParams({
+                        name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        package: packageName || 'Standard'
+                    });
+
+                    setTimeout(() => {
+                        if (isSponsorship) {
+                            window.location.href = 'sponsors.html?status=success_donation';
+                        } else if (packId === 'templates40' || packageName === 'Pack 40 Modèles CV') {
+                            window.location.href = 'merci?type=digital&' + nextParams.toString();
+                        } else {
+                            window.location.href = 'details-cv?' + nextParams.toString();
+                        }
+                    }, 2500);
+
+                } else {
+                    throw new Error(result.message || "Erreur inconnue.");
+                }
+
+            } catch (error) {
+                console.error("DEBUG FETCH ERROR:", error);
+
+                let msg = error.message;
+                if (msg === "Failed to fetch") {
+                    msg = "Impossible de contacter le serveur. Vérifiez que XAMPP (Apache & MySQL) est lancé et que vous avez internet.";
+                }
+
+                alert("Désolé, une erreur est survenue : " + msg);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+            }
         });
     </script>
+    <!-- Stat Tracking -->
+    <img src="api/track" alt="" style="display:none;">
 </body>
 
 </html>

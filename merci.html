@@ -10,10 +10,10 @@
     <!-- Open Graph / Twitter -->
     <meta property="og:title" content="Merci pour votre confiance – HireMe CV Services" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moncvpro.hiremeguide.com/merci.html" />
-    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta property="og:url" content="https://moncvpro.hiremeguide.com/merci" />
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
     <!-- Favicons -->
     <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
@@ -258,15 +258,116 @@
     </footer>
 
     <script>
-        // Retrieve User Name
+        // Retrieve User Name & Type
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const name = urlParams.get('name');
+            const type = urlParams.get('type');
+
+            const isValentin = urlParams.get('valentin');
 
             if (name) {
                 document.getElementById('userName').textContent = name;
             } else {
                 document.getElementById('userName').textContent = "l'ami"; // Fallback
+            }
+
+            if (isValentin) {
+                // Update Intro Text - VALENTIN
+                const introP = document.querySelector('.text-lg.text-gray-600.max-w-xl');
+                if (introP) {
+                    introP.innerHTML = `L'amour et la réussite vont de pair ! ❤️ <br> Nous avons bien reçu votre commande <strong>Valentine Career Deal</strong>.`;
+                }
+
+                // Update Box Content - VALENTIN
+                const blueBox = document.querySelector('.bg-blue-50');
+                if (blueBox) {
+                    blueBox.classList.remove('bg-blue-50', 'border-blue-100');
+                    blueBox.classList.add('bg-rose-50', 'border-rose-100');
+                    blueBox.innerHTML = `
+                          <div class="flex items-start mb-4">
+                              <svg class="w-6 h-6 text-rose-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                              </svg>
+                              <div>
+                                  <h3 class="font-bold text-rose-900 text-lg">💑 Un futur brillant vous attend</h3>
+                                  <p class="text-rose-800 text-sm mt-1">
+                                      Votre commande est en cours de traitement. Notre équipe prépare vos documents avec soin pour vous aider à atteindre vos objectifs.
+                                  </p>
+                              </div>
+                          </div>
+                      `;
+                }
+
+                // Update Header Color for fun
+                document.querySelector('h1').classList.add('text-rose-600');
+                document.querySelector('h1').classList.remove('text-neutral');
+            } else if (type === 'digital') {
+                // Update Intro Text
+                const introP = document.querySelector('.text-lg.text-gray-600.max-w-xl');
+                if (introP) {
+                    introP.innerHTML = `Nous avons bien reçu votre commande pour le <strong>Pack 40 Modèles CV</strong>. 🙌 <br> Notre équipe vérifie votre paiement en ce moment même.`;
+                }
+
+                // Update Box Content
+                const blueBox = document.querySelector('.bg-blue-50');
+                if (blueBox) {
+                    blueBox.innerHTML = `
+                        <div class="flex items-start mb-4">
+                            <svg class="w-6 h-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <h3 class="font-bold text-blue-900 text-lg">⏳ Envoi en cours...</h3>
+                                <p class="text-blue-800 text-sm mt-1">
+                                    Une fois votre paiement validé, vous recevrez <strong>immédiatement</strong> votre lien de téléchargement contenant les 40 modèles Word.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="border-t border-blue-200 mt-4 pt-4 flex items-start">
+                             <svg class="w-6 h-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class="text-blue-800 text-sm">
+                                Le pack vous sera envoyé sur <span class="font-bold">WhatsApp</span> et par <span class="font-bold">Email</span>. Surveillez votre boîte de réception !
+                            </p>
+                        </div>
+                    `;
+                }
+            } else if (type === 'ebook') {
+                // Update Intro Text - EBOOK
+                const introP = document.querySelector('.text-lg.text-gray-600.max-w-xl');
+                if (introP) {
+                    introP.innerHTML = `Félicitations pour votre investissement ! 🎓 <br> Le <strong>Guide Ultime de l'Emploi</strong> va transformer votre recherche de travail.`;
+                }
+
+                // Update Box Content - EBOOK
+                const blueBox = document.querySelector('.bg-blue-50');
+                if (blueBox) {
+                    blueBox.innerHTML = `
+                         <div class="flex items-start mb-4">
+                             <svg class="w-6 h-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                             </svg>
+                             <div>
+                                 <h3 class="font-bold text-blue-900 text-lg">⏳ Vérification du paiement...</h3>
+                                 <p class="text-blue-800 text-sm mt-1">
+                                     Nous vérifions votre transaction. Dès validation, vous recevrez le <strong>PDF complet</strong> sur WhatsApp et par Email.
+                                 </p>
+                             </div>
+                         </div>
+                         <div class="border-t border-blue-200 mt-4 pt-4 flex items-start">
+                              <svg class="w-6 h-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                             </svg>
+                             <p class="text-blue-800 text-sm">
+                                 <strong>Besoin du PDF tout de suite ?</strong><br>
+                                 Contactez-nous sur WhatsApp avec votre preuve de paiement pour un envoi prioritaire.
+                                 <a href="https://wa.me/237654250688" class="underline font-bold">Cliquez ici</a>.
+                             </p>
+                         </div>
+                     `;
+                }
             }
         });
     </script>

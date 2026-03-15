@@ -2,23 +2,37 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0WXT4Q08R2');
+    </script>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HireMe CV Services — CV Professionnels avec -60% (HIREME60)</title>
+    <link rel="canonical" href="https://moncvpro.hiremeguide.com/" />
     <meta name="description"
         content="CV et Lettres de motivation rédigés par des experts. Promo 15 jours: HIREME60 (-60%). Livraison 48h.">
-    <meta property="og:title" content="HireMe CV Services – Votre CV Professionnel en 48h" />
+    <meta property="og:title" content="HireMe CV Services – Doublez vos Entretiens en 48h" />
     <meta property="og:description"
-        content="Obtenez un CV moderne, professionnel et optimisé pour les recruteurs du monde entier. Disponible en Afrique, Europe, USA, Canada et plus." />
+        content="Passez d'un CV ignoré à un CV de top 1%. Rédaction experte, optimisation ATS et design premium. Profitez de -60% aujourd'hui !" />
     <meta property="og:url" content="https://moncvpro.hiremeguide.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HireMe CV Services – Votre CV Professionnel en 48h" />
-    <meta name="twitter:description" content="Service international de rédaction de CV et optimisation LinkedIn." />
-    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview.jpg" />
+    <meta name="twitter:description"
+        content="Passez au niveau supérieur avec un CV qui décroche des entretiens. -60% Promo." />
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
 
     <!-- Favicons -->
@@ -32,11 +46,89 @@
     <link rel="apple-touch-icon" sizes="180x180"
         href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
 
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <script src="assets/js/pwa.js" defer></script>
+    <meta name="theme-color" content="#0ea5e9">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "HireMe CV Services",
+      "image": "https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png",
+      "@id": "https://moncvpro.hiremeguide.com",
+      "url": "https://moncvpro.hiremeguide.com",
+      "telephone": "+237654250688",
+      "priceRange": "2000 FCFA - 45000 FCFA",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Douala",
+        "addressLocality": "Douala",
+        "addressCountry": "CM"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 4.051056,
+        "longitude": 9.767868
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "20:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/hiremeguide",
+        "https://www.linkedin.com/company/hiremeguide"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Rédaction CV Professionnel - Pack Pro",
+      "image": "https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png",
+      "description": "Service de rédaction de CV optimisé ATS et Design Premium. Augmentez vos chances de recrutement.",
+      "brand": {
+        "@type": "Brand",
+        "name": "HireMe CV"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://moncvpro.hiremeguide.com",
+        "priceCurrency": "XAF",
+        "price": "5100",
+        "priceValidUntil": "2025-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "342"
+      }
+    }
+    </script>
+
+    <!-- Dynamic Activity Notification is now inline -->
+
+    <!-- Stat Tracking -->
+    <img src="api/track.php" alt="" style="display:none;">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -96,18 +188,137 @@
                 display: none;
             }
         }
+
+        /* Notification Highlight */
+        .notification-glow {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+            border: 2px solid #22c55e !important;
+            animation: notification-pulse 2s infinite;
+        }
+
+        @keyframes notification-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+            }
+
+        }
     </style>
+    <!-- Spin Wheel Feature -->
+    <link rel="stylesheet" href="assets/css/spin-wheel.css">
+    <!-- CV Audit Feature -->
+    <script src="assets/js/cv-audit.js" defer></script>
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
 
-    <!-- Top Banner -->
-    <div id="topPromoBanner" style="display: none;"
-        class="bg-gradient-to-r from-primary to-blue-600 text-white text-center py-2 px-4 text-sm font-medium animate-pulse-slow">
-        🔥 Promotion Spéciale : Utilisez le code <span class="font-bold bg-white text-primary px-1 rounded ml-1"
-            id="bannerCode">CODE</span> pour <span id="bannerPercent">-0%</span> !
+    <!-- Top Banner with Countdown -->
+    <div id="topPromoBanner"
+        class="bg-neutral text-white text-center py-2.5 px-4 text-[10px] sm:text-xs font-bold relative z-[60] border-b border-amber-500/30">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
+            <span class="uppercase tracking-widest font-bold"><span class="text-amber-500">OFFRE SPÉCIALE RAMADAN
+                    :</span>
+                Profitez de tarifs exceptionnels pendant ce mois béni !</span>
+            <a href="ramadan.php"
+                class="bg-amber-600 text-white px-3 py-1 rounded-full text-[9px] font-black hover:bg-white hover:text-amber-600 transition-all ml-2 underline">VOIR
+                L'OFFRE</a>
+        </div>
     </div>
 
+    <!-- Sticky Progress Bar (New) -->
+    <div id="stickyProgressBar"
+        class="fixed top-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur shadow-md transition-transform duration-300 -translate-y-full"
+        style="display: none;">
+        <div class="max-w-3xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center relative z-10 step-item" data-step="1">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs ring-4 ring-white transition-colors duration-300">
+                        1</div>
+                    <span class="text-[10px] font-bold text-neutral mt-1 transition-colors duration-300">Offre</span>
+                </div>
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-200 mx-1 relative top-[-6px]">
+                    <div class="h-full bg-primary transition-all duration-300 w-0 step-connector" data-step="1"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center relative z-10 step-item" data-step="2">
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs ring-4 ring-white transition-colors duration-300">
+                        2</div>
+                    <span
+                        class="text-[10px] font-bold text-gray-400 mt-1 transition-colors duration-300">Identité</span>
+                </div>
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-200 mx-1 relative top-[-6px]">
+                    <div class="h-full bg-primary transition-all duration-300 w-0 step-connector" data-step="2"></div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center relative z-10 step-item" data-step="3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs ring-4 ring-white transition-colors duration-300">
+                        3</div>
+                    <span class="text-[10px] font-bold text-gray-400 mt-1 transition-colors duration-300">Options</span>
+                </div>
+                <!-- Connector -->
+                <div class="flex-1 h-0.5 bg-gray-200 mx-1 relative top-[-6px]">
+                    <div class="h-full bg-primary transition-all duration-300 w-0 step-connector" data-step="3"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center relative z-10 step-item" data-step="4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-xs ring-4 ring-white transition-colors duration-300">
+                        4</div>
+                    <span class="text-[10px] font-bold text-gray-400 mt-1 transition-colors duration-300">Valid.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Activity Notification Container -->
+    <div id="liveToast"
+        class="fixed bottom-32 left-4 right-4 sm:right-auto sm:left-6 sm:bottom-10 sm:max-w-sm z-[70] transform translate-y-48 transition-all duration-700 pointer-events-none">
+        <style>
+            @media (max-width: 768px) {
+                #liveToast {
+                    bottom: 6rem !important;
+                }
+            }
+        </style>
+        <div
+            class="bg-white/95 backdrop-blur shadow-2xl rounded-2xl p-3 border border-gray-100 flex items-center gap-3 max-w-[280px] sm:max-w-none mx-auto sm:mx-0">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex-shrink-0 flex items-center justify-center text-xl text-primary"
+                id="toastIcon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-0.5" id="toastHeader">Vient de
+                    commander</p>
+                <p class="text-sm font-bold text-neutral truncate" id="toastTitle">M. Jean-Pierre</p>
+                <p class="text-xs text-gray-400" id="toastSub">Pack Expert — Douala</p>
+            </div>
+            <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- Notification Sound -->
+    <audio id="notificationSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Navigation -->
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 glass-effect border-b border-gray-100 dark:border-gray-800 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -117,60 +328,150 @@
                             class="text-neutral">CV</span></span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#advantages" class="text-gray-600 hover:text-primary transition-colors">Pourquoi nous?</a>
+                    <a href="cv-models" class="text-gray-600 hover:text-primary transition-colors font-medium">Modèles
+                        CV</a>
+                    <a href="sponsors.html"
+                        class="text-gray-600 hover:text-primary transition-colors font-medium">Sponsoriser</a>
+                    <a href="reservation"
+                        class="text-gray-600 hover:text-primary transition-colors font-bold flex items-center">
+                        <span
+                            class="bg-purple-100 text-purple-700 text-[10px] px-2 py-0.5 rounded-full mr-1 animate-pulse">NOUVEAU</span>
+                        Réservation
+                    </a>
+                    <a href="lettres.html"
+                        class="text-gray-600 hover:text-primary transition-colors font-bold flex items-center">
+                        <span
+                            class="bg-red-100 text-red-600 text-[8px] px-1.5 py-0.5 rounded-md mr-1 font-black">HOT</span>
+                        Lettres
+                    </a>
                     <a href="#pricing" class="text-gray-600 hover:text-primary transition-colors">Tarifs</a>
                     <a href="#process" class="text-gray-600 hover:text-primary transition-colors">Comment ça marche</a>
-                    <a href="#contact" class="text-gray-600 hover:text-primary transition-colors">Contact</a>
                 </div>
-                <div>
+                <div class="hidden md:block">
                     <a href="#pricing"
-                        class="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform hover:scale-105">
                         Commander
                     </a>
                 </div>
+                <!-- Mobile Menu Button -->
+                <div class="flex md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()"
+                        class="text-gray-500 hover:text-primary focus:outline-none focus:text-primary p-2"
+                        aria-label="Menu principal">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu"
+            class="hidden md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-100 shadow-xl z-40 animate-fade-in-down">
+            <div class="px-4 pt-4 pb-6 space-y-2">
+                <a href="cv-models"
+                    class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors">Modèles
+                    CV</a>
+                <a href="sponsors.html"
+                    class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors">Sponsoriser</a>
+                <a href="lettres"
+                    class="block px-3 py-3 rounded-xl text-base font-bold text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
+                    onclick="toggleMobileMenu()">Pack 300 Lettres</a>
+                <a href="reservation"
+                    class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
+                    onclick="toggleMobileMenu()">Réservation</a>
+                <a href="#pricing"
+                    class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
+                    onclick="toggleMobileMenu()">Tarifs</a>
+                <a href="#pricing"
+                    class="block w-full text-center mt-4 px-5 py-3 rounded-xl font-bold text-white bg-primary hover:bg-blue-600 shadow-lg"
+                    onclick="toggleMobileMenu()">Commander (-60%)</a>
             </div>
         </div>
     </nav>
 
     <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative pt-12 pb-16 px-4 sm:pt-20 sm:pb-24 lg:pb-32 overflow-hidden">
+        <section class="relative pt-10 pb-16 px-4 sm:pt-20 sm:pb-24 lg:pb-32 overflow-hidden border-b border-gray-100">
             <div class="max-w-7xl mx-auto text-center relative z-10">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral tracking-tight mb-6">
-                    Boostez votre carrière avec un <span
-                        class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">CV
-                        Professionnel</span>
+                <!-- Urgency Badge -->
+                <div id="heroPromoBadge" style="display: none;"
+                    class="inline-flex items-center space-x-2 bg-red-50 border border-red-100 px-4 py-1.5 rounded-full mb-6 animate-pulse">
+                    <span class="flex h-2 w-2 rounded-full bg-red-500"></span>
+                    <span class="text-red-700 text-xs font-bold uppercase tracking-wider">Offre Exceptionnelle : -<span
+                            id="heroDiscount">60</span>%
+                        finissent bientôt</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl font-extrabold text-neutral tracking-tight mb-6 leading-tight">
+                    Ne postulez plus. <br class="hidden sm:block">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">Soyez
+                        Recruté.</span>
                 </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 mb-8">
-                    Des CV et Lettres de motivation rédigés par des experts pour attirer les recruteurs et décrocher
-                    plus d'entretiens.
+                <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500 mb-10 leading-relaxed">
+                    Nous ne rédigeons pas seulement des CV. Nous créons des <span
+                        class="text-neutral font-bold italic">machines à décrocher des entretiens</span> optimisées pour
+                    l'international et les systèmes ATS.
                 </p>
-                <div class="flex justify-center gap-4">
+
+                <!-- NEW: AI CV Audit CTA -->
+                <div class="mb-12">
+                    <a href="#" onclick="trackEvent('click_ai_audit')"
+                        class="cv-audit-trigger inline-flex items-center gap-3 bg-white border-2 border-primary/20 p-2 pr-6 rounded-full hover:border-primary transition-all group">
+                        <span
+                            class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">NOUVEAU</span>
+                        <span class="text-sm font-bold text-neutral">Votre CV est-il efficace ? Testez votre score
+                            gratuitement →</span>
+                    </a>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
                     <a href="#pricing"
-                        class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-glow text-white bg-primary hover:bg-blue-600 transition-all transform hover:-translate-y-1">
-                        Voir les offres
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                        class="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full shadow-glow text-white bg-primary hover:bg-blue-600 transition-all transform hover:-translate-y-1 hover:scale-105"
+                        onclick="trackEvent('click_hero_cta')">
+                        Propulser ma carrière
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
                                 clip-rule="evenodd" />
                         </svg>
                     </a>
+                    <a href="#advantages"
+                        class="text-gray-500 font-semibold hover:text-neutral transition-colors flex items-center"
+                        onclick="trackEvent('click_hero_how_it_works')">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Voir comment ça marche
+                    </a>
                 </div>
-                <div class="mt-8 flex justify-center space-x-8 text-gray-500">
-                    <div class="flex items-center">
-                        <svg class="h-5 w-5 text-accent mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                            </path>
-                        </svg>
-                        <span>Livraison 48h</span>
+
+                <!-- Trust Bar -->
+                <div
+                    class="pt-8 border-t border-gray-100 flex flex-wrap justify-center items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Paiements
+                            Sécurisés</span>
+                        <div class="flex gap-3">
+                            <span
+                                class="font-bold text-orange-500 border border-orange-200 px-2 py-0.5 rounded text-[10px]">MTN</span>
+                            <span
+                                class="font-bold text-orange-600 border border-orange-200 px-2 py-0.5 rounded text-[10px]">Orange</span>
+                        </div>
                     </div>
-                    <div class="flex items-center">
-                        <svg class="h-5 w-5 text-accent mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                            </path>
-                        </svg>
-                        <span>Optimisé ATS</span>
+                    <div class="h-4 w-px bg-gray-200 hidden sm:block"></div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Certifications</span>
+                        <span
+                            class="font-bold text-blue-600 border border-blue-200 px-2 py-0.5 rounded text-[10px]">ATS-READY</span>
+                        <span
+                            class="font-bold text-green-600 border border-green-200 px-2 py-0.5 rounded text-[10px]">GURANTEED</span>
                     </div>
                 </div>
             </div>
@@ -181,6 +482,37 @@
                 </div>
             </div>
         </section>
+
+        <!-- Advance Booking CTA -->
+        <div class="max-w-7xl mx-auto px-4 -mt-8 relative z-20">
+            <a href="reservation"
+                class="group block bg-gradient-to-r from-purple-600 to-indigo-700 rounded-3xl p-6 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 border border-white/20">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-6">
+                        <div
+                            class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl group-hover:rotate-12 transition-transform">
+                            📅
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-xl font-bold text-white mb-1">Besoin de votre CV pour une date précise ?
+                            </h3>
+                            <p class="text-purple-100 text-sm">Réservez votre créneau en avance et payez le jour de la
+                                livraison. À partir de <span class="font-bold underline">2 000 FCFA</span> seulement.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 bg-white text-purple-700 px-6 py-3 rounded-full font-extrabold group-hover:bg-purple-50 transition-colors">
+                        Savoir plus
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
 
         <!-- Why Us -->
         <section id="advantages" class="py-16 bg-white">
@@ -208,41 +540,120 @@
                     <!-- Feature 2 -->
                     <div class="p-6 bg-gray-50 rounded-2xl hover:shadow-soft transition-all duration-300">
                         <div
-                            class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 text-accent">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                            class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-primary">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Compatible ATS</h3>
-                        <p class="text-gray-600">Optimisation des mots-clés pour passer les filtres des logiciels de
-                            recrutement (ATS).</p>
+                        <h3 class="text-xl font-bold mb-2">Optimisation ATS</h3>
+                        <p class="text-gray-600">Mots-clés stratégiques pour passer les logiciels de tri automatique des
+                            recruteurs.</p>
                     </div>
                     <!-- Feature 3 -->
                     <div class="p-6 bg-gray-50 rounded-2xl hover:shadow-soft transition-all duration-300">
                         <div
-                            class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-purple-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                            class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-primary">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Rédaction Expert</h3>
-                        <p class="text-gray-600">Correction des fautes et reformulation pour un impact maximal de vos
-                            expériences.</p>
+                        <h3 class="text-xl font-bold mb-2">Rapidité (48h)</h3>
+                        <p class="text-gray-600">Recevez votre nouveau CV optimisé sous 48h ouvrables, prêt à l'emploi.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- NEW: Trusted By Section -->
+                <div class="mt-20 pt-12 border-t border-gray-100 text-center">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-10">Nos clients sont recrutés
+                        par les plus grands</p>
+                    <div
+                        class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-30 grayscale saturate-0">
+                        <span class="text-xl font-black text-neutral tracking-tighter">MTN</span>
+                        <span class="text-xl font-black text-neutral tracking-tighter">ORANGE</span>
+                        <span class="text-xl font-black text-neutral tracking-tighter">ECOBANK</span>
+                        <span class="text-xl font-black text-neutral tracking-tighter">SABC</span>
+                        <span class="text-xl font-black text-neutral tracking-tighter">UNDP</span>
+                        <span class="text-xl font-black text-neutral tracking-tighter">WORLD BANK</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Visual Proof: Before/After -->
+        <section class="py-16 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-neutral">Résultats concrets</h2>
+                    <p class="mt-4 text-gray-500 text-lg">Voyez la différence entre un CV ordinaire et une
+                        candidature HireMe.</p>
+                </div>
+
+                <div class="relative max-w-4xl mx-auto">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-inner">
+                        <!-- Before -->
+                        <div class="space-y-4">
+                            <span
+                                class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV
+                                Ordinaire (Rejeté)</span>
+                            <div
+                                class="bg-white border-2 border-red-50 rounded-xl overflow-hidden opacity-70 transform -rotate-1 hover:rotate-0 transition-transform shadow-sm">
+                                <img src="assets/cv-before-messy.png" alt="Exemple CV désorganisé" loading="lazy"
+                                    class="w-full h-auto">
+                            </div>
+                            <p class="text-sm text-gray-400 italic">"Design dépassé, trop de texte, non
+                                optimisé pour les robots."</p>
+                        </div>
+
+                        <!-- After -->
+                        <div class="space-y-4">
+                            <span
+                                class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">HireMe
+                                CV (Recruté)</span>
+                            <div
+                                class="bg-white border-2 border-primary rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform shadow-xl relative">
+                                <div
+                                    class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">
+                                    ATS OPTIMIZED</div>
+                                <img src="assets/cv-after-professional.png" alt="Exemple CV HireMe Optimisé"
+                                    loading="lazy" class="w-full h-auto">
+                            </div>
+                            <p class="text-sm text-neutral font-medium">"Design épuré, mots-clés
+                                stratégiques, impact visuel immédiat."</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Stat -->
+                    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
+                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100">
+                            <p class="text-3xl font-extrabold text-primary">85%</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Taux de
+                                réponse</p>
+                        </div>
+                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100">
+                            <p class="text-3xl font-extrabold text-accent">3x Plus</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                D'entretiens</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="py-16 bg-bg">
+        <section id="pricing" class="py-16 bg-bg border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-extrabold text-neutral">Nos Packs Services</h2>
-                    <p class="mt-4 text-gray-500">Choisissez l'offre adaptée à vos besoins</p>
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <span class="flex h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="text-xs font-bold text-red-600 uppercase tracking-widest" id="liveViewers">12
+                            personnes consultent cette page</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral">Prêt à changer de dimension
+                        ?</h2>
+                    <p class="mt-4 text-gray-500">Choisissez l'expertise qui correspond à vos ambitions.</p>
 
                     <!-- Promo Code Input -->
                     <div class="mt-8 max-w-md mx-auto bg-white p-4 rounded-xl shadow-sm border border-gray-100">
@@ -260,15 +671,16 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Pack Junior -->
-                    <div
+                    <div data-pack-id="etudiant"
                         class="bg-white rounded-2xl shadow-soft p-6 relative border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col">
                         <h3 class="text-xl font-bold text-neutral mb-2">Pack Étudiant</h3>
                         <p class="text-sm text-gray-500 mb-4">Pour les stages et débuts.</p>
                         <div class="mb-4">
-                            <span class="text-3xl font-bold text-primary price-display" data-base-price="8000">8
+                            <span class="text-3xl font-bold text-primary price-display" data-base-price="5000">5
                                 000</span>
                             <span class="text-sm font-medium text-gray-500">FCFA</span>
-                            <div class="old-price text-sm text-red-400 line-through hidden font-medium"></div>
+                            <div class="old-price text-sm text-red-400 line-through hidden font-medium">
+                            </div>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1">
                             <li class="flex items-center text-sm text-gray-600"><svg class="h-4 w-4 text-accent mr-2"
@@ -287,12 +699,12 @@
                                         d="M5 13l4 4L19 7" />
                                 </svg>Livraison PDF</li>
                         </ul>
-                        <button onclick="selectPack('etudiant', 8000)"
+                        <button onclick="selectPack('etudiant', 5000)"
                             class="w-full block text-center bg-gray-50 text-primary font-bold py-2.5 rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary">Choisir</button>
                     </div>
 
                     <!-- Pack Pro -->
-                    <div
+                    <div data-pack-id="pro"
                         class="bg-white rounded-2xl shadow-lg p-6 relative border-2 border-primary transform scale-105 z-10 flex flex-col">
                         <div
                             class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
@@ -300,10 +712,11 @@
                         <h3 class="text-xl font-bold text-neutral mb-2">Pack Pro</h3>
                         <p class="text-sm text-gray-500 mb-4">Pour les jeunes diplômés.</p>
                         <div class="mb-4">
-                            <span class="text-3xl font-bold text-primary price-display" data-base-price="15000">15
+                            <span class="text-3xl font-bold text-primary price-display" data-base-price="12000">12
                                 000</span>
                             <span class="text-sm font-medium text-gray-500">FCFA</span>
-                            <div class="old-price text-sm text-red-400 line-through hidden font-medium"></div>
+                            <div class="old-price text-sm text-red-400 line-through hidden font-medium">
+                            </div>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1">
                             <li class="flex items-center text-sm text-gray-600"><svg class="h-4 w-4 text-accent mr-2"
@@ -327,20 +740,21 @@
                                         d="M5 13l4 4L19 7" />
                                 </svg>Format Word + PDF</li>
                         </ul>
-                        <button onclick="selectPack('pro', 15000)"
+                        <button onclick="selectPack('pro', 12000)"
                             class="w-full block text-center bg-primary text-white font-bold py-2.5 rounded-xl hover:bg-blue-600 transition-colors shadow-lg">Choisir</button>
                     </div>
 
                     <!-- Pack Expert -->
-                    <div
+                    <div data-pack-id="senior"
                         class="bg-white rounded-2xl shadow-soft p-6 relative border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col">
                         <h3 class="text-xl font-bold text-neutral mb-2">Pack Senior</h3>
                         <p class="text-sm text-gray-500 mb-4">Pour les confirmés.</p>
                         <div class="mb-4">
-                            <span class="text-3xl font-bold text-primary price-display" data-base-price="25000">25
+                            <span class="text-3xl font-bold text-primary price-display" data-base-price="30000">30
                                 000</span>
                             <span class="text-sm font-medium text-gray-500">FCFA</span>
-                            <div class="old-price text-sm text-red-400 line-through hidden font-medium"></div>
+                            <div class="old-price text-sm text-red-400 line-through hidden font-medium">
+                            </div>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1">
                             <li class="flex items-center text-sm text-gray-600"><svg class="h-4 w-4 text-accent mr-2"
@@ -359,20 +773,24 @@
                                         d="M5 13l4 4L19 7" />
                                 </svg>Réécriture complète</li>
                         </ul>
-                        <button onclick="selectPack('senior', 25000)"
+                        <button onclick="selectPack('senior', 30000)"
                             class="w-full block text-center bg-gray-50 text-primary font-bold py-2.5 rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary">Choisir</button>
                     </div>
 
-                    <!-- Pack Ultimate -->
-                    <div
-                        class="bg-white rounded-2xl shadow-soft p-6 relative border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+                    <!-- Pack Expert -->
+                    <div data-pack-id="expert"
+                        class="bg-white rounded-2xl shadow-soft p-6 relative border-2 border-primary transform hover:-translate-y-1 transition-transform duration-300 flex flex-col scale-105 z-10">
+                        <div
+                            class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-widest whitespace-nowrap shadow-lg animate-pulse">
+                            🔥 PLUS QUE 3 PLACES DISPONIBLES</div>
                         <h3 class="text-xl font-bold text-neutral mb-2">Pack Expert</h3>
                         <p class="text-sm text-gray-500 mb-4">Carrière internationale.</p>
                         <div class="mb-4">
-                            <span class="text-3xl font-bold text-primary price-display" data-base-price="35000">35
+                            <span class="text-3xl font-bold text-primary price-display" data-base-price="90000">90
                                 000</span>
                             <span class="text-sm font-medium text-gray-500">FCFA</span>
-                            <div class="old-price text-sm text-red-400 line-through hidden font-medium"></div>
+                            <div class="old-price text-sm text-red-400 line-through hidden font-medium">
+                            </div>
                         </div>
                         <ul class="space-y-3 mb-8 flex-1">
                             <li class="flex items-center text-sm text-gray-600"><svg class="h-4 w-4 text-accent mr-2"
@@ -384,15 +802,173 @@
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 13l4 4L19 7" />
-                                </svg>Coaching 30 min</li>
+                                </svg>Portfolio Professionnel</li>
                             <li class="flex items-center text-sm text-gray-600"><svg class="h-4 w-4 text-accent mr-2"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 13l4 4L19 7" />
                                 </svg>Priorité absolue</li>
                         </ul>
-                        <button onclick="selectPack('expert', 35000)"
+                        <button onclick="selectPack('expert', 90000)"
                             class="w-full block text-center bg-gray-50 text-primary font-bold py-2.5 rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary">Choisir</button>
+                    </div>
+
+                    <!-- NEW: Pack Templates 40 -->
+                    <div data-pack-id="templates40"
+                        class="bg-neutral text-white rounded-2xl shadow-xl p-6 relative border-2 border-accent transform hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+                        <div
+                            class="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-widest whitespace-nowrap shadow-lg">
+                            VENTE FLASH -73%</div>
+                        <h3 class="text-xl font-bold mb-2">40 Modèles de CV</h3>
+                        <p class="text-blue-200 text-sm mb-4">Design Premium & ATS.</p>
+                        <div class="mb-4">
+                            <span class="text-3xl font-bold text-white">3 999</span>
+                            <span class="text-sm font-medium text-blue-200">FCFA</span>
+                            <div class="text-sm text-gray-400 line-through font-medium">15 000 FCFA</div>
+                        </div>
+                        <ul class="space-y-3 mb-8 flex-1">
+                            <li class="flex items-center text-sm text-blue-50"><svg class="h-4 w-4 text-accent mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>40 Designs Modernes</li>
+                            <li class="flex items-center text-sm text-blue-50"><svg class="h-4 w-4 text-accent mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>Format Word Modifiable</li>
+                            <li class="flex items-center text-sm text-blue-50"><svg class="h-4 w-4 text-accent mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>Téléchargement Immédiat</li>
+                        </ul>
+                        <a href="https://boutique.hiremeguide.com/prd_nun0gx" target="_blank" rel="noopener noreferrer"
+                            onclick="trackEvent('click_templates_buy_now')"
+                            class="w-full block text-center bg-accent text-white font-bold py-3 rounded-xl hover:bg-green-600 transition-all shadow-lg animate-pulse">Acheter
+                            Maintenant</a>
+                        <button onclick="selectPack('templates40', 3999); trackEvent('click_templates_mobile_money')"
+                            class="mt-4 text-center text-xs text-blue-300 hover:text-white underline opacity-80 decoration-dotted">Ou
+                            payer par Mobile Money ici</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scanner Bridge (NEW) -->
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4">
+                <div
+                    class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8">
+                    <div class="bg-primary/5 p-6 rounded-2xl">
+                        <span class="text-5xl animate-pulse inline-block">🔍</span>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-2xl font-bold text-neutral mb-2">Pas sûr de votre CV actuel ?</h3>
+                        <p class="text-gray-600 mb-0">Faites scanner votre CV gratuitement par notre IA pour détecter
+                            les erreurs fatales qui bloquent votre recrutement.</p>
+                    </div>
+                    <a href="#"
+                        class="cv-audit-trigger bg-primary text-white font-bold px-8 py-4 rounded-2xl hover:bg-neutral transition-all shadow-lg shadow-primary/20 whitespace-nowrap">Scanner
+                        mon CV Gratuit →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section (Expert Pack) -->
+        <section id="portfolio" class="py-16 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                    <div class="mb-12 lg:mb-0">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-primary mb-4">
+                            Exclusif Pack Expert
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral tracking-tight mb-6">
+                            Plus qu'un CV, un <span class="text-primary">Portfolio de Classe Mondiale</span>
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Pour les carrières internationales, un CV ne suffit plus. Nous concevons pour
+                            vous un
+                            portfolio interactif qui met en valeur vos réalisations, vos projets et vos
+                            compétences de
+                            manière visuelle et percutante.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-6 h-6 bg-accent/10 rounded-full flex items-center justify-center mt-1">
+                                    <svg class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base font-bold text-neutral">Design Sur Mesure</p>
+                                    <p class="text-sm text-gray-500">Une mise en page unique qui reflète
+                                        votre identité
+                                        professionnelle.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-6 h-6 bg-accent/10 rounded-full flex items-center justify-center mt-1">
+                                    <svg class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base font-bold text-neutral">Mise en valeur des Projets
+                                    </p>
+                                    <p class="text-sm text-gray-500">Présentation détaillée de vos succès
+                                        avec visuels
+                                        et descriptions.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-6 h-6 bg-accent/10 rounded-full flex items-center justify-center mt-1">
+                                    <svg class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base font-bold text-neutral">Optimisé pour le Web</p>
+                                    <p class="text-sm text-gray-500">Un lien direct à envoyer aux recruteurs
+                                        ou à
+                                        ajouter à votre profil LinkedIn.</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#order" onclick="selectPack('expert', 30000)"
+                            class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-primary hover:bg-blue-600 transition-all">
+                            Démarrer mon portfolio
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <!-- Mockup Image / Illustration area -->
+                        <div
+                            class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-inner overflow-hidden border border-gray-100">
+                            <!-- Portfolio Image Container -->
+                            <div class="transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                                <img id="portfolioRotatingImage" src="assets/cv-after-professional.png"
+                                    alt="Exemple Portfolio CV" class="w-full h-auto rounded-xl shadow-2xl">
+                            </div>
+                            <div
+                                class="absolute bottom-4 right-4 bg-white rounded-xl shadow-2xl p-4 w-48 transform -rotate-6 hover:rotate-0 transition-transform duration-500 hidden sm:block">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-6 h-6 bg-green-100 rounded-full"></div>
+                                    <div class="h-2 w-16 bg-gray-100 rounded"></div>
+                                </div>
+                                <div class="h-1 w-full bg-gray-100 rounded mb-1"></div>
+                                <div class="h-1 w-full bg-gray-100 rounded"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -404,81 +980,254 @@
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
                     <div class="bg-neutral py-6 px-8">
                         <h2 class="text-2xl font-bold text-white">Finaliser votre commande</h2>
-                        <p class="text-gray-400 text-sm mt-1">Remplissez le formulaire ci-dessous pour démarrer.</p>
+                        <p class="text-gray-400 text-sm mt-1">Remplissez le formulaire ci-dessous pour
+                            démarrer.</p>
                     </div>
-                    <form id="orderForm" class="p-8 space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom complet <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" id="name" required
-                                    class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary"
-                                    placeholder="Jean Dupont">
-                            </div>
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone
-                                    (WhatsApp) <span class="text-danger">*</span></label>
-                                <input type="tel" id="phone" required
-                                    class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary"
-                                    placeholder="699 00 00 00">
-                            </div>
-                        </div>
-
+                    <div class="p-8 space-y-6">
+                        <!-- Wizard Form Integration -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email <span
-                                    class="text-danger">*</span></label>
-                            <input type="email" id="email" required
-                                class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary"
-                                placeholder="jean@exemple.com">
-                        </div>
-
-                        <div>
-                            <label for="packSelect" class="block text-sm font-medium text-gray-700 mb-1">Pack
-                                sélectionné <span class="text-danger">*</span></label>
-                            <select id="packSelect"
-                                class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary bg-white">
-                                <option value="" disabled selected>Choisir un pack...</option>
-                                <option value="etudiant" data-price="8000">Pack Étudiant (8 000 FCFA)</option>
-                                <option value="pro" data-price="15000">Pack Pro (15 000 FCFA)</option>
-                                <option value="senior" data-price="25000">Pack Senior (25 000 FCFA)</option>
-                                <option value="expert" data-price="35000">Pack Expert (35 000 FCFA)</option>
-                            </select>
-                        </div>
-
-                        <!-- Dynamic Total -->
-                        <div class="bg-blue-50 p-4 rounded-lg flex justify-between items-center border border-blue-100">
-                            <div>
-                                <span class="block text-sm text-blue-800 font-medium">Total à payer</span>
-                                <span id="appliedDiscountBadge"
-                                    class="hidden text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold">Code
-                                    HIREME60 appliqué (-60%)</span>
-                            </div>
-                            <div class="text-right">
-                                <div id="finalPrice" class="text-2xl font-extrabold text-blue-900">0 FCFA</div>
-                                <div id="originalPriceDisplay" class="text-sm text-red-500 line-through hidden">0 FCFA
+                            <div
+                                class="max-w-2xl mx-auto bg-white rounded-3xl shadow-soft border border-gray-100 p-6 sm:p-10 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-full h-1.5 bg-gray-50">
+                                    <div id="formProgress" class="h-full bg-primary transition-all duration-500"
+                                        style="width: 33%"></div>
                                 </div>
+
+                                <form id="orderForm" class="space-y-8 mt-4">
+                                    <!-- Step 1: Client Info -->
+                                    <div id="step1" class="space-y-6">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span
+                                                class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                                            <h3 class="text-lg font-bold text-neutral">Vos informations</h3>
+                                        </div>
+                                        <div class="grid grid-cols-1 gap-4">
+                                            <div>
+                                                <label for="name"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Nom
+                                                    complet</label>
+                                                <input type="text" id="name" name="name"
+                                                    placeholder="Ex: Jean-Marc Kamga" required autocomplete="name"
+                                                    autocapitalize="words"
+                                                    class="w-full rounded-xl border-gray-200 border-2 p-3 bg-gray-50 focus:bg-white transition-all">
+                                            </div>
+                                            <div>
+                                                <label for="phone"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                                                <input type="tel" id="phone" name="phone" placeholder="Ex: 6XX XXX XXX"
+                                                    required inputmode="numeric" autocomplete="tel"
+                                                    class="w-full rounded-xl border-gray-200 border-2 p-3 bg-gray-50 focus:bg-white transition-all">
+                                            </div>
+                                            <div>
+                                                <label for="city"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                                                <input type="text" id="city" name="city"
+                                                    placeholder="Ex: Douala, Yaoundé..." required
+                                                    autocomplete="address-level2"
+                                                    class="w-full rounded-xl border-gray-200 border-2 p-3 bg-gray-50 focus:bg-white transition-all">
+                                            </div>
+                                            <div>
+                                                <label for="email"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                                <input type="email" id="email" name="email"
+                                                    placeholder="votre@email.com" required autocomplete="email"
+                                                    class="w-full rounded-xl border-gray-200 border-2 p-3 bg-gray-50 focus:bg-white transition-all">
+                                            </div>
+                                        </div>
+                                        <button type="button" onclick="goToStep(2)"
+                                            class="w-full bg-primary text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-blue-600 transition-all flex justify-center items-center">
+                                            Continuer <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Step 2: Choose Service -->
+                                    <div id="step2" class="hidden space-y-6">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span
+                                                class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                                            <h3 class="text-lg font-bold text-neutral">Choisissez votre service</h3>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <label class="block text-sm font-medium text-gray-700">Sélectionnez le pack
+                                                qui vous propulsera</label>
+                                            <div class="grid grid-cols-1 gap-3">
+                                                <select id="packSelect" name="pack" required
+                                                    onchange="updateOrderTotal()"
+                                                    class="w-full rounded-2xl border-gray-200 border-2 p-4 text-lg font-bold bg-gray-50 focus:bg-white transition-all appearance-none cursor-pointer">
+                                                    <option value="etudiant" data-price="5000">Pack Étudiant (5 000
+                                                        FCFA)</option>
+                                                    <option value="pro" data-price="12000" selected>Pack Pro (12 000
+                                                        FCFA)</option>
+                                                    <option value="senior" data-price="30000">Pack Senior (30 000 FCFA)
+                                                    </option>
+                                                    <option value="expert" data-price="90000">Pack Expert (90 000 FCFA)
+                                                    </option>
+                                                    <option value="templates40" data-price="3999">Pack 40 Modèles CV (3
+                                                        999 FCFA)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- NEW: Checkout Upsells (Order Bumps) -->
+                                        <div class="space-y-3 pt-2">
+                                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Boostez
+                                                votre candidature (Optionnel)</p>
+
+                                            <div class="space-y-3 pt-2">
+                                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                                    Rapidité de traitement</p>
+                                                <div class="grid grid-cols-3 gap-2">
+                                                    <label
+                                                        class="relative flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-gray-200 transition-all bg-white has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-sm text-center h-full">
+                                                        <input type="radio" name="delivery_time" value="0" checked
+                                                            onchange="updateOrderTotal()" class="peer sr-only">
+                                                        <span
+                                                            class="text-xs font-bold text-gray-600 peer-checked:text-primary mb-1">Standard</span>
+                                                        <span class="text-[10px] text-gray-400">48h</span>
+                                                    </label>
+                                                    <label
+                                                        class="relative flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-primary/30 transition-all bg-white has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-sm text-center h-full">
+                                                        <input type="radio" name="delivery_time" value="1000"
+                                                            onchange="updateOrderTotal()" class="peer sr-only">
+                                                        <span
+                                                            class="text-xs font-bold text-gray-600 peer-checked:text-primary mb-1">Urgent
+                                                            (3h)</span>
+                                                        <span class="text-[10px] font-bold text-primary">+1 000 F</span>
+                                                    </label>
+                                                    <label
+                                                        class="relative flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-primary/30 transition-all bg-white has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-sm text-center h-full">
+                                                        <input type="radio" name="delivery_time" value="2000"
+                                                            onchange="updateOrderTotal()" class="peer sr-only">
+                                                        <span
+                                                            class="text-xs font-bold text-gray-600 peer-checked:text-primary mb-1">Flash
+                                                            (1h)</span>
+                                                        <span class="text-[10px] font-bold text-primary">+2 000 F</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Options Extras -->
+                                            <div class="space-y-3 pt-2">
+                                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                                    Options supplémentaires</p>
+
+                                                <label
+                                                    class="flex items-center p-4 border-2 border-gray-100 rounded-2xl cursor-pointer hover:border-primary/30 transition-all bg-gray-50/50 group">
+                                                    <input type="checkbox" id="upsellLetter" value="1000"
+                                                        onchange="updateOrderTotal()"
+                                                        class="w-5 h-5 text-primary rounded border-gray-300 focus:ring-primary">
+                                                    <div class="ml-4 flex-1">
+                                                        <div class="flex justify-between items-center">
+                                                            <span
+                                                                class="font-bold text-neutral group-hover:text-primary transition-colors">📝
+                                                                Lettre de Motivation</span>
+                                                            <span class="text-sm font-bold text-primary">+1 000
+                                                                FCFA</span>
+                                                        </div>
+                                                        <p class="text-xs text-gray-500">Rédigée sur mesure pour
+                                                            accompagner
+                                                            votre nouveau CV.</p>
+                                                    </div>
+                                                </label>
+
+                                                <label
+                                                    class="flex items-center p-4 border-2 border-accent/20 rounded-2xl cursor-pointer hover:border-accent transition-all bg-accent/5 group relative overflow-hidden">
+                                                    <div
+                                                        class="absolute -top-1 -right-4 bg-accent text-white text-[8px] font-bold px-4 py-1 rotate-12 uppercase tracking-widest shadow-sm">
+                                                        OFFRE GOAT</div>
+                                                    <input type="checkbox" id="upsellRecruiter" value="2500"
+                                                        onchange="updateOrderTotal()"
+                                                        class="w-5 h-5 text-accent rounded border-gray-300 focus:ring-accent">
+                                                    <div class="ml-4 flex-1">
+                                                        <div class="flex justify-between items-center">
+                                                            <span
+                                                                class="font-extrabold text-neutral group-hover:text-accent transition-colors">📖
+                                                                La Bible des Recruteurs (250+ Contacts)</span>
+                                                            <span class="text-sm font-bold text-accent">+2 500
+                                                                FCFA</span>
+                                                        </div>
+                                                        <p class="text-xs text-gray-600">Emails & WhatsApp direct des RH
+                                                            au
+                                                            Cameroun. Livraison instantanée !</p>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <button type="button" onclick="goToStep(1)"
+                                                class="w-1/3 text-gray-500 font-bold py-4 rounded-xl hover:bg-gray-50 transition-all">Retour</button>
+                                            <button type="button" onclick="goToStep(3)"
+                                                class="flex-1 bg-primary text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-600 transition-all">Récapitulatif</button>
+                                        </div>
+                                    </div>
                             </div>
-                        </div>
 
-                        <div class="flex items-start">
-                            <input id="terms" type="checkbox" required
-                                class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded mt-1">
-                            <label for="terms" class="ml-2 block text-sm text-gray-600">
-                                J'accepte d'envoyer les informations requises pour la rédaction de mon CV après la
-                                commande.
-                            </label>
-                        </div>
+                            <!-- Step 3: Summary & Payment -->
+                            <div id="step3" class="hidden space-y-6">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span
+                                        class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                                    <h3 class="text-lg font-bold text-neutral">Confirmation</h3>
+                                </div>
 
-                        <button type="submit"
-                            class="w-full bg-accent text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-600 transition-all transform hover:scale-[1.02] flex justify-center items-center text-lg">
-                            <span>Valider la commande</span>
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </button>
-                    </form>
+                                <div class="bg-gray-50 rounded-2xl p-5 space-y-3">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-500">Service sélectionné :</span>
+                                        <span id="summaryPack" class="font-bold text-neutral">Pack
+                                            Pro</span>
+                                    </div>
+                                    <div
+                                        class="border-t border-gray-200 pt-3 flex justify-between items-center text-xl">
+                                        <span class="font-bold text-neutral">Total :</span>
+                                        <div class="text-right">
+                                            <div id="finalPrice" class="font-extrabold text-primary">10 000
+                                                FCFA</div>
+                                            <div id="appliedDiscountBadge"
+                                                class="hidden text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold mt-1">
+                                                CODE APPLIQUÉ</div>
+                                            <div id="originalPriceDisplay"
+                                                class="text-sm text-red-500 line-through hidden">0
+                                                FCFA</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start bg-blue-50 p-4 rounded-xl">
+                                    <input id="terms" type="checkbox" required
+                                        class="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded mt-0.5">
+                                    <label for="terms" class="ml-3 block text-xs text-blue-700 leading-tight">
+                                        J'accepte d'envoyer les informations requises pour la
+                                        rédaction de mon CV après le paiement.
+                                    </label>
+                                </div>
+
+                                <div class="flex gap-4">
+                                    <button type="button" onclick="goToStep(2)"
+                                        class="w-1/4 text-gray-500 font-bold py-4 rounded-xl hover:bg-gray-50 transition-all">Retour</button>
+                                    <button type="submit"
+                                        class="flex-1 bg-accent text-white font-bold py-4 rounded-2xl shadow-xl hover:bg-green-600 transition-all transform hover:scale-[1.02] flex justify-center items-center text-lg">
+                                        <span>Payer maintenant</span>
+                                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M14 5l7 7m0 0l-7 7m7-7H3">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <p class="text-[10px] text-center text-gray-400">Paiement 100%
+                                    sécurisé via MTN & Orange Money</p>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -496,7 +1245,8 @@
                         <h3 class="font-bold text-lg mb-2">Choisissez un pack</h3>
                         <p class="text-sm text-gray-500">Sélectionnez l'offre adaptée à votre profil.</p>
                         <!-- Connector Line -->
-                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0"></div>
+                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0">
+                        </div>
                     </div>
                     <div class="relative">
                         <div
@@ -504,8 +1254,10 @@
                             2</div>
                         <h3 class="font-bold text-lg mb-2">Code Promo</h3>
                         <p class="text-sm text-gray-500">Appliquez <span
-                                class="font-mono text-primary bg-primary/10 px-1 rounded">HIREME60</span> pour -60%.</p>
-                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0"></div>
+                                class="font-mono text-primary bg-primary/10 px-1 rounded">HIREME60</span>
+                            pour -60%.</p>
+                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0">
+                        </div>
                     </div>
                     <div class="relative">
                         <div
@@ -513,7 +1265,8 @@
                             3</div>
                         <h3 class="font-bold text-lg mb-2">Commande</h3>
                         <p class="text-sm text-gray-500">Remplissez le formulaire et validez.</p>
-                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0"></div>
+                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gray-200 -z-0">
+                        </div>
                     </div>
                     <div class="relative">
                         <div
@@ -526,36 +1279,85 @@
             </div>
         </section>
 
-        <!-- Testimonials (Placeholder as requested) -->
-        <section class="py-16 bg-white overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-extrabold text-neutral mb-8">Ils ont décroché un job</h2>
-                <div class="flex flex-wrap justify-center gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl max-w-sm text-left">
-                        <div class="flex items-center mb-4">
-                            <div class="h-10 w-10 rounded-full bg-gray-300"></div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-neutral">Sarah M.</p>
-                                <p class="text-xs text-gray-500">Assistant RH</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 text-sm">"Service incroyable. J'ai eu 3 entretiens la semaine suivant la
-                            réception de mon nouveau CV."</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-xl max-w-sm text-left">
-                        <div class="flex items-center mb-4">
-                            <div class="h-10 w-10 rounded-full bg-gray-300"></div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-neutral">Marc D.</p>
-                                <p class="text-xs text-gray-500">Ingénieur</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 text-sm">"Le design est top et la rédaction très professionnelle. Merci
-                            pour la rapidité !"</p>
-                    </div>
+        <!-- Reviews Section -->
+        <section id="reviews" class="py-20 bg-white overflow-hidden relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-black text-neutral mb-4">Ils ont décroché un job grâce à nous</h2>
+                    <p class="text-gray-500 text-lg max-w-2xl mx-auto">Découvrez les retours d'expérience de nos
+                        candidats qui ont transformé leur carrière.</p>
+                    <button onclick="openReviewModal()"
+                        class="mt-8 inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                        <span>Laisser un avis</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Reviews Grid -->
+                <div id="reviewsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Loaded dynamically via JS -->
+                    <div class="animate-pulse bg-gray-50 h-64 rounded-3xl"></div>
+                    <div class="animate-pulse bg-gray-50 h-64 rounded-3xl"></div>
+                    <div class="animate-pulse bg-gray-50 h-64 rounded-3xl"></div>
                 </div>
             </div>
         </section>
+
+        <!-- Review Modal -->
+        <div id="reviewModal"
+            class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl transform transition-all duration-300 scale-95 opacity-0"
+                id="reviewModalContent">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-black text-neutral">Votre Avis</h3>
+                    <button onclick="closeReviewModal()" class="text-gray-400 hover:text-neutral">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <form id="reviewForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Votre Nom</label>
+                        <input type="text" name="name" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Note</label>
+                        <div class="flex gap-2" id="starRating">
+                            <button type="button" data-val="1"
+                                class="text-3xl filter grayscale hover:grayscale-0 transition-all">⭐</button>
+                            <button type="button" data-val="2"
+                                class="text-3xl filter grayscale hover:grayscale-0 transition-all">⭐</button>
+                            <button type="button" data-val="3"
+                                class="text-3xl filter grayscale hover:grayscale-0 transition-all">⭐</button>
+                            <button type="button" data-val="4"
+                                class="text-3xl filter grayscale hover:grayscale-0 transition-all">⭐</button>
+                            <button type="button" data-val="5"
+                                class="text-3xl filter grayscale-0 transition-all">⭐</button>
+                        </div>
+                        <input type="hidden" name="stars" value="5" id="starsInput">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Témoignage (court)</label>
+                        <textarea name="comment" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all h-32 resize-none"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-primary text-white font-black py-4 rounded-xl shadow-lg hover:bg-neutral transition-all transform hover:scale-[1.02]">
+                        Publier mon avis
+                    </button>
+                </form>
+            </div>
+        </div>
 
         <!-- Footer -->
         <footer id="contact" class="bg-neutral text-white py-12">
@@ -564,7 +1366,8 @@
                     <span class="text-2xl font-extrabold text-white tracking-tight">HireMe<span
                             class="text-primary">CV</span></span>
                     <p class="mt-4 text-gray-400 text-sm">
-                        Le partenaire de votre réussite professionnelle. Nous créons des CV qui font la différence.
+                        Le partenaire de votre réussite professionnelle. Nous créons des CV qui font la
+                        différence.
                     </p>
                 </div>
                 <div>
@@ -574,7 +1377,7 @@
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg> contact@hiremecv.com</li>
+                            </svg> moncvpro@hiremeguide.com</li>
                         <li class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -585,8 +1388,9 @@
                 <div>
                     <h4 class="font-bold text-lg mb-4">Légal</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="conditions-generales.html" class="hover:text-white">Conditions Générales</a></li>
-                        <li><a href="politique-confidentialite.html" class="hover:text-white">Politique de
+                        <li><a href="conditions-generales" class="hover:text-white">Conditions
+                                Générales</a></li>
+                        <li><a href="politique-confidentialite" class="hover:text-white">Politique de
                                 Confidentialité</a></li>
                     </ul>
                 </div>
@@ -599,11 +1403,10 @@
 
     <!-- Mobile Sticky CTA -->
     <div class="cta-spacer"></div>
-    <div
+    <div id="mobileStickyCTA"
         class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden z-50 flex items-center justify-between shadow-lg">
         <div>
             <span class="text-xs text-gray-500 block">Offre limitée</span>
-            <span class="text-primary font-bold">Code: HIREME60</span>
         </div>
         <a href="#order"
             class="bg-accent text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-green-600 transition-colors">
@@ -615,8 +1418,9 @@
     <script>
         // State
         let isPromoApplied = false;
-        let currentDiscountPercent = 0;
-        let selectedPackId = null;
+        let promoData = null; // Store full promo data
+        let selectedPackId = 'pro'; // Default
+        let visConfig = { rate: 1, symbol: 'FCFA', prefix: '', country: 'Unknown' };
 
         // Elements
         const promoInput = document.getElementById('promoInput');
@@ -632,12 +1436,62 @@
 
         // Banner Elements
         const topPromoBanner = document.getElementById('topPromoBanner');
+        const heroPromoBadge = document.getElementById('heroPromoBadge');
+        const heroDiscount = document.getElementById('heroDiscount');
+        const mobileStickyCTA = document.getElementById('mobileStickyCTA');
+        const stickyPromoPromoCode = document.getElementById('stickyPromoPromoCode');
         const bannerCode = document.getElementById('bannerCode');
-        const bannerPercent = document.getElementById('bannerPercent');
+
+        // URL Params (Affiliate Tracking)
+        const urlParams = new URLSearchParams(window.location.search);
+        const affiliateRef = urlParams.get('ref');
 
         // Functions
         function formatPrice(price) {
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            const converted = Math.round(price * (visConfig.rate || 1));
+            return converted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        async function loadVisitorConfig() {
+            try {
+                // Pass current URL params to API (to support debug_country etc.)
+                const urlParams = new URLSearchParams(window.location.search);
+                const response = await fetch('api/get_visitor_config.php?' + urlParams.toString());
+                const data = await response.json();
+                visConfig = data;
+                window.visConfig = data; // Explicit global access
+
+                // 1. Phone Prefill
+                const phoneInput = document.getElementById('phone');
+                if (phoneInput && !phoneInput.value && visConfig.prefix) {
+                    phoneInput.value = visConfig.prefix;
+                }
+
+
+                // 3. Promo Check (Banner & Auto-apply for local users)
+                await checkActivePromo();
+
+                // 4. Initial UI Sync
+                updatePricesVisuals();
+                updateOrderTotal();
+
+                // 5. Regional Specifics
+                if (visConfig.country === 'Algérie') {
+                    showToast("🇩🇿 Paiement Baridimob & Paysera disponible via WhatsApp !", "info", 8000);
+                }
+
+            } catch (e) {
+                console.log("Geo-config load fail", e);
+                // Fallback to local default if API fails
+                visConfig = { country: 'Cameroun', currency: 'XAF', symbol: 'FCFA', rate: 1, is_foreign: false };
+            }
+        }
+
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
         }
 
         // 1. Check Active Promo for Banner (On Load)
@@ -647,23 +1501,457 @@
                 const data = await response.json();
 
                 if (data.active) {
-                    // Show Banner
-                    bannerCode.textContent = data.code;
-                    bannerPercent.textContent = '-' + data.percent + '%';
-                    topPromoBanner.style.display = 'block';
+                    // Update Banner/UI Elements
+                    if (bannerCode) bannerCode.textContent = data.code;
+                    if (topPromoBanner) topPromoBanner.style.display = 'block';
+
+                    if (heroDiscount) heroDiscount.textContent = data.discount_type === 'percent' ? data.discount_value : 'OFFRE';
+                    if (heroPromoBadge) heroPromoBadge.style.display = 'inline-flex';
+
+                    if (stickyPromoPromoCode) stickyPromoPromoCode.textContent = `Code: ${data.code}`;
+                    if (mobileStickyCTA) mobileStickyCTA.style.display = 'flex';
+
+                    // Auto-Apply if active
+                    applyDiscount(data);
+
+                    startCountdown();
+                } else {
+                    if (topPromoBanner) topPromoBanner.style.display = 'none';
+                    if (heroPromoBadge) heroPromoBadge.style.display = 'none';
+                    if (mobileStickyCTA) mobileStickyCTA.style.display = 'none';
                 }
             } catch (error) {
                 console.error("Erreur chargement promo:", error);
-                // Fallback: Do nothing (banner remains hidden)
             }
         }
+
+        // Exit Intent Logic (NEW)
+        let exitPopupShown = false;
+        function handleExitIntent(e) {
+            if (e.clientY <= 0 && !exitPopupShown && !isPromoApplied) {
+                showExitPopup();
+            }
+        }
+
+        function showExitPopup() {
+            const popup = document.getElementById('exitPopup');
+            const content = document.getElementById('exitPopupContent');
+            if (popup && content) {
+                popup.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+                exitPopupShown = true;
+                trackEvent('exit_intent_popup_shown');
+            }
+        }
+
+        function closeExitPopup() {
+            const content = document.getElementById('exitPopupContent');
+            if (content) {
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    document.getElementById('exitPopup').classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Mobile Exit Intent (Scroll Speed + Time)
+        let lastScrollTop = 0;
+        let lastScrollTime = Date.now();
+        let scrollSpeed = 0;
+
+        function initMobileExitIntent() {
+            // 1. Time-based trigger (45s)
+            setTimeout(() => {
+                if (!exitPopupShown && !isPromoApplied) {
+                    showExitPopup();
+                }
+            }, 45000);
+
+            // 2. Scroll Speed Trigger (Rapid scroll up)
+            window.addEventListener('scroll', () => {
+                const st = window.pageYOffset || document.documentElement.scrollTop;
+                const now = Date.now();
+                const dt = now - lastScrollTime;
+
+                if (dt > 50) { // Limit checks
+                    const dist = lastScrollTop - st; // Positive if scrolling UP
+                    scrollSpeed = dist / dt;
+
+                    // If scrolling up fast (> 2px/ms) and we are not at the very top
+                    if (scrollSpeed > 2 && st > 100 && !exitPopupShown && !isPromoApplied) {
+                        showExitPopup();
+                    }
+
+                    lastScrollTop = st;
+                    lastScrollTime = now;
+                }
+            }, { passive: true });
+        }
+
+        function applyExitPromo() {
+            // Get the code currently displayed in the popup (dynamic)
+            const codeElem = document.querySelector('#exitPopup .font-mono');
+            if (promoInput && codeElem) {
+                const dynamicCode = codeElem.innerText.trim();
+                promoInput.value = dynamicCode;
+
+                applyPromoCode();
+                closeExitPopup();
+                trackEvent('exit_intent_promo_clicked', { code: dynamicCode });
+
+                // Scroll to order form to show applied discount
+                setTimeout(() => {
+                    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            }
+        }
+
+        // Track Event Helper
+        function trackEvent(eventName, eventData = {}) {
+            fetch('api/track.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event_name: eventName, event_data: eventData })
+            }).catch(err => console.error("Tracking error:", err));
+        }
+
+        // --- Intent Tracking (Heatmap) ---
+        const hoverTimers = {};
+        document.querySelectorAll('[data-pack-id]').forEach(card => {
+            const packId = card.getAttribute('data-pack-id');
+
+            card.addEventListener('mouseenter', () => {
+                // Trigger after 2 seconds of continuous hover
+                hoverTimers[packId] = setTimeout(() => {
+                    trackEvent('intent_pack_hover', { pack_id: packId });
+                    console.log('Intent logged:', packId);
+                }, 2000);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (hoverTimers[packId]) {
+                    clearTimeout(hoverTimers[packId]);
+                    delete hoverTimers[packId];
+                }
+            });
+        });
+
+        // Live Activity Mock
+        const sales = [
+            { name: "M. Abba", city: "Yaoundé", pack: "Pack Pro", icon: "🚀" },
+            { name: "Sarah N.", city: "Douala", pack: "Pack Expert", icon: "✨" },
+            { name: "David O.", city: "Bafoussam", pack: "Pack Senior", icon: "💼" },
+            { name: "Mme. Kamga", city: "Limbe", pack: "Pack Étudiant", icon: "🎓" },
+            { name: "Eric T.", city: "Garoua", pack: "Pack Expert", icon: "👑" },
+            { name: "Fifi L.", city: "Kribi", pack: "Pack Pro", icon: "💎" }
+        ];
+
+
+        async function showLiveToast() {
+            try {
+                const response = await fetch('api/get_recent_sales.php');
+                const data = await response.json();
+                if (data.success && data.sales && data.sales.length > 0) {
+                    const sale = data.sales[Math.floor(Math.random() * data.sales.length)];
+                    const toast = document.getElementById('liveToast');
+                    if (!toast) return;
+
+                    document.getElementById('toastHeader').textContent = "Vient de commander";
+                    document.getElementById('toastTitle').textContent = sale.name;
+                    document.getElementById('toastSub').textContent = `${sale.pack} — ${sale.city}`;
+                    document.getElementById('toastIcon').textContent = sale.icon || "🎉";
+
+                    toast.classList.remove('translate-y-48');
+                    toast.querySelector('div').classList.add('notification-glow');
+
+                    // Play Sound
+                    const sound = document.getElementById('notificationSound');
+                    if (sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(e => console.log("Audio play blocked"));
+                    }
+
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-48');
+                        toast.querySelector('div').classList.remove('notification-glow');
+                    }, 6000);
+                }
+            } catch (e) {
+                console.error("Social proof error:", e);
+            }
+        }
+
+        // 0.5 Soft Toast Notification (Validation)
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('liveToast');
+            const icon = document.getElementById('toastIcon');
+            const header = document.getElementById('toastHeader');
+            const title = document.getElementById('toastTitle');
+            const sub = document.getElementById('toastSub');
+            const badge = toast ? toast.querySelector('div div:last-child') : null;
+
+            if (!toast) return;
+
+            // Configure content
+            if (type === 'error') {
+                icon.textContent = '⚠️';
+                icon.className = 'w-12 h-12 bg-red-100 rounded-full flex-shrink-0 flex items-center justify-center text-xl';
+                header.textContent = "Attention";
+                title.textContent = "Erreur de saisie";
+                title.className = "text-sm font-bold text-red-600 truncate";
+                sub.textContent = message;
+                if (badge) badge.className = "w-2 h-2 rounded-full bg-red-500 animate-pulse";
+            } else {
+                icon.textContent = '✅';
+                icon.className = 'w-12 h-12 bg-green-100 rounded-full flex-shrink-0 flex items-center justify-center text-xl';
+                header.textContent = "Succès";
+                title.textContent = "Opération réussie";
+                title.className = "text-sm font-bold text-green-600 truncate";
+                sub.textContent = message;
+                if (badge) badge.className = "w-2 h-2 rounded-full bg-green-500 animate-pulse";
+            }
+
+            toast.classList.remove('translate-y-48');
+            toast.classList.remove('pointer-events-none'); // Allow clicking if needed, though primarily view only
+
+            // Hide after 4s
+            setTimeout(() => {
+                toast.classList.add('translate-y-48');
+                // Reset to default "Sales" style after hiding is complete (wait 700ms transition)
+                setTimeout(() => {
+                    toast.classList.add('pointer-events-none');
+                }, 700);
+            }, 4000);
+        }
+
+        function startCountdown() {
+            // Set to 2 hours from now for fake but effective urgency
+            let time = 7200 + Math.floor(Math.random() * 3600);
+
+            setInterval(() => {
+                time--;
+                const h = Math.floor(time / 3600);
+                const m = Math.floor((time % 3600) / 60);
+                const s = time % 60;
+                document.getElementById('countdown').textContent =
+                    `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Form Wizard Logic
+        function goToStep(step) {
+            // Validation for Step 1 (Client Info) before moving to Step 2
+            if (step === 2) {
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const city = document.getElementById('city').value;
+
+                if (!name || !phone || !email || !city) {
+                    showToast("Veuillez remplir vos informations.", "error");
+                    return;
+                }
+
+                // Save Prospect Data (Abandoned Cart Tracking) - EARLIER NOW
+                saveProspectData(name, phone, email, city);
+            }
+
+            // Sync Summary for Step 3
+            if (step === 3) {
+                const packSelect = document.getElementById('packSelect');
+                document.getElementById('summaryPack').textContent = packSelect.options[packSelect.selectedIndex].textContent.split('(')[0].trim();
+            }
+
+            // Hide all steps
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+
+            // Show target step
+            document.getElementById('step' + step).classList.remove('hidden');
+
+            // Update progress bar
+            const progress = (step / 3) * 100;
+            document.getElementById('formProgress').style.width = progress + '%';
+
+            // - Form Step 1 (Info) = Step 2 "Identité"
+            // - Form Step 2 (Pack/Extra) = Step 3 "Options"
+            // - Form Step 3 (Summary) = Step 4 "Validation"
+
+            // The 'step' arg here is 1, 2, 3 correspond to Form Divs.
+            // Form Step 1 => ID 'step1' => Our Flow Step 2
+            // Form Step 2 => ID 'step2' => Our Flow Step 3
+            // Form Step 3 => ID 'step3' => Our Flow Step 4
+            updateStickyProgressBar(step + 1);
+        }
+
+        // Sticky Progress Bar Logic
+        const stickyBar = document.getElementById('stickyProgressBar');
+        const pricingSection = document.getElementById('pricing');
+        const orderSection = document.getElementById('order');
+
+        // Scroll Listener
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const pricingTop = pricingSection.offsetTop;
+            const orderTop = orderSection.offsetTop;
+            const orderHeight = orderSection.offsetHeight;
+
+            // 1. Show/Hide Sticky Bar
+            // Show if we are past the pricing title area roughly (e.g. 500px)
+            if (scrollY > 600) {
+                stickyBar.style.display = 'block';
+                setTimeout(() => stickyBar.classList.remove('-translate-y-full'), 10);
+            } else {
+                stickyBar.classList.add('-translate-y-full');
+            }
+
+            // 2. Auto-Update Step 1 vs Form
+            // If we are seeing pricing section but NOT in form yet
+            if (scrollY < orderTop - 300) {
+                updateStickyProgressBar(1);
+            }
+
+            // 3. Manage Distractions (Hide Toast near form)
+            const liveToast = document.getElementById('liveToast');
+            if (scrollY > orderTop - 500 && scrollY < (orderTop + orderHeight)) {
+                if (liveToast) liveToast.style.opacity = '0';
+            } else {
+                if (liveToast) liveToast.style.opacity = '1';
+            }
+        });
+
+
+        function updateStickyProgressBar(currentStep) {
+            const steps = document.querySelectorAll('.step-item');
+            const connectors = document.querySelectorAll('.step-connector');
+
+            steps.forEach(step => {
+                const stepNum = parseInt(step.getAttribute('data-step'));
+                const circle = step.querySelector('div');
+                const label = step.querySelector('span');
+
+                if (stepNum <= currentStep) {
+                    // Active or Completed
+                    circle.classList.remove('bg-gray-100', 'text-gray-400');
+                    circle.classList.add('bg-primary', 'text-white');
+                    label.classList.remove('text-gray-400');
+                    label.classList.add('text-neutral');
+                } else {
+                    // Inactive
+                    circle.classList.add('bg-gray-100', 'text-gray-400');
+                    circle.classList.remove('bg-primary', 'text-white');
+                    label.classList.add('text-gray-400');
+                    label.classList.remove('text-neutral');
+                }
+            });
+
+            connectors.forEach(conn => {
+                const stepNum = parseInt(conn.getAttribute('data-step'));
+                if (stepNum < currentStep) {
+                    conn.classList.remove('w-0');
+                    conn.classList.add('w-full');
+                } else {
+                    conn.classList.remove('w-full');
+                    conn.classList.add('w-0');
+                }
+            });
+        }
+
+        async function saveProspectData(name, whatsapp, email, city) {
+            const packSelect = document.getElementById('packSelect');
+            const selectedOption = packSelect.options[packSelect.selectedIndex];
+            const packageName = selectedOption.textContent.split('(')[0].trim();
+
+            // Calculate current total
+            // Calculate amounts separately
+            let baseAmount = parseInt(selectedOption.getAttribute('data-price'));
+            let upsellAmount = 0;
+
+            const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
+            if (deliveryOption) upsellAmount += parseInt(deliveryOption.value);
+
+            const upsellLetter = document.getElementById('upsellLetter');
+            const upsellRecruiter = document.getElementById('upsellRecruiter');
+
+            if (upsellLetter && upsellLetter.checked) upsellAmount += parseInt(upsellLetter.value);
+            if (upsellRecruiter && upsellRecruiter.checked) upsellAmount += 2500;
+
+            // Apply discount ONLY to baseAmount
+            if (isPromoApplied && promoData) {
+                if (promoData.discount_type === 'percent') {
+                    baseAmount = Math.round(baseAmount * (1 - (promoData.discount_value / 100)));
+                } else {
+                    baseAmount = Math.max(0, baseAmount - promoData.discount_value);
+                }
+            }
+
+            // Final total
+            let amount = baseAmount + upsellAmount;
+
+            try {
+                await fetch('api/save_prospect.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        whatsapp,
+                        email,
+                        city,
+                        country: window.visConfig ? window.visConfig.country : 'Unknown',
+                        package: packageName,
+                        amount: amount,
+                        has_recruiter_list: (upsellRecruiter && upsellRecruiter.checked) ? 1 : 0,
+                        source: (new URLSearchParams(window.location.search)).get('utm_source') || 'Direct'
+                    })
+                });
+            } catch (e) {
+                console.error("Prospect save error:", e);
+            }
+        }
+
+        // Live Viewers Logic (Smoother Jitter)
+        let currentViewers = Math.floor(Math.random() * (22 - 12 + 1)) + 12;
+        function updateLiveViewers() {
+            // Small oscillation instead of total random
+            const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+            currentViewers = Math.max(7, Math.min(28, currentViewers + change));
+
+            const el = document.getElementById('liveViewers');
+            if (el) el.textContent = `${currentViewers} personnes consultent cette page en ce moment`;
+        }
+        setInterval(updateLiveViewers, 8000);
+        updateLiveViewers();
+
+        // Live Activity Initialization
+        setInterval(showLiveToast, 12000);
+        setTimeout(showLiveToast, 3000); // Show first notification after 3s
+
+        // 1.5 Auto-Save Prospect when user finishes typing
+        ['name', 'phone', 'email', 'city'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('blur', () => {
+                    const name = document.getElementById('name').value;
+                    const phone = document.getElementById('phone').value;
+                    const email = document.getElementById('email').value;
+                    const city = document.getElementById('city').value;
+
+                    // Only save if at least name and phone are partially filled
+                    if (name.length > 2 && phone.length > 5) {
+                        saveProspectData(name, phone, email, city);
+                    }
+                });
+            }
+        });
 
         // 2. Validate User Code
         async function applyPromoCode() {
             const code = promoInput.value.trim();
             if (!code) return;
 
-            // UI Loading State
             const originalBtnText = applyPromoBtn.innerHTML;
             applyPromoBtn.textContent = "...";
             applyPromoBtn.disabled = true;
@@ -673,100 +1961,273 @@
                 const data = await response.json();
 
                 if (data.valid) {
-                    if (isPromoApplied) return; // Already applied
-
-                    isPromoApplied = true;
-                    currentDiscountPercent = parseFloat(data.percent); // e.g. 60
-
-                    promoMessage.textContent = `Code appliqué ! Vous avez -${currentDiscountPercent}% de réduction.`;
-                    promoMessage.className = "mt-2 text-sm text-left h-5 text-green-600 font-bold";
-
-                    // Update UI
-                    updatePricesVisuals();
-                    updateOrderTotal();
-
-                    // Lock Input
-                    promoInput.disabled = true;
-                    applyPromoBtn.textContent = "Appliqué";
-                    applyPromoBtn.classList.remove('bg-neutral');
-                    applyPromoBtn.classList.add('bg-green-600');
-                    applyPromoBtn.disabled = false; // Keep it clickable but it does nothing new
+                    applyDiscount(data, true);
                 } else {
-                    // Invalid
-                    promoMessage.textContent = data.message || "Code invalide ou expiré.";
+                    promoMessage.textContent = data.message || "Code invalide.";
                     promoMessage.className = "mt-2 text-sm text-left h-5 text-red-500 font-bold";
-
                     applyPromoBtn.textContent = "Appliquer";
                     applyPromoBtn.disabled = false;
                 }
-
             } catch (error) {
-                console.error("Erreur validation:", error);
-                promoMessage.textContent = "Erreur de connexion. Réessayez.";
-                promoMessage.className = "mt-2 text-sm text-left h-5 text-red-500";
-
+                console.error("Validation error:", error);
                 applyPromoBtn.textContent = originalBtnText;
                 applyPromoBtn.disabled = false;
             }
         }
 
+        function applyDiscount(data, manual = false) {
+            isPromoApplied = true;
+            promoData = data;
+
+            // Update UI elements
+            if (promoInput && !promoInput.value) promoInput.value = data.code;
+            if (promoMessage) {
+                promoMessage.textContent = data.message || "Code appliqué !";
+                promoMessage.className = "mt-2 text-sm text-left h-5 text-green-600 font-bold";
+            }
+
+            if (manual) {
+                // UI Locks for manual application
+                if (promoInput) promoInput.disabled = true;
+                if (applyPromoBtn) {
+                    applyPromoBtn.textContent = "Appliqué";
+                    applyPromoBtn.classList.remove('bg-neutral');
+                    applyPromoBtn.classList.add('bg-green-600');
+                }
+            }
+
+            updatePricesVisuals();
+            updateOrderTotal();
+        }
+
         function updatePricesVisuals() {
             priceDisplays.forEach(el => {
                 const basePrice = parseInt(el.getAttribute('data-base-price'));
-                const newPrice = Math.round(basePrice * (1 - (currentDiscountPercent / 100)));
+                const packId = el.closest('[data-pack-id]')?.getAttribute('data-pack-id') || null;
 
-                // Animate change
-                el.textContent = formatPrice(newPrice);
-                el.classList.add("text-green-600"); // Optional highlight
+                let newPrice = basePrice;
 
-                // Find sibling old-price
-                const container = el.parentElement;
-                const oldPriceEl = container.querySelector('.old-price');
-                if (oldPriceEl) {
-                    oldPriceEl.textContent = formatPrice(basePrice) + ' FCFA';
-                    oldPriceEl.classList.remove('hidden');
+                // For international visitors, we use the prices explicitly set in admin (intl_data)
+                // and avoid applying local Cameroonian promo codes on top of them.
+                if (!visConfig.is_foreign && isPromoApplied && promoData) {
+                    const isRestricted = promoData.products && promoData.products.length > 0;
+                    const isApplicable = !isRestricted || (packId && promoData.products.includes(packId));
+
+                    if (isApplicable) {
+                        if (promoData.discount_type === 'percent') {
+                            newPrice = Math.round(basePrice * (1 - (promoData.discount_value / 100)));
+                        } else {
+                            newPrice = Math.max(0, basePrice - promoData.discount_value);
+                        }
+
+                        el.textContent = formatPrice(newPrice);
+                        el.classList.add("text-green-600");
+
+                        const oldPriceEl = el.parentElement.querySelector('.old-price');
+                        if (oldPriceEl) {
+                            oldPriceEl.textContent = formatPrice(basePrice) + ' ' + visConfig.symbol;
+                            oldPriceEl.classList.remove('hidden');
+                        }
+                    } else {
+                        // Reset to original if not applicable to this pack
+                        el.textContent = formatPrice(basePrice);
+                        el.classList.remove("text-green-600");
+                        const oldPriceEl = el.parentElement.querySelector('.old-price');
+                        if (oldPriceEl) oldPriceEl.classList.add('hidden');
+                    }
+                } else {
+                    // International flow or no promo
+                    el.textContent = formatPrice(newPrice);
+                    if (visConfig.is_foreign) el.classList.add("text-green-600");
+                    else el.classList.remove("text-green-600");
+
+                    // Strikethrough for Intl
+                    if (visConfig.is_foreign && visConfig.intl_data && packId) {
+                        const normalPrice = parseInt(visConfig.intl_data[`intl_pack_${packId}_normal`]);
+                        const oldPriceEl = el.parentElement.querySelector('.old-price');
+                        if (oldPriceEl && normalPrice > basePrice) {
+                            oldPriceEl.textContent = formatPrice(normalPrice) + ' ' + visConfig.symbol;
+                            oldPriceEl.classList.remove('hidden');
+                        }
+                    } else {
+                        const oldPriceEl = el.parentElement.querySelector('.old-price');
+                        if (oldPriceEl) oldPriceEl.classList.add('hidden');
+                    }
+                }
+
+                // Global Symbol Update
+                const symbolEl = el.nextElementSibling;
+                if (symbolEl && (symbolEl.classList.contains('text-xs') || symbolEl.textContent.includes('CFA') || symbolEl.textContent.includes('$') || symbolEl.textContent.includes('€'))) {
+                    symbolEl.textContent = visConfig.symbol;
                 }
             });
         }
 
         function updateOrderTotal() {
             const selectedOption = packSelect.options[packSelect.selectedIndex];
-            if (!selectedOption.value) {
-                finalPriceEl.textContent = "0 FCFA";
-                originalPriceDisplayEl.classList.add('hidden');
-                appliedDiscountBadge.classList.add('hidden');
-                return;
-            }
+            if (!selectedOption || !selectedOption.value) return;
 
             let basePrice = parseInt(selectedOption.getAttribute('data-price'));
-            let finalPrice = basePrice;
+            let upsellTotal = 0;
 
-            if (isPromoApplied) {
-                finalPrice = Math.round(basePrice * (1 - (currentDiscountPercent / 100)));
+            const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
+            const upsellLetter = document.getElementById('upsellLetter');
+            const upsellRecruiter = document.getElementById('upsellRecruiter');
 
-                // Update badge text
-                appliedDiscountBadge.textContent = `Code Promo appliqué (-${currentDiscountPercent}%)`;
+            if (deliveryOption) upsellTotal += parseInt(deliveryOption.value);
+            if (upsellLetter && upsellLetter.checked) upsellTotal += parseInt(upsellLetter.value);
+            if (upsellRecruiter && upsellRecruiter.checked) upsellTotal += parseInt(upsellRecruiter.value);
 
-                originalPriceDisplayEl.textContent = formatPrice(basePrice) + ' FCFA';
-                originalPriceDisplayEl.classList.remove('hidden');
-                appliedDiscountBadge.classList.remove('hidden');
-            } else {
+            let totalPrice = basePrice + upsellTotal;
+            let originalPrice = totalPrice;
+            let isApplicable = false;
+
+            // Skip local promo code calculation for foreigners
+            if (!visConfig.is_foreign && isPromoApplied && promoData) {
+                const isRestricted = promoData.products && promoData.products.length > 0;
+                isApplicable = !isRestricted || promoData.products.includes(selectedOption.value);
+
+                if (isApplicable) {
+                    let discountedBase = basePrice;
+                    if (promoData.discount_type === 'percent') {
+                        discountedBase = Math.round(basePrice * (1 - (promoData.discount_value / 100)));
+                    } else {
+                        discountedBase = Math.max(0, basePrice - promoData.discount_value);
+                    }
+
+                    // Recalculate Total: Discounted Base + Full Upsells
+                    totalPrice = discountedBase + upsellTotal;
+
+                    appliedDiscountBadge.textContent = `Promo appliquée: ${promoData.code} (${promoData.discount_type === 'percent' ? '-' + promoData.discount_value + '%' : '-' + formatPrice(promoData.discount_value) + ' ' + visConfig.symbol}) sur le pack`;
+                    originalPriceDisplayEl.textContent = formatPrice(originalPrice) + ' ' + visConfig.symbol;
+                    originalPriceDisplayEl.classList.remove('hidden');
+                    appliedDiscountBadge.classList.remove('hidden');
+                }
+            }
+
+            if (!isApplicable) {
                 originalPriceDisplayEl.classList.add('hidden');
                 appliedDiscountBadge.classList.add('hidden');
             }
 
-            finalPriceEl.textContent = formatPrice(finalPrice) + ' FCFA';
+            finalPriceEl.textContent = formatPrice(totalPrice) + ' ' + visConfig.symbol;
         }
 
         // Event Listeners
-        window.addEventListener('DOMContentLoaded', checkActivePromo);
+        window.addEventListener('DOMContentLoaded', () => {
+            loadVisitorConfig();
+
+            // Init Sticky Progress Bar (Step 1: Offre)
+            if (typeof updateStickyProgressBar === "function") {
+                updateStickyProgressBar(1);
+            }
+
+            // Trigger Auto-Pilot (Low frequency, non-blocking)
+            if (Math.random() < 0.2) { // 20% chance to run on page load
+                fetch('api/auto_pilot.php').catch(e => console.log("AutoPilot silent fail"));
+            }
+
+            // Init Exit Intent (after 5s delay)
+            setTimeout(() => {
+                document.addEventListener('mouseleave', handleExitIntent);
+                // Init Mobile Intent
+                if (window.innerWidth < 768) {
+                    initMobileExitIntent();
+                }
+            }, 5000);
+
+            // Rotating Portfolio Image Logic
+            async function fetchRotatingImage() {
+                const imgElement = document.getElementById('portfolioRotatingImage');
+                if (!imgElement) return;
+
+                try {
+                    const response = await fetch('api/get_rotating_portfolio.php');
+                    const data = await response.json();
+
+                    if (data.success && data.image_path) {
+                        // Only update if src is different to avoid flicker
+                        // Note: data.image_path might be relative, imgElement.src is absolute. 
+                        // We check if the filename ends with the path.
+                        if (!imgElement.src.endsWith(data.image_path)) {
+
+                            // Fade out
+                            imgElement.style.opacity = '0';
+
+                            setTimeout(() => {
+                                // Preload image
+                                const newImg = new Image();
+                                newImg.onload = () => {
+                                    imgElement.src = data.image_path;
+                                    imgElement.alt = data.title || "Exemple Portfolio CV";
+                                    // Fade in
+                                    imgElement.style.opacity = '1';
+                                };
+                                newImg.src = data.image_path;
+                            }, 500); // Wait for fade out
+
+                            console.log("Portfolio image updated:", data.title);
+                        }
+                    }
+                } catch (e) {
+                    console.error("Failed to load rotating portfolio:", e);
+                }
+            }
+
+            // Initialize on load
+            // The original DOMContentLoaded listener is being modified here.
+            // The user provided a new DOMContentLoaded block, which seems to be a replacement.
+            // I will integrate the new parts into the existing DOMContentLoaded listener.
+            // Original: loadLatestDesign();
+            // New: fetchRotatingImage(); setInterval(fetchRotatingImage, 5000);
+            // Also, the new block has initMobileExitIntent() and showLiveToast() calls.
+            // initMobileExitIntent is already called within a setTimeout.
+            // showLiveToast is already called via setInterval and setTimeout at the top of the file.
+            // I will only add the fetchRotatingImage calls and remove loadLatestDesign.
+
+            loadLatestDesign(); // This line will be removed as per the instruction's implied change.
+
+            // Init Portfolio Rotation
+            fetchRotatingImage(); // Run once immediately
+            setInterval(fetchRotatingImage, 60000); // Check every 60 seconds
+        });
+
+        // Dynamic Hero Preview (Latest Upload)
+        async function loadLatestDesign() {
+            try {
+                const response = await fetch('api/get_designs.php');
+                const data = await response.json();
+
+                if (data.success && data.designs.length > 0) {
+                    const latest = data.designs[0];
+                    const previewEl = document.getElementById('heroResumePreview');
+
+                    if (previewEl) {
+                        // Replace CSS mockup with actual Image
+                        previewEl.innerHTML = `
+                            <img src="${latest.image_path_clean}" 
+                                 alt="${latest.title}" 
+                                 class="w-full h-auto rounded shadow-sm object-cover">
+                        `;
+                    }
+                }
+            } catch (e) {
+                console.log("No dynamic design loaded");
+            }
+        }
 
         applyPromoBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent form submit triggering if inside form (it's not, but good practice)
             applyPromoCode();
         });
 
-        packSelect.addEventListener('change', updateOrderTotal);
+        packSelect.addEventListener('change', () => {
+            updateOrderTotal();
+            // User selected an option, move to Step 2 in Sticky Bar if form is visible
+            if (typeof updateStickyProgressBar === "function") {
+                updateStickyProgressBar(2);
+            }
+        });
 
         function selectPack(packId, price) {
             selectedPackId = packId;
@@ -775,43 +2236,350 @@
             // Scroll to form
             document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
 
+            // Since Step 1 is now Info, we stay on Step 1 but set the pack hiddenly
+            // However, we still want to trigger the "goToStep" style transition if we were on another step
+            goToStep(1);
+
             updateOrderTotal();
+
+            updateOrderTotal();
+
+            // Track Intent
+            trackEvent('pack_selected', { pack: packId, price: price });
+
         }
 
-        orderForm.addEventListener('submit', (e) => {
+        orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Basic Validation verification (HTML5 does most)
-            if (!packSelect.value) {
-                alert("Veuillez sélectionner un pack.");
+            // 1. Validation check
+            if (!packSelect || !packSelect.value) {
+                showToast("Veuillez sélectionner un pack.", "error");
                 return;
             }
 
-            // Simulate Success
             const btn = orderForm.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Traitement...`;
+            }
 
-            btn.disabled = true;
-            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Traitement...`;
+            try {
+                // Use global window.visConfig
+                const config = window.visConfig || visConfig;
 
-            setTimeout(() => {
-                // Get data for redirection
+                // Get form data
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
-                const priceText = finalPriceEl.textContent;
+                const city = document.getElementById('city').value;
+                const phone = document.getElementById('phone').value;
 
-                // Encode params
+                const selectedOption = packSelect.options[packSelect.selectedIndex];
+                const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
+                const upsellLetter = document.getElementById('upsellLetter');
+                const upsellRecruiter = document.getElementById('upsellRecruiter');
+
+                let packageName = selectedOption.textContent.split('(')[0].trim();
+                let baseAmount = parseInt(selectedOption.getAttribute('data-price'));
+                let upsellAmount = 0;
+
+                if (deliveryOption) upsellAmount += parseInt(deliveryOption.value);
+                if (upsellLetter && upsellLetter.checked) upsellAmount += parseInt(upsellLetter.value);
+                if (upsellRecruiter && upsellRecruiter.checked) upsellAmount += 2500;
+
+                let originalTotal = baseAmount + upsellAmount;
+                let finalTotal = originalTotal;
+                let discountTotal = 0;
+
+                // Apply Promo Logic for Local Users
+                if (!config.is_foreign && isPromoApplied && promoData) {
+                    const isRestricted = promoData.products && promoData.products.length > 0;
+                    const isApplicable = !isRestricted || promoData.products.includes(selectedOption.value);
+
+                    if (isApplicable) {
+                        let discountedBase = baseAmount;
+                        if (promoData.discount_type === 'percent') {
+                            discountedBase = Math.round(baseAmount * (1 - (promoData.discount_value / 100)));
+                        } else {
+                            discountedBase = Math.max(0, baseAmount - promoData.discount_value);
+                        }
+                        finalTotal = discountedBase + upsellAmount;
+                        discountTotal = originalTotal - finalTotal;
+                    }
+                }
+
+                // Track Start Payment
+                trackEvent('payment_initiate', { package: packageName, amount: finalTotal, email: email });
+
+                // Default Flow (All users go to paiement.html first)
                 const params = new URLSearchParams({
-                    name: name,
-                    email: email,
-                    amount: priceText
+                    name, email, city, phone,
+                    amount: finalTotal,
+                    original_amount: originalTotal,
+                    discount_amount: discountTotal,
+                    promo_code: (isPromoApplied && promoData) ? promoData.code : '',
+                    pack_id: selectedOption.value,
+                    package: packageName,
+                    upsell_letter: (upsellLetter && upsellLetter.checked) ? 1 : 0,
+                    upsell_recruiter: (upsellRecruiter && upsellRecruiter.checked) ? 1 : 0,
+                    affiliate_code: affiliateRef || ''
                 });
-
-                // Redirect to Payment Page
                 window.location.href = 'paiement.html?' + params.toString();
-            }, 1000);
+
+            } catch (err) {
+                console.error("Form submission error:", err);
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = "<span>Payer maintenant</span>";
+                }
+                showToast("Une erreur est survenue. Vérifiez vos infos.", "error");
+            }
         });
     </script>
+    <!-- Legacy Exit Popup (DISABLED - Replaced by Spin Wheel) -->
+    <!-- 
+    <div id="exitPopup" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        ... (Content Removed to prevent conflict) ...
+    </div>
+    -->
+
+    <!-- Legacy Exit Script (DISABLED) -->
+    <script>
+        // Legacy Exit Intent Logic - DISABLED
+        // Now handled by assets/js/spin-wheel.js
+        console.log("Legacy Exit Popup disabled.");
+    </script>
+
+    <!-- Announcement Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Announcement Logic REMOVED to prevent conflict.
+            // console.log("Announcements disabled on Homepage.");
+        });
+
+        function showSpecialModal(ann) {
+            // alert("DEBUG: 3. Opening Modal Function"); // Step 3
+
+            // Check if seen recently (DISABLED FOR DEBUGGING/VERIFICATION)
+            // if (sessionStorage.getItem('seen_ann_' + ann.id)) return;
+
+            const modalInfo = {
+                'new_year': {
+                    emoji: '🎇',
+                    title: 'Bonne Année !',
+                    bg: 'bg-gradient-to-br from-indigo-900 via-purple-900 to-black',
+                    text: 'text-yellow-100',
+                    border: 'border-yellow-500'
+                },
+                'christmas': {
+                    emoji: '🎄',
+                    title: 'Joyeux Noël !',
+                    bg: 'bg-gradient-to-br from-red-900 via-green-900 to-black',
+                    text: 'text-white',
+                    border: 'border-green-500'
+                },
+                'info': {
+                    emoji: '📢',
+                    title: 'Information',
+                    bg: 'bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900',
+                    text: 'text-blue-50',
+                    border: 'border-blue-400'
+                },
+                'success': {
+                    emoji: '✨',
+                    title: 'Excellente Nouvelle',
+                    bg: 'bg-gradient-to-br from-emerald-900 via-teal-900 to-black',
+                    text: 'text-emerald-50',
+                    border: 'border-emerald-400'
+                },
+                'default': {
+                    emoji: '👋',
+                    title: 'Bonjour !',
+                    bg: 'bg-gradient-to-br from-gray-900 via-slate-800 to-black',
+                    text: 'text-white',
+                    border: 'border-gray-500'
+                }
+            };
+
+            const theme = modalInfo[ann.type] || modalInfo['default'];
+
+            const modal = document.createElement('div');
+            modal.className = `fixed inset-0 z-[120] flex items-center justify-center p-4 transition-opacity duration-300 opacity-0`;
+            modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            modal.style.backdropFilter = 'blur(8px)';
+            modal.id = 'special-announcement-modal';
+
+            modal.innerHTML = `
+                <div class="relative w-full max-w-lg rounded-3xl p-1 shadow-2xl transform scale-90 transition-transform duration-300 ${theme.bg}" id="ann-modal-content">
+                    <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-8 text-center border-2 ${theme.border} relative overflow-hidden">
+                        <!-- Decor -->
+                        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                             <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <div class="text-6xl mb-4 animate-bounce">${theme.emoji}</div>
+                            <h2 class="text-3xl font-black ${theme.text} mb-4 font-serif tracking-wide uppercase">${theme.title}</h2>
+                            <p class="text-lg ${theme.text} opacity-90 mb-8 leading-relaxed font-medium">
+                                ${ann.message.replace(/\n/g, '<br>')}
+                            </p>
+                            <button onclick="closeSpecialModal(${ann.id})" class="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-white/20">
+                                C'est noté ! ✨
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('#ann-modal-content').classList.remove('scale-90');
+                modal.querySelector('#ann-modal-content').classList.add('scale-100');
+            });
+        }
+
+        function closeSpecialModal(id) {
+            const modal = document.getElementById('special-announcement-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.remove();
+                    sessionStorage.setItem('seen_ann_' + id, 'true');
+                }, 300);
+            }
+        }
+
+        function showAnnouncementBanner(ann) {
+            // FALLBACK: If this overrides, force modal anyway
+            showSpecialModal(ann);
+        }
+
+        // --- Reviews System Logic ---
+        async function fetchReviews() {
+            try {
+                const res = await fetch('api/get_reviews.php');
+                const result = await res.json();
+                if (result.success) {
+                    const container = document.getElementById('reviewsContainer');
+                    if (!container) return;
+
+                    if (result.data.length === 0) {
+                        container.innerHTML = '<p class="col-span-3 text-center text-gray-400 italic py-10">Pas encore d\'avis. Soyez le premier !</p>';
+                        return;
+                    }
+
+                    container.innerHTML = result.data.map(r => `
+                        <div class="bg-gray-50/50 p-8 rounded-[2rem] border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-500 group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="font-bold text-neutral">${r.name}</h4>
+                                    <div class="flex gap-1 mt-1">
+                                        ${'<span class="text-yellow-400 text-xs">⭐</span>'.repeat(r.stars)}
+                                    </div>
+                                </div>
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11.5C14.017 12.0523 13.5693 12.5 13.017 12.5H11.017C10.4647 12.5 10.017 12.0523 10.017 11.5V5C10.017 4.44772 10.4647 4 11.017 4H19.017C20.6739 4 22.017 5.34315 22.017 7V15C22.017 16.6569 20.6739 18 19.017 18H17.017C16.4647 18 16.017 18.4477 16.017 19V21H14.017ZM4.017 21L4.017 18C4.017 16.8954 4.91243 16 6.017 16H9.017C9.56928 16 10.017 15.5523 10.017 15V9C10.017 8.44772 9.56928 8 9.017 8H5.017C4.46472 8 4.017 8.44772 4.017 9V11.5C4.017 12.0523 3.56928 12.5 3.017 12.5H1.017C0.464722 12.5 0.017 12.0523 0.017 11.5V5C0.017 4.44772 0.464722 4 1.017 4H9.017C10.6739 4 12.017 5.34315 12.017 7V15C12.017 16.6569 10.6739 18 9.017 18H7.017C6.46472 18 6.017 18.4477 6.017 19V21H4.017Z"/></svg>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 italic leading-relaxed">"${r.comment}"</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) { console.error("Reviews load error:", err); }
+        }
+
+        function openReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            const content = document.getElementById('reviewModalContent');
+            if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            const content = document.getElementById('reviewModalContent');
+            if (!modal || !content) return;
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        // Star Rating Implementation
+        document.querySelectorAll('#starRating button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = parseInt(btn.getAttribute('data-val'));
+                document.getElementById('starsInput').value = val;
+                document.querySelectorAll('#starRating button').forEach(s => {
+                    const sVal = parseInt(s.getAttribute('data-val'));
+                    s.classList.toggle('grayscale', sVal > val);
+                });
+            });
+        });
+
+        // Review Form Submit
+        const rForm = document.getElementById('reviewForm');
+        if (rForm) {
+            rForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const btn = e.target.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Envoi...';
+
+                try {
+                    const res = await fetch('api/save_review.php', { method: 'POST', body: formData });
+                    const result = await res.json();
+                    if (result.success) {
+                        showToast(result.message, 'success');
+                        closeReviewModal();
+                        e.target.reset();
+                    } else {
+                        showToast(result.message, 'error');
+                    }
+                } catch (err) {
+                    showToast('Erreur lors de l\'envoi.', 'error');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            });
+        }
+
+        // Initial Load
+        fetchReviews();
+
+        // Auto-open review modal check
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#laisser-un-avis') {
+                setTimeout(openReviewModal, 500); // Small delay to ensure UI is ready
+            }
+        });
+    </script>
+    <!-- Spin Wheel Feature -->
+    <script src="assets/js/spin-wheel.js"></script>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/237654250688?text=Bonjour%20HireMe%20!%20J'ai%20une%20question%20avant%20de%20passer%20commande."
+        target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-24 right-6 md:bottom-10 md:right-10 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all hover:scale-110 z-[80] animate-bounce-slow"
+        onclick="trackEvent('click_whatsapp_float')">
+        <svg class="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+    <!-- Offline Form Logic -->
+    <script src="assets/js/offline-form.js" defer></script>
 </body>
+
 
 </html>
