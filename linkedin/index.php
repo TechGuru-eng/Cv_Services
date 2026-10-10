@@ -165,6 +165,7 @@ if (empty($testimonials)) {
             box-shadow: 0 20px 30px -10px rgba(14, 165, 233, 0.15);
         }
     </style>
+    <script src="../assets/js/site-language.js" defer></script>
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -299,8 +300,8 @@ if (empty($testimonials)) {
                         <div class="relative mx-auto max-w-md lg:max-w-none anim-float">
                             <!-- Main Visual Showcase Image -->
                             <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-white/80 bg-white">
-                                <img src="../assets/img/linkedin-profile-showcase.jpg" alt="Aperçu Optimisation Profil LinkedIn HireMe" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none"></div>
+                                <img src="../assets/images/linkedin-hero-banner.png" alt="Aperçu Optimisation Profil LinkedIn HireMe" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none"></div>
                             </div>
 
                             <!-- Floating Badge 1: Top 1% Visibilité -->
@@ -408,7 +409,7 @@ if (empty($testimonials)) {
                             </a>
                         </div>
                         <div class="lg:col-span-7">
-                            <img src="../assets/img/linkedin-banners-showcase.jpg" alt="Exemples de Bannières LinkedIn HireMe" class="w-full rounded-2xl shadow-md border border-gray-100 object-cover">
+                            <img src="../assets/images/linkedin-hero-3d.jpg" alt="Exemples de Bannières LinkedIn HireMe" class="w-full rounded-2xl shadow-md border border-gray-100 object-cover">
                         </div>
                     </div>
                 </div>
@@ -421,6 +422,11 @@ if (empty($testimonials)) {
                 <div class="text-center mb-12">
                     <span class="text-xs uppercase font-extrabold tracking-widest text-primary bg-sky-50 px-3 py-1 rounded-full border border-sky-200">Impact Concret</span>
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-neutral mt-3">Avant vs Après HireMe</h2>
+                </div>
+
+                <!-- High-res Before/After Graphic Card -->
+                <div class="mb-10 max-w-3xl mx-auto rounded-3xl overflow-hidden border border-sky-200 shadow-xl bg-white p-2">
+                    <img src="../assets/images/linkedin-before-after.png" alt="Transformation Profil LinkedIn Avant / Après" class="w-full h-auto object-contain rounded-2xl">
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

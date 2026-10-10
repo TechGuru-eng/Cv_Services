@@ -239,6 +239,7 @@
     <link rel="stylesheet" href="assets/css/spin-wheel.css">
     <!-- CV Audit Feature -->
     <script src="assets/js/cv-audit.js" defer></script>
+    <script src="assets/js/site-language.js" defer></script>
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -2039,7 +2040,7 @@
         async function saveProspectData(name, whatsapp, email, city) {
             const packSelect = document.getElementById('packSelect');
             const selectedOption = packSelect.options[packSelect.selectedIndex];
-            const packageName = selectedOption.textContent.split('(')[0].trim();
+            const packageName = (window.HireMeLanguage ? window.HireMeLanguage.originalText(selectedOption) : selectedOption.textContent).split('(')[0].trim();
 
             // Calculate current total
             // Calculate amounts separately
@@ -2291,9 +2292,22 @@
             finalPriceEl.textContent = formatPrice(totalPrice) + ' ' + visConfig.symbol;
         }
 
+        async function checkActivePromo() {
+            try {
+                const response = await fetch('api/check_promo.php?action=get_active');
+                const data = await response.json();
+                if (data.active) {
+                    applyDiscount(data, false);
+                }
+            } catch (error) {
+                console.error("Auto promo check error:", error);
+            }
+        }
+
         // Event Listeners
         window.addEventListener('DOMContentLoaded', () => {
             loadVisitorConfig();
+            checkActivePromo();
 
             // Init Sticky Progress Bar (Step 1: Offre)
             if (typeof updateStickyProgressBar === "function") {
@@ -2460,7 +2474,7 @@
                 const upsellLetter = document.getElementById('upsellLetter');
                 const ebookIds = ['upsellEbook1','upsellEbook2','upsellEbook3','upsellEbook4','upsellEbook5','upsellEbook6','upsellEbook7'];
 
-                let packageName = selectedOption.textContent.split('(')[0].trim();
+                let packageName = (window.HireMeLanguage ? window.HireMeLanguage.originalText(selectedOption) : selectedOption.textContent).split('(')[0].trim();
                 let baseAmount = parseInt(selectedOption.getAttribute('data-price'));
                 let upsellAmount = 0;
 
