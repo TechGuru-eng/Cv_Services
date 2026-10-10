@@ -2,6 +2,24 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '984926333941411');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=984926333941411&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
@@ -128,7 +146,14 @@
     <!-- Dynamic Activity Notification is now inline -->
 
     <!-- Stat Tracking -->
-    <img src="api/track.php" alt="" style="display:none;">
+    <script>
+        // Dual-Mode Tracking (Pixel + JS Ping)
+        const trackUrl = 'api/track.php?t=' + new Date().getTime();
+        document.write('<img src="' + trackUrl + '" alt="" style="display:none;">');
+        
+        // JS Fallback
+        fetch(trackUrl).catch(() => {});
+    </script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -217,16 +242,19 @@
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
 
-    <!-- Top Banner with Countdown -->
-    <div id="topPromoBanner"
-        class="bg-neutral text-white text-center py-2.5 px-4 text-[10px] sm:text-xs font-bold relative z-[60] border-b border-amber-500/30">
-        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-            <span class="uppercase tracking-widest font-bold"><span class="text-amber-500">OFFRE SPÉCIALE RAMADAN
-                    :</span>
-                Profitez de tarifs exceptionnels pendant ce mois béni !</span>
-            <a href="ramadan.php"
-                class="bg-amber-600 text-white px-3 py-1 rounded-full text-[9px] font-black hover:bg-white hover:text-amber-600 transition-all ml-2 underline">VOIR
-                L'OFFRE</a>
+    <!-- Top Announcement Bar: LinkedIn Service Launch -->
+    <div id="topAnnouncementBanner"
+        class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white text-center py-2.5 px-4 text-[11px] sm:text-xs font-bold relative z-[60] border-b border-white/10 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center bg-white/20 text-white text-[10px] uppercase font-black px-2 py-0.5 rounded-full tracking-wider">🚀 NOUVEAU</span>
+                <span class="font-medium text-blue-50">Boostez votre visibilité auprès des recruteurs avec notre service <strong class="text-white font-extrabold">Optimisation de Profil LinkedIn</strong> !</span>
+            </div>
+            <a href="linkedin"
+                class="inline-flex items-center gap-1.5 bg-white text-blue-700 hover:bg-blue-50 px-4 py-1 rounded-full text-[10px] sm:text-xs font-black transition-all shadow-sm transform hover:scale-105 no-underline">
+                <span>Découvrir l'offre (-60%)</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
         </div>
     </div>
 
@@ -327,11 +355,17 @@
                     <span class="text-2xl font-extrabold text-primary tracking-tight">HireMe<span
                             class="text-neutral">CV</span></span>
                 </div>
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex space-x-8 items-center">
                     <a href="cv-models" class="text-gray-600 hover:text-primary transition-colors font-medium">Modèles
                         CV</a>
                     <a href="sponsors.html"
                         class="text-gray-600 hover:text-primary transition-colors font-medium">Sponsoriser</a>
+                    <a href="linkedin"
+                        class="text-sky-600 hover:text-primary transition-colors font-bold flex items-center">
+                        <span
+                            class="bg-sky-100 text-sky-700 text-[10px] px-2 py-0.5 rounded-full mr-1 font-black animate-pulse">NOUVEAU</span>
+                        LinkedIn
+                    </a>
                     <a href="reservation"
                         class="text-gray-600 hover:text-primary transition-colors font-bold flex items-center">
                         <span
@@ -370,6 +404,9 @@
         <div id="mobileMenu"
             class="hidden md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-100 shadow-xl z-40 animate-fade-in-down">
             <div class="px-4 pt-4 pb-6 space-y-2">
+                <a href="linkedin"
+                    class="block px-3 py-3 rounded-xl text-base font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
+                    onclick="toggleMobileMenu()">🚀 Optimisation LinkedIn (Nouveau)</a>
                 <a href="cv-models"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors">Modèles
                     CV</a>
@@ -381,9 +418,9 @@
                 <a href="reservation"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
                     onclick="toggleMobileMenu()">Réservation</a>
-                <a href="#pricing"
+                <a href="remboursement.php"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
-                    onclick="toggleMobileMenu()">Tarifs</a>
+                    onclick="toggleMobileMenu()">Remboursement</a>
                 <a href="#pricing"
                     class="block w-full text-center mt-4 px-5 py-3 rounded-xl font-bold text-white bg-primary hover:bg-blue-600 shadow-lg"
                     onclick="toggleMobileMenu()">Commander (-60%)</a>
@@ -458,11 +495,9 @@
                     <div class="flex items-center space-x-2">
                         <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Paiements
                             Sécurisés</span>
-                        <div class="flex gap-3">
-                            <span
-                                class="font-bold text-orange-500 border border-orange-200 px-2 py-0.5 rounded text-[10px]">MTN</span>
-                            <span
-                                class="font-bold text-orange-600 border border-orange-200 px-2 py-0.5 rounded text-[10px]">Orange</span>
+                        <div class="flex gap-4 items-center">
+                            <img src="assets/img/mtn_momo_logo.png" alt="MTN Money" class="h-6 object-contain">
+                            <img src="assets/img/orange_money_logo.png" alt="Orange Money" class="h-6 object-contain">
                         </div>
                     </div>
                     <div class="h-4 w-px bg-gray-200 hidden sm:block"></div>
@@ -472,6 +507,7 @@
                             class="font-bold text-blue-600 border border-blue-200 px-2 py-0.5 rounded text-[10px]">ATS-READY</span>
                         <span
                             class="font-bold text-green-600 border border-green-200 px-2 py-0.5 rounded text-[10px]">GURANTEED</span>
+                        <a href="remboursement.php" class="font-bold text-orange-600 border border-orange-200 bg-orange-50 px-2 py-0.5 rounded text-[10px] hover:bg-orange-100 transition">100% SATISFAIT OU REMBOURSÉ</a>
                     </div>
                 </div>
             </div>
@@ -581,61 +617,85 @@
                 </div>
             </div>
         </section>
-        <!-- Visual Proof: Before/After -->
-        <section class="py-16 bg-white overflow-hidden">
+        <!-- Visual Proof: Rotating Before/After Carousel -->
+        <section id="beforeAfterSection" class="py-16 bg-white overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-extrabold text-neutral">Résultats concrets</h2>
-                    <p class="mt-4 text-gray-500 text-lg">Voyez la différence entre un CV ordinaire et une
-                        candidature HireMe.</p>
+                <div class="text-center mb-8">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-blue-50 text-primary border border-blue-100 mb-3">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                        Transformations Réelles
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral tracking-tight">Résultats concrets : Avant / Après</h2>
+                    <p class="mt-3 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">Voyez la transformation directe entre un CV ordinaire rejeté et une candidature optimisée HireMe.</p>
                 </div>
 
-                <div class="relative max-w-4xl mx-auto">
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-inner">
+                <!-- Carousel Controls / Category Selector -->
+                <div class="flex justify-center items-center gap-2 mb-8 flex-wrap">
+                    <button type="button" onclick="selectBeforeAfterSlide(0)" class="ba-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-primary text-white" data-index="0">
+                        💼 Gestion & Direction
+                    </button>
+                    <button type="button" onclick="selectBeforeAfterSlide(1)" class="ba-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-index="1">
+                        💻 Ingénierie & Tech
+                    </button>
+                    <button type="button" onclick="selectBeforeAfterSlide(2)" class="ba-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-index="2">
+                        📈 Commercial & Marketing
+                    </button>
+                </div>
+
+                <div class="relative max-w-4xl mx-auto" id="baCarouselWrapper">
+                    <!-- Carousel Slide Container -->
+                    <div id="baSlideContent" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-inner transition-opacity duration-300">
                         <!-- Before -->
                         <div class="space-y-4">
-                            <span
-                                class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV
-                                Ordinaire (Rejeté)</span>
-                            <div
-                                class="bg-white border-2 border-red-50 rounded-xl overflow-hidden opacity-70 transform -rotate-1 hover:rotate-0 transition-transform shadow-sm">
-                                <img src="assets/cv-before-messy.png" alt="Exemple CV désorganisé" loading="lazy"
-                                    class="w-full h-auto">
+                            <div class="flex items-center justify-between">
+                                <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV Ordinaire (Rejeté)</span>
+                                <span id="baBeforeScore" class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Score ATS : 28%</span>
                             </div>
-                            <p class="text-sm text-gray-400 italic">"Design dépassé, trop de texte, non
-                                optimisé pour les robots."</p>
+                            <div class="bg-white border-2 border-red-100 rounded-xl overflow-hidden opacity-80 transform -rotate-1 hover:rotate-0 transition-transform shadow-sm relative group">
+                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="Exemple CV Avant" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
+                                <div class="absolute inset-0 bg-red-500/10 pointer-events-none"></div>
+                            </div>
+                            <p id="baBeforeQuote" class="text-sm text-gray-400 italic">"Design dépassé, trop de texte dense, non optimisé pour les robots ATS."</p>
                         </div>
 
                         <!-- After -->
                         <div class="space-y-4">
-                            <span
-                                class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">HireMe
-                                CV (Recruté)</span>
-                            <div
-                                class="bg-white border-2 border-primary rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform shadow-xl relative">
-                                <div
-                                    class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">
-                                    ATS OPTIMIZED</div>
-                                <img src="assets/cv-after-professional.png" alt="Exemple CV HireMe Optimisé"
-                                    loading="lazy" class="w-full h-auto">
+                            <div class="flex items-center justify-between">
+                                <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">HireMe CV (Recruté)</span>
+                                <span id="baAfterScore" class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Score ATS : 98%</span>
                             </div>
-                            <p class="text-sm text-neutral font-medium">"Design épuré, mots-clés
-                                stratégiques, impact visuel immédiat."</p>
+                            <div class="bg-white border-2 border-primary rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform shadow-xl relative group">
+                                <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">ATS OPTIMIZED</div>
+                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="Exemple CV Après" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
+                            </div>
+                            <p id="baAfterQuote" class="text-sm text-neutral font-medium">"Design épuré, mots-clés stratégiques, impact visuel immédiat."</p>
                         </div>
+                    </div>
+
+                    <!-- Slide Navigation Arrows -->
+                    <button type="button" onclick="prevBeforeAfterSlide()" aria-label="Précédent" class="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white text-gray-700 hover:text-primary rounded-full shadow-lg border border-gray-100 flex items-center justify-center transition-all z-20 hover:scale-110">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button type="button" onclick="nextBeforeAfterSlide()" aria-label="Suivant" class="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white text-gray-700 hover:text-primary rounded-full shadow-lg border border-gray-100 flex items-center justify-center transition-all z-20 hover:scale-110">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <!-- Indicators Dots -->
+                    <div class="flex justify-center items-center gap-2 mt-4">
+                        <span class="ba-dot w-2.5 h-2.5 rounded-full bg-primary cursor-pointer transition-all" onclick="selectBeforeAfterSlide(0)"></span>
+                        <span class="ba-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all" onclick="selectBeforeAfterSlide(1)"></span>
+                        <span class="ba-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all" onclick="selectBeforeAfterSlide(2)"></span>
                     </div>
 
                     <!-- Performance Stat -->
                     <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
-                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100">
+                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100 w-full sm:w-auto">
                             <p class="text-3xl font-extrabold text-primary">85%</p>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Taux de
-                                réponse</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Taux de réponse</p>
                         </div>
-                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100">
+                        <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100 w-full sm:w-auto">
                             <p class="text-3xl font-extrabold text-accent">3x Plus</p>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">
-                                D'entretiens</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">D'entretiens</p>
                         </div>
                     </div>
                 </div>
@@ -956,7 +1016,7 @@
                             class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-inner overflow-hidden border border-gray-100">
                             <!-- Portfolio Image Container -->
                             <div class="transform rotate-2 hover:rotate-0 transition-transform duration-500">
-                                <img id="portfolioRotatingImage" src="assets/cv-after-professional.png"
+                                <img id="portfolioRotatingImage" src="assets/cv-default.jpg"
                                     alt="Exemple Portfolio CV" class="w-full h-auto rounded-xl shadow-2xl">
                             </div>
                             <div
@@ -1153,6 +1213,45 @@
                                                         <p class="text-xs text-gray-600">Emails & WhatsApp direct des RH
                                                             au
                                                             Cameroun. Livraison instantanée !</p>
+                                                    </div>
+                                                </label>
+
+                                                <!-- NEW UPSELL: LinkedIn Profile Boost -->
+                                                <label
+                                                    class="flex items-center p-4 border-2 border-sky-200 rounded-2xl cursor-pointer hover:border-sky-400 transition-all bg-sky-50/40 group relative overflow-hidden">
+                                                    <div
+                                                        class="absolute -top-1 -right-4 bg-sky-600 text-white text-[8px] font-bold px-4 py-1 rotate-12 uppercase tracking-widest shadow-sm">
+                                                        NOUVEAU -50%</div>
+                                                    <input type="checkbox" id="upsellLinkedin" value="5000"
+                                                        onchange="updateOrderTotal()"
+                                                        class="w-5 h-5 text-sky-600 rounded border-gray-300 focus:ring-sky-500">
+                                                    <div class="ml-4 flex-1">
+                                                        <div class="flex justify-between items-center">
+                                                            <span
+                                                                class="font-extrabold text-neutral group-hover:text-sky-600 transition-colors">💼
+                                                                Boost Profil LinkedIn (Offre Bundle)</span>
+                                                            <span class="text-sm font-bold text-sky-600">+5 000
+                                                                FCFA</span>
+                                                        </div>
+                                                        <p class="text-xs text-gray-600">Optimisation complète de votre profil LinkedIn pour attirer les recruteurs.</p>
+                                                    </div>
+                                                </label>
+
+                                                <!-- NEW UPSELL: Coaching & Simulation Entretien -->
+                                                <label
+                                                    class="flex items-center p-4 border-2 border-indigo-200 rounded-2xl cursor-pointer hover:border-indigo-400 transition-all bg-indigo-50/40 group relative overflow-hidden">
+                                                    <input type="checkbox" id="upsellCoaching" value="2000"
+                                                        onchange="updateOrderTotal()"
+                                                        class="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                                                    <div class="ml-4 flex-1">
+                                                        <div class="flex justify-between items-center">
+                                                            <span
+                                                                class="font-extrabold text-neutral group-hover:text-indigo-600 transition-colors">🎯
+                                                                Simulation & Guide Entretien Recruteur</span>
+                                                            <span class="text-sm font-bold text-indigo-600">+2 000
+                                                                FCFA</span>
+                                                        </div>
+                                                        <p class="text-xs text-gray-600">Les 25 questions pièges décortiquées + réponses types pour réussir vos entretiens.</p>
                                                     </div>
                                                 </label>
                                             </div>
@@ -1392,6 +1491,7 @@
                                 Générales</a></li>
                         <li><a href="politique-confidentialite" class="hover:text-white">Politique de
                                 Confidentialité</a></li>
+                        <li><a href="remboursement.php" class="hover:text-white text-orange-400 font-bold">Demande de Remboursement</a></li>
                     </ul>
                 </div>
             </div>
@@ -1516,7 +1616,7 @@
 
                     startCountdown();
                 } else {
-                    if (topPromoBanner) topPromoBanner.style.display = 'none';
+                    // if (topPromoBanner) topPromoBanner.style.display = 'none'; // Keep Neptune banner visible
                     if (heroPromoBadge) heroPromoBadge.style.display = 'none';
                     if (mobileStickyCTA) mobileStickyCTA.style.display = 'none';
                 }
@@ -2073,10 +2173,14 @@
             const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
             const upsellLetter = document.getElementById('upsellLetter');
             const upsellRecruiter = document.getElementById('upsellRecruiter');
+            const upsellLinkedin = document.getElementById('upsellLinkedin');
+            const upsellCoaching = document.getElementById('upsellCoaching');
 
             if (deliveryOption) upsellTotal += parseInt(deliveryOption.value);
             if (upsellLetter && upsellLetter.checked) upsellTotal += parseInt(upsellLetter.value);
             if (upsellRecruiter && upsellRecruiter.checked) upsellTotal += parseInt(upsellRecruiter.value);
+            if (upsellLinkedin && upsellLinkedin.checked) upsellTotal += parseInt(upsellLinkedin.value);
+            if (upsellCoaching && upsellCoaching.checked) upsellTotal += parseInt(upsellCoaching.value);
 
             let totalPrice = basePrice + upsellTotal;
             let originalPrice = totalPrice;
@@ -2121,6 +2225,9 @@
             if (typeof updateStickyProgressBar === "function") {
                 updateStickyProgressBar(1);
             }
+
+            // Init Rotating Before/After CV Carousel
+            initBeforeAfterCarousel();
 
             // Trigger Auto-Pilot (Low frequency, non-blocking)
             if (Math.random() < 0.2) { // 20% chance to run on page load
@@ -2278,6 +2385,8 @@
                 const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
                 const upsellLetter = document.getElementById('upsellLetter');
                 const upsellRecruiter = document.getElementById('upsellRecruiter');
+                const upsellLinkedin = document.getElementById('upsellLinkedin');
+                const upsellCoaching = document.getElementById('upsellCoaching');
 
                 let packageName = selectedOption.textContent.split('(')[0].trim();
                 let baseAmount = parseInt(selectedOption.getAttribute('data-price'));
@@ -2286,6 +2395,8 @@
                 if (deliveryOption) upsellAmount += parseInt(deliveryOption.value);
                 if (upsellLetter && upsellLetter.checked) upsellAmount += parseInt(upsellLetter.value);
                 if (upsellRecruiter && upsellRecruiter.checked) upsellAmount += 2500;
+                if (upsellLinkedin && upsellLinkedin.checked) upsellAmount += 5000;
+                if (upsellCoaching && upsellCoaching.checked) upsellAmount += 2000;
 
                 let originalTotal = baseAmount + upsellAmount;
                 let finalTotal = originalTotal;
@@ -2322,6 +2433,8 @@
                     package: packageName,
                     upsell_letter: (upsellLetter && upsellLetter.checked) ? 1 : 0,
                     upsell_recruiter: (upsellRecruiter && upsellRecruiter.checked) ? 1 : 0,
+                    upsell_linkedin: (upsellLinkedin && upsellLinkedin.checked) ? 1 : 0,
+                    upsell_coaching: (upsellCoaching && upsellCoaching.checked) ? 1 : 0,
                     affiliate_code: affiliateRef || ''
                 });
                 window.location.href = 'paiement.html?' + params.toString();
@@ -2335,6 +2448,153 @@
                 showToast("Une erreur est survenue. Vérifiez vos infos.", "error");
             }
         });
+
+        // ==================== Rotating Before/After CV Carousel Logic ====================
+        const beforeAfterSlides = [
+            {
+                category: "💼 Gestion & Direction",
+                before: {
+                    tag: "CV Ordinaire (Rejeté)",
+                    score: "Score ATS : 28%",
+                    img: "assets/cv-before-messy.png",
+                    quote: "Design dépassé, trop de texte dense, non optimisé pour les robots ATS."
+                },
+                after: {
+                    tag: "HireMe CV (Recruté)",
+                    score: "Score ATS : 98%",
+                    badge: "ATS OPTIMIZED",
+                    img: "assets/cv-after-professional.png",
+                    quote: "Design épuré, mots-clés stratégiques, impact visuel immédiat."
+                }
+            },
+            {
+                category: "💻 Ingénierie & Tech",
+                before: {
+                    tag: "CV Technique Standard",
+                    score: "Score ATS : 42%",
+                    img: "assets/cv-before-messy.png",
+                    quote: "Projets et compétences noyés dans un bloc de texte sans hiérarchie."
+                },
+                after: {
+                    tag: "HireMe CV Tech (Entretien Décroché)",
+                    score: "Score ATS : 96%",
+                    badge: "TOP CANDIDAT TECH",
+                    img: "assets/img/cv-sample-1.jpg",
+                    quote: "Mise en avant des frameworks, livrables chiffrés et clarté immédiate."
+                }
+            },
+            {
+                category: "📈 Commercial & Marketing",
+                before: {
+                    tag: "CV Commercial Classique",
+                    score: "Score ATS : 35%",
+                    img: "assets/cv-before-messy.png",
+                    quote: "Aucun indicateur de chiffre d'affaires, mise en page fade et banale."
+                },
+                after: {
+                    tag: "HireMe CV Business (Recruté Top Entreprise)",
+                    score: "Score ATS : 99%",
+                    badge: "HIGH CONVERSION",
+                    img: "assets/img/cv-sample-2.jpg",
+                    quote: "Performances quantifiées, storytelling percutant, 3x plus d'entretiens."
+                }
+            }
+        ];
+
+        let currentBaIndex = 0;
+        let baTimer = null;
+        let isBaHovered = false;
+
+        function renderBeforeAfterSlide(index) {
+            const slide = beforeAfterSlides[index];
+            if (!slide) return;
+
+            const content = document.getElementById('baSlideContent');
+            if (!content) return;
+
+            content.style.opacity = '0.2';
+            content.style.transform = 'scale(0.99)';
+
+            setTimeout(() => {
+                const bTag = document.getElementById('baBeforeTag');
+                const bScore = document.getElementById('baBeforeScore');
+                const bImg = document.getElementById('baBeforeImg');
+                const bQuote = document.getElementById('baBeforeQuote');
+                const aTag = document.getElementById('baAfterTag');
+                const aScore = document.getElementById('baAfterScore');
+                const aBadge = document.getElementById('baAfterBadge');
+                const aImg = document.getElementById('baAfterImg');
+                const aQuote = document.getElementById('baAfterQuote');
+
+                if (bTag) bTag.innerText = slide.before.tag;
+                if (bScore) bScore.innerText = slide.before.score;
+                if (bImg) bImg.src = slide.before.img;
+                if (bQuote) bQuote.innerText = `"${slide.before.quote}"`;
+
+                if (aTag) aTag.innerText = slide.after.tag;
+                if (aScore) aScore.innerText = slide.after.score;
+                if (aBadge) aBadge.innerText = slide.after.badge;
+                if (aImg) aImg.src = slide.after.img;
+                if (aQuote) aQuote.innerText = `"${slide.after.quote}"`;
+
+                document.querySelectorAll('.ba-tab-btn').forEach((btn, i) => {
+                    if (i === index) {
+                        btn.className = "ba-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-primary text-white";
+                    } else {
+                        btn.className = "ba-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-gray-100 text-gray-600 hover:bg-gray-200";
+                    }
+                });
+
+                document.querySelectorAll('.ba-dot').forEach((dot, i) => {
+                    if (i === index) {
+                        dot.className = "ba-dot w-3 h-3 rounded-full bg-primary cursor-pointer transition-all";
+                    } else {
+                        dot.className = "ba-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all";
+                    }
+                });
+
+                content.style.opacity = '1';
+                content.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function selectBeforeAfterSlide(index) {
+            currentBaIndex = index;
+            renderBeforeAfterSlide(currentBaIndex);
+            resetBeforeAfterTimer();
+        }
+
+        function nextBeforeAfterSlide() {
+            currentBaIndex = (currentBaIndex + 1) % beforeAfterSlides.length;
+            renderBeforeAfterSlide(currentBaIndex);
+            resetBeforeAfterTimer();
+        }
+
+        function prevBeforeAfterSlide() {
+            currentBaIndex = (currentBaIndex - 1 + beforeAfterSlides.length) % beforeAfterSlides.length;
+            renderBeforeAfterSlide(currentBaIndex);
+            resetBeforeAfterTimer();
+        }
+
+        function resetBeforeAfterTimer() {
+            if (baTimer) clearInterval(baTimer);
+            baTimer = setInterval(() => {
+                if (!isBaHovered) {
+                    currentBaIndex = (currentBaIndex + 1) % beforeAfterSlides.length;
+                    renderBeforeAfterSlide(currentBaIndex);
+                }
+            }, 5500);
+        }
+
+        function initBeforeAfterCarousel() {
+            const wrapper = document.getElementById('baCarouselWrapper');
+            if (wrapper) {
+                wrapper.addEventListener('mouseenter', () => { isBaHovered = true; });
+                wrapper.addEventListener('mouseleave', () => { isBaHovered = false; });
+            }
+            renderBeforeAfterSlide(0);
+            resetBeforeAfterTimer();
+        }
     </script>
     <!-- Legacy Exit Popup (DISABLED - Replaced by Spin Wheel) -->
     <!-- 

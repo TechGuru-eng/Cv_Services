@@ -107,12 +107,8 @@
                     class="bg-white p-8 rounded-[2rem] shadow-2xl shadow-yellow-500/5 border border-gray-50 border-t-8 border-t-yellow-400 hover:shadow-yellow-500/10 transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
                         <div
-                            class="w-16 h-16 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 text-yellow-600 shadow-inner">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
-                                </path>
-                            </svg>
+                            class="mb-6">
+                            <img src="assets/img/mtn_momo_logo.png" alt="MTN" class="h-12 mx-auto object-contain">
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-1">Paiement MTN MoMo</h3>
                         <p class="text-[10px] font-bold text-yellow-600 uppercase tracking-widest mb-6">Instantané • 0
@@ -142,12 +138,8 @@
                     class="bg-white p-8 rounded-[2rem] shadow-2xl shadow-orange-500/5 border border-gray-50 border-t-8 border-t-orange-500 hover:shadow-orange-500/10 transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
                         <div
-                            class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-orange-600 shadow-inner">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                </path>
-                            </svg>
+                            class="mb-6">
+                            <img src="assets/img/orange_money_logo.png" alt="Orange" class="h-12 mx-auto object-contain">
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-1">Paiement Orange Money</h3>
                         <p class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-6">Simple •
@@ -629,6 +621,8 @@
                 if (urlParams.get('package')) formData.append('package_name', urlParams.get('package'));
                 if (urlParams.get('upsell_recruiter')) formData.append('upsell_recruiter', urlParams.get('upsell_recruiter'));
                 if (urlParams.get('upsell_letter')) formData.append('upsell_letter', urlParams.get('upsell_letter'));
+                if (urlParams.get('upsell_linkedin')) formData.append('upsell_linkedin', urlParams.get('upsell_linkedin'));
+                if (urlParams.get('upsell_coaching')) formData.append('upsell_coaching', urlParams.get('upsell_coaching'));
                 if (urlParams.get('affiliate_code')) formData.append('affiliate_code', urlParams.get('affiliate_code'));
 
                 // Sponsorship Params
@@ -682,6 +676,10 @@
                             window.location.href = 'sponsors.html?status=success_donation';
                         } else if (packId === 'templates40' || packageName === 'Pack 40 Modèles CV') {
                             window.location.href = 'merci?type=digital&' + nextParams.toString();
+                        } else if (packageName && packageName.toLowerCase().includes('lettre') && !packageName.toLowerCase().includes('cv')) {
+                            const clientName = document.getElementById('fullName').value || 'un client';
+                            const waText = encodeURIComponent("Bonjour HireMe CV, je suis " + clientName + " et je viens d'effectuer mon paiement pour le service 'Lettre de Motivation'.");
+                            window.location.href = 'https://wa.me/237654250688?text=' + waText;
                         } else {
                             window.location.href = 'details-cv?' + nextParams.toString();
                         }

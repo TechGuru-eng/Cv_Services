@@ -23,7 +23,11 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         </a>
         <a href="<?= $navBaseUrl ?>orders"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= ($currentPage == 'orders.php' || $currentPage == 'order-details.php') ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
-            <span class="mr-3 text-xl">📋</span> Commandes
+            <span class="mr-3 text-xl">📋</span> Commandes (CV)
+        </a>
+        <a href="<?= $navBaseUrl ?>linkedin/commandes.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= (strpos($_SERVER['PHP_SELF'], 'linkedin') !== false) ? 'bg-sky-600 text-white shadow-lg shadow-sky-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">💼</span> Commandes LinkedIn
         </a>
         <a href="<?= $navBaseUrl ?>orders?type=advance"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= (isset($_GET['type']) && $_GET['type'] == 'advance') ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
@@ -41,6 +45,10 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'clients.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">👥</span> Clients (CV)
         </a>
+        <a href="<?= $navBaseUrl ?>redesign_requests.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'redesign_requests.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🔄</span> Demandes Refonte
+        </a>
         <a href="<?= $navBaseUrl ?>cv_packs.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'cv_packs.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">📦</span> Packs CV
@@ -53,6 +61,14 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         <a href="<?= $navBaseUrl ?>cv-models"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'cv-models.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🎨</span> Modèles CV
+        </a>
+        <a href="<?= $navBaseUrl ?>blog.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= ($currentPage == 'blog.php' || $currentPage == 'blog_edit.php') ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">✏️</span> Blog & Articles
+        </a>
+        <a href="<?= $navBaseUrl ?>blog_subscribers.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'blog_subscribers.php' ? 'bg-teal-600 text-white shadow-lg shadow-teal-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">📧</span> Abonnés Blog
         </a>
         <a href="<?= $navBaseUrl ?>promos"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'promos.php' ? 'bg-green-600 text-white shadow-lg shadow-green-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
@@ -82,6 +98,10 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'marketing.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🚀</span> Marketing
         </a>
+        <a href="<?= $navBaseUrl ?>sms-panel.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'sms-panel.php' ? 'bg-sky-600 text-white shadow-lg shadow-sky-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">📱</span> Dashboard SMS
+        </a>
         <a href="<?= $navBaseUrl ?>leads_rescue.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'leads_rescue.php' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🚀</span> Leads Rescue
@@ -89,6 +109,10 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         <a href="<?= $navBaseUrl ?>leads"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'leads.php' ? 'bg-yellow-600 text-white shadow-lg shadow-yellow-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">👻</span> Paniers (Relances)
+        </a>
+        <a href="<?= $navBaseUrl ?>export-leads.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'export-leads.php' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">📝</span> Leads CV Builder
         </a>
         <a href="<?= $navBaseUrl ?>flash-analytics.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'flash-analytics.php' ? 'bg-yellow-500 text-white shadow-lg shadow-yellow-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
@@ -110,6 +134,18 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'sponsorships.php' ? 'bg-teal-600 text-white shadow-lg shadow-teal-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🤝</span> Parrainages
         </a>
+        <a href="<?= $navBaseUrl ?>beneficiaries.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'beneficiaries.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🎓</span> Bénéficiaires
+        </a>
+        <a href="<?= $navBaseUrl ?>school_leads.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'school_leads.php' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🏫</span> Leads Écoles
+        </a>
+        <a href="<?= $navBaseUrl ?>club_platform.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= ($currentPage == 'club_platform.php' || $currentPage == 'subscriptions.php') ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">⚡</span> Club HireMe
+        </a>
         <a href="<?= $navBaseUrl ?>manage_admins"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'manage_admins.php' ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🛡️</span> Admins
@@ -117,6 +153,18 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         <a href="<?= $navBaseUrl ?>security.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'security.php' ? 'bg-red-600 text-white shadow-lg shadow-red-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🔒</span> Sécurité
+        </a>
+        <a href="<?= $navBaseUrl ?>litiges.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'litiges.php' ? 'bg-black text-white shadow-lg shadow-gray-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🏴‍☠️</span> Gestion Litiges
+        </a>
+        <a href="<?= $navBaseUrl ?>remboursements.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'remboursements.php' ? 'bg-orange-600 text-white shadow-lg shadow-orange-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">💸</span> Remboursements
+        </a>
+        <a href="<?= $navBaseUrl ?>cleanup_non_payers.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'cleanup_non_payers.php' ? 'bg-red-900 text-white shadow-lg shadow-red-950/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🧹</span> Nettoyage CV
         </a>
         <a href="<?= $navBaseUrl ?>reviews.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'reviews.php' ? 'bg-yellow-500 text-white shadow-lg shadow-yellow-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
@@ -172,6 +220,13 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
                 <div class="text-xs text-slate-400">Gérer les dossiers finalisés</div>
             </div>
         </a>
+        <a href="<?= $navBaseUrl ?>redesign_requests.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🔄</span>
+            <div>
+                <div class="font-bold">Demandes Refonte</div>
+                <div class="text-xs text-slate-400">Garantie & Refonte CV</div>
+            </div>
+        </a>
         <a href="<?= $navBaseUrl ?>cv_packs.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📦</span>
             <div>
@@ -193,11 +248,39 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
                 <div class="text-xs text-slate-400">Gérer les pré-commandes</div>
             </div>
         </a>
+        <a href="<?= $navBaseUrl ?>school_leads.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-indigo-600/20 hover:text-indigo-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🏫</span>
+            <div>
+                <div class="font-bold">Leads Écoles</div>
+                <div class="text-xs text-slate-400">Demandes de partenariats</div>
+            </div>
+        </a>
+        <a href="<?= $navBaseUrl ?>club_platform.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">⚡</span>
+            <div>
+                <div class="font-bold">Club HireMe</div>
+                <div class="text-xs text-slate-400">Plateforme de Membres V2</div>
+            </div>
+        </a>
         <a href="<?= $navBaseUrl ?>cv-models" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🎨</span>
             <div>
                 <div class="font-bold">Modèles CV</div>
                 <div class="text-xs text-slate-400">Ajouter ou modifier des designs</div>
+            </div>
+        </a>
+        <a href="<?= $navBaseUrl ?>blog.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">✏️</span>
+            <div>
+                <div class="font-bold">Blog & Articles</div>
+                <div class="text-xs text-slate-400">Gérer les articles de conseil CV</div>
+            </div>
+        </a>
+        <a href="<?= $navBaseUrl ?>blog_subscribers.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-teal-600/20 hover:text-teal-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📧</span>
+            <div>
+                <div class="font-bold">Abonnés Blog</div>
+                <div class="text-xs text-slate-400">Leads capturés par le blog</div>
             </div>
         </a>
 
@@ -227,6 +310,13 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🚀</span>
             <div class="font-bold">Marketing & Exports</div>
         </a>
+        <a href="<?= $navBaseUrl ?>sms-panel.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-sky-600/20 hover:text-sky-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📱</span>
+            <div>
+                <div class="font-bold">Dashboard SMS</div>
+                <div class="text-xs text-slate-400">Rapports & Campagnes TextBee</div>
+            </div>
+        </a>
 
         <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-6 mb-2 ml-2">Système</p>
         
@@ -245,6 +335,14 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         <a href="<?= $navBaseUrl ?>announcements" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-purple-600/20 hover:text-purple-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📢</span>
             <div class="font-bold">Annonces</div>
+        </a>
+        <a href="<?= $navBaseUrl ?>litiges.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-gray-600/20 hover:text-gray-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🏴‍☠️</span>
+            <div class="font-bold">Gestion Litiges</div>
+        </a>
+        <a href="<?= $navBaseUrl ?>remboursements.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-orange-600/20 hover:text-orange-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">💸</span>
+            <div class="font-bold">Remboursements</div>
         </a>
         <a href="<?= $navBaseUrl ?>manage_admins" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-purple-600/20 hover:text-purple-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🛡️</span>
@@ -265,6 +363,13 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
         <a href="<?= $navBaseUrl ?>leads" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-yellow-600/20 hover:text-yellow-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🛒</span>
             <div class="font-bold">Paniers Abandonnés</div>
+        </a>
+        <a href="<?= $navBaseUrl ?>export-leads.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-emerald-600/20 hover:text-emerald-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📝</span>
+            <div>
+                <div class="font-bold">Leads CV Builder</div>
+                <div class="text-xs text-slate-400">Exportation prospects du CV Builder</div>
+            </div>
         </a>
         <a href="<?= $navBaseUrl ?>kanban" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-orange-600/20 hover:text-orange-400 transition-all group">
             <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">📋</span>

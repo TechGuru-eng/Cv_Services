@@ -37,6 +37,19 @@ $pageTitle = ($typeFilter === 'advance') ? "Réservations" : "Commandes";
                 </a>
             </div>
 
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-2 mb-6">
+                <a href="orders.php" class="px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm <?= empty($typeFilter) ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' ?>">
+                    📋 Commandes CV
+                </a>
+                <a href="orders.php?type=advance" class="px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm <?= ($typeFilter === 'advance') ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' ?>">
+                    📅 Réservations
+                </a>
+                <a href="linkedin/commandes.php" class="px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm bg-white text-sky-700 hover:bg-sky-50 border border-sky-200 flex items-center gap-1.5">
+                    💼 Commandes LinkedIn &rarr;
+                </a>
+            </div>
+
             <div class="bg-white shadow-md rounded-lg overflow-hidden overflow-x-auto">
                 <table class="min-w-full leading-normal">
                     <thead>

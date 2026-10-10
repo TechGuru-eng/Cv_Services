@@ -16,6 +16,8 @@ if (file_exists('vendor/autoload.php')) {
 }
 
 require_once 'admin/config/db.php';
+require_once 'admin/includes/security_helper.php';
+require_once 'includes/upload_helper.php';
 
 // Rate Limiting
 if (isset($_SESSION['last_order_attempt']) && (time() - $_SESSION['last_order_attempt'] < 10)) {
@@ -26,6 +28,20 @@ $_SESSION['last_order_attempt'] = time();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'POST required.']);
+    exit;
+}
+// IP-based limit (the session limit above is bypassable by dropping the cookie)
+if (!rate_limit_ok('save-order', 8, 3600)) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Trop de tentatives. Réessayez plus tard.']);
+    exit;
+}
+
+// Security Check: Blacklist
+$rawWhatsapp = $_POST['whatsapp'] ?? '';
+$rawEmail = $_POST['email'] ?? '';
+if (isBlacklisted($rawWhatsapp, $pdo) || isBlacklisted($rawEmail, $pdo)) {
+    echo json_encode(['success' => false, 'message' => 'Désolé, votre accès aux services HireMe a été restreint. Veuillez contacter le support.']);
     exit;
 }
 
@@ -46,6 +62,14 @@ if (isset($_POST['original_amount']))
 if (isset($_POST['discount_amount']))
     $discountAmount = floatval($_POST['discount_amount']);
 
+if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['success' => false, 'message' => 'Nom et email valides requis.']);
+    exit;
+}
+if ($amount <= 0 || $amount > 10000000 || $originalAmount < 0 || $discountAmount < 0) {
+    echo json_encode(['success' => false, 'message' => 'Montant invalide.']);
+    exit;
+}
 if (empty($transactionNumber)) {
     echo json_encode(['success' => false, 'message' => 'Numéro de transaction requis.']);
     exit;
@@ -55,34 +79,27 @@ $hasRecruiterList = intval($_POST['upsell_recruiter'] ?? 0);
 $promoCodeUsed = $_POST['promo_code'] ?? null;
 $affiliateCode = $_POST['affiliate_code'] ?? ($_SESSION['affiliate_code'] ?? null);
 
-// Handle File Upload
+// Handle File Upload (validated: real MIME type, size, random server-side name)
 $proofPath = null;
 if (isset($_FILES['proofFile']) && $_FILES['proofFile']['error'] === UPLOAD_ERR_OK) {
-    if (!is_dir('uploads')) {
-        mkdir('uploads', 0777, true);
-    }
-    
-    $fileTmpPath = $_FILES['proofFile']['tmp_name'];
-    $fileName = $_FILES['proofFile']['name'];
-    $fileSize = $_FILES['proofFile']['size'];
-    $fileType = $_FILES['proofFile']['type'];
-    $fileNameCmps = explode(".", $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
-    
-    $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg', 'pdf');
-    if (in_array($fileExtension, $allowedfileExtensions)) {
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-        $dest_path = 'uploads/' . $newFileName;
-        
-        if(move_uploaded_file($fileTmpPath, $dest_path)) {
-            $proofPath = $dest_path;
-        }
+    $proofPath = secure_upload($_FILES['proofFile'], ['jpg', 'jpeg', 'png', 'gif', 'pdf'], 'uploads/proofs', 'PROOF-');
+    if ($proofPath === null) {
+        echo json_encode(['success' => false, 'message' => 'Fichier de preuve invalide (JPG, PNG ou PDF, 5 Mo max).']);
+        exit;
     }
 }
 
 try {
-    // Generate Order Ref
-    $orderRef = 'CMD-' . date('ymd') . '-' . strtoupper(substr(uniqid(), -4));
+    // Reject re-use of the same payment transaction reference
+    $stmtDup = $pdo->prepare("SELECT id FROM orders WHERE transaction_number = ? AND payment_status <> 'failed' LIMIT 1");
+    $stmtDup->execute([$transactionNumber]);
+    if ($stmtDup->fetch()) {
+        echo json_encode(['success' => false, 'message' => "Ce numéro de transaction a déjà été utilisé. Contactez le support si c'est une erreur."]);
+        exit;
+    }
+
+    // Generate Order Ref (unguessable suffix)
+    $orderRef = 'CMD-' . date('ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
 
     // Default package if not provided
     $packageName = $_POST['package_name'] ?? 'Standard';
@@ -92,6 +109,14 @@ try {
     if ($upsellLetter && stripos($packageName, 'Lettre') === false) {
         $packageName .= ' + Lettre Motivation';
     }
+    $upsellLinkedin = intval($_POST['upsell_linkedin'] ?? 0);
+    if ($upsellLinkedin && stripos($packageName, 'LinkedIn') === false) {
+        $packageName .= ' + Boost LinkedIn';
+    }
+    $upsellCoaching = intval($_POST['upsell_coaching'] ?? 0);
+    if ($upsellCoaching && stripos($packageName, 'Coaching') === false) {
+        $packageName .= ' + Coaching Entretien';
+    }
 
     // Insert into DB
     $stmt = $pdo->prepare("INSERT INTO orders (order_ref, name, email, whatsapp, country, city, package_name, payment_method, transaction_number, payment_proof, created_at, payment_status, amount, original_amount, discount_amount, promo_code_used, affiliate_code, has_recruiter_list) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'pending', ?, ?, ?, ?, ?, ?)");
@@ -100,8 +125,13 @@ try {
 
     // Increment Promo Usage
     if ($promoCodeUsed) {
-        $stmtPromo = $pdo->prepare("UPDATE promo_codes SET usage_count = usage_count + 1 WHERE code = ?");
-        $stmtPromo->execute([$promoCodeUsed]);
+        // Atomic: honours status, validity dates and usage_limit in a single statement
+        $stmtPromo = $pdo->prepare("UPDATE promo_codes SET usage_count = usage_count + 1 WHERE code = ? AND status = 'active' AND start_date <= CURDATE() AND end_date >= CURDATE() AND (usage_limit IS NULL OR usage_count < usage_limit)");
+        $stmtPromo->execute([strtoupper(trim($promoCodeUsed))]);
+        if ($stmtPromo->rowCount() === 0) {
+            // Invalid/expired/exhausted code: flag it so the admin does not honour the client-side discount
+            $pdo->prepare("UPDATE orders SET promo_code_used = CONCAT('INVALID:', promo_code_used) WHERE id = ?")->execute([$orderId]);
+        }
     }
 
     // Mark Prospect as Converted (Optional, wrap in try-catch)
@@ -112,11 +142,7 @@ try {
         // Ignore if prospects table doesn't exist
     }
 
-    // Insert into Revenue (Optional, but good for tracking)
-    if ($amount > 0) {
-        $stmtRev = $pdo->prepare("INSERT INTO revenue (order_id, amount, payment_method) VALUES (?, ?, ?)");
-        $stmtRev->execute([$orderId, $amount, $paymentMethod]);
-    }
+    // Revenue is recorded when the admin verifies the payment (admin/order-details.php), not at order creation.
 
     // --- SPONSORSHIP LOGIC ---
     // Check if this is a sponsorship order.
@@ -157,10 +183,10 @@ try {
         if ($sponsorshipQty > 0) {
             $stmtPool = $pdo->prepare("INSERT INTO sponsorship_pool 
                 (order_id, donor_name, package_name, credits_total, credits_remaining, message) 
-                VALUES (?, ?, ?, ?, ?, ?)");
-            // Use 'name' from order as donor_name.
-            // Message is optional, maybe add field later.
-            $stmtPool->execute([$orderId, $name, $packageName, $sponsorshipQty, $sponsorshipQty, 'Soutien aux talents']);
+                VALUES (?, ?, ?, ?, 0, ?)");
+            // credits_remaining stays 0 until the admin verifies the payment (admin/order-details.php unlocks it).
+            $sponsorshipQty = min((int)$sponsorshipQty, 1000);
+            $stmtPool->execute([$orderId, $name, $packageName, $sponsorshipQty, 'Soutien aux talents']);
         }
     }
     // -------------------------
@@ -172,7 +198,7 @@ try {
     $mail->Host = 'smtp.hostinger.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'newsletter@hiremeguide.com';
-    $mail->Password = 'Dreamer.Sophia#27';
+    $mail->Password = getenv('SMTP_PASSWORD');
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
     $mail->setFrom('newsletter@hiremeguide.com', 'HireMe System');
@@ -232,7 +258,7 @@ try {
     $custMail->Host = 'smtp.hostinger.com';
     $custMail->SMTPAuth = true;
     $custMail->Username = 'newsletter@hiremeguide.com';
-    $custMail->Password = 'Dreamer.Sophia#27';
+    $custMail->Password = getenv('SMTP_PASSWORD');
     $custMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $custMail->Port = 465;
     $custMail->setFrom('newsletter@hiremeguide.com', 'HireMe CV Services');
