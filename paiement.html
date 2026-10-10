@@ -619,10 +619,10 @@
                 if (urlParams.get('city')) formData.append('city', urlParams.get('city'));
                 if (urlParams.get('country')) formData.append('country', urlParams.get('country'));
                 if (urlParams.get('package')) formData.append('package_name', urlParams.get('package'));
-                if (urlParams.get('upsell_recruiter')) formData.append('upsell_recruiter', urlParams.get('upsell_recruiter'));
                 if (urlParams.get('upsell_letter')) formData.append('upsell_letter', urlParams.get('upsell_letter'));
-                if (urlParams.get('upsell_linkedin')) formData.append('upsell_linkedin', urlParams.get('upsell_linkedin'));
-                if (urlParams.get('upsell_coaching')) formData.append('upsell_coaching', urlParams.get('upsell_coaching'));
+                ['upsellEbook1','upsellEbook2','upsellEbook3','upsellEbook4','upsellEbook5','upsellEbook6','upsellEbook7'].forEach(function(id) {
+                    if (urlParams.get(id)) formData.append(id, urlParams.get(id));
+                });
                 if (urlParams.get('affiliate_code')) formData.append('affiliate_code', urlParams.get('affiliate_code'));
 
                 // Sponsorship Params

@@ -75,7 +75,7 @@ if (empty($transactionNumber)) {
     exit;
 }
 
-$hasRecruiterList = intval($_POST['upsell_recruiter'] ?? 0);
+$hasRecruiterList = 0;
 $promoCodeUsed = $_POST['promo_code'] ?? null;
 $affiliateCode = $_POST['affiliate_code'] ?? ($_SESSION['affiliate_code'] ?? null);
 
@@ -109,13 +109,20 @@ try {
     if ($upsellLetter && stripos($packageName, 'Lettre') === false) {
         $packageName .= ' + Lettre Motivation';
     }
-    $upsellLinkedin = intval($_POST['upsell_linkedin'] ?? 0);
-    if ($upsellLinkedin && stripos($packageName, 'LinkedIn') === false) {
-        $packageName .= ' + Boost LinkedIn';
-    }
-    $upsellCoaching = intval($_POST['upsell_coaching'] ?? 0);
-    if ($upsellCoaching && stripos($packageName, 'Coaching') === false) {
-        $packageName .= ' + Coaching Entretien';
+
+    $ebookMap = [
+        'upsellEbook1' => 'Guide 32 Cabinets RH',
+        'upsellEbook2' => "50 Questions d'Entretien",
+        'upsellEbook3' => 'Formation En Ligne',
+        'upsellEbook4' => '100 Messages Pro',
+        'upsellEbook5' => 'Pack 60 Modèles CV',
+        'upsellEbook6' => 'Pack 300 Lettres',
+        'upsellEbook7' => 'Annuaire Entreprises Cameroun'
+    ];
+    foreach ($ebookMap as $key => $title) {
+        if (!empty($_POST[$key]) && intval($_POST[$key]) === 1 && stripos($packageName, $title) === false) {
+            $packageName .= ' + ' . $title;
+        }
     }
 
     // Insert into DB
