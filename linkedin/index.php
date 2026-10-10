@@ -170,13 +170,13 @@ if (empty($testimonials)) {
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
 
     <!-- 1. TOP PROMO BANNER (Links to MonCvPro main site) -->
-    <div id="topPromoBanner" class="bg-gradient-to-r from-sky-600 via-blue-700 to-indigo-800 text-white text-center py-2 px-4 text-[11px] font-black relative z-[60] border-b border-white/20 shadow-md">
+    <div id="topPromoBanner" class="bg-gradient-to-r from-blue-700 via-indigo-600 via-sky-600 to-blue-800 bg-[length:200%_200%] animate-gradient-x text-white text-center py-2 px-4 text-[11px] font-black relative z-[60] border-b border-white/20 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-3">
             <a href="../index.html" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white text-white hover:text-blue-900 px-3 py-0.5 rounded-full text-[10px] font-extrabold transition-all no-underline">
-                <i class="fa-solid fa-arrow-left text-[9px]"></i> MonCvPro.com (Accueil CV)
+                <i class="fa-solid fa-arrow-left text-[9px]"></i> MonCV Pro (Accueil CV)
             </a>
             <span class="uppercase tracking-widest font-black">
-                🇨🇲 -60% SUR L'OPTIMISATION LINKEDIN • CODE : <span class="bg-yellow-400 text-slate-950 px-2 py-0.5 rounded font-mono">HIREME60</span>
+                🇨🇲 -60% SUR L'OPTIMISATION LINKEDIN • CODE : <span class="bg-yellow-400 text-slate-950 px-2 py-0.5 rounded font-mono shadow-sm">HIREME60</span>
             </span>
             <a href="commander" class="bg-yellow-400 text-slate-950 px-3.5 py-0.5 rounded-full text-[10px] font-black hover:bg-white transition-all shadow-md no-underline animate-pulse">
                 COMMANDER (-60%)
@@ -189,11 +189,11 @@ if (empty($testimonials)) {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <!-- Brand logo links back to MonCvPro home -->
-                <a href="../index.html" class="flex-shrink-0 flex items-center gap-2 group" title="Retourner sur MonCvPro">
+                <a href="../index.html" class="flex-shrink-0 flex items-center gap-2 group" title="Retourner sur MonCV Pro">
                     <span class="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">HM</span>
                     <div class="flex flex-col">
                         <span class="text-xl font-extrabold text-primary tracking-tight leading-none">HireMe<span class="text-neutral">LinkedIn</span></span>
-                        <span class="text-[9px] font-bold text-gray-400 tracking-wider">Par MonCvPro.com</span>
+                        <span class="text-[9px] font-bold text-gray-400 tracking-wider">Par MonCV Pro</span>
                     </div>
                 </a>
 
@@ -201,7 +201,7 @@ if (empty($testimonials)) {
                 <div class="hidden md:flex items-center space-x-7 text-xs font-bold">
                     <a href="../index.html" class="text-primary hover:text-sky-700 bg-sky-50 px-3 py-1.5 rounded-xl border border-sky-200 flex items-center gap-1.5 transition-all hover:bg-sky-100">
                         <i class="fa-solid fa-house text-[11px]"></i>
-                        <span>Accueil MonCvPro</span>
+                        <span>Accueil MonCV Pro</span>
                     </a>
                     <a href="#services" class="text-gray-600 hover:text-primary transition-colors">Services</a>
                     <a href="#diagnostic" class="text-gray-600 hover:text-primary transition-colors flex items-center">
@@ -209,7 +209,6 @@ if (empty($testimonials)) {
                         Score Profil
                     </a>
                     <a href="#tarifs" class="text-gray-600 hover:text-primary transition-colors">Tarifs (-60%)</a>
-                    <a href="suivi-linkedin" class="text-gray-600 hover:text-primary transition-colors">Suivi Commande</a>
                     <a href="#faq" class="text-gray-600 hover:text-primary transition-colors">FAQ</a>
                 </div>
 
@@ -231,12 +230,11 @@ if (empty($testimonials)) {
         <!-- Mobile Menu Dropdown -->
         <div id="mobileMenu" class="hidden md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-xl z-40 p-4 space-y-2 text-sm font-bold">
             <a href="../index.html" class="block px-3 py-2.5 rounded-xl text-primary bg-sky-50 border border-sky-200">
-                <i class="fa-solid fa-house mr-2"></i> Retour au site MonCvPro.com
+                <i class="fa-solid fa-house mr-2"></i> Retour au site MonCV Pro
             </a>
             <a href="#services" class="block px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-100" onclick="toggleMobileMenu()">Services</a>
             <a href="#diagnostic" class="block px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-100" onclick="toggleMobileMenu()">Calculateur de Score</a>
             <a href="#tarifs" class="block px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-100" onclick="toggleMobileMenu()">Tarifs (-60%)</a>
-            <a href="suivi-linkedin" class="block px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-100" onclick="toggleMobileMenu()">Suivi de Commande</a>
             <a href="commander" class="block w-full text-center mt-3 px-5 py-3 rounded-xl font-extrabold text-white bg-primary hover:bg-sky-600 shadow-md" onclick="toggleMobileMenu()">
                 Commander (-60%)
             </a>
@@ -581,14 +579,34 @@ if (empty($testimonials)) {
                             <p class="text-xs font-bold text-gray-500 mb-6 italic">"<?= htmlspecialchars($pkg['tagline']) ?>"</p>
 
                             <!-- Bullet Points -->
-                            <ul class="space-y-2.5 text-xs text-gray-700 mb-6 font-medium">
-                                <?php foreach ($deliverables as $deliv): ?>
+                            <ul class="space-y-2.5 text-xs text-gray-700 mb-2 font-medium">
+                                <?php 
+                                $visibleItems = array_slice($deliverables, 0, 3);
+                                $hiddenItems = array_slice($deliverables, 3);
+                                foreach ($visibleItems as $deliv): ?>
                                 <li class="flex items-start gap-2">
                                     <i class="fa-solid fa-circle-check text-accent mt-0.5 shrink-0 text-xs"></i>
                                     <span><?= htmlspecialchars($deliv) ?></span>
                                 </li>
                                 <?php endforeach; ?>
                             </ul>
+
+                            <?php if (!empty($hiddenItems)): ?>
+                            <ul class="space-y-2.5 text-xs text-gray-700 mb-4 font-medium hidden">
+                                <?php foreach ($hiddenItems as $deliv): ?>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-check text-accent mt-0.5 shrink-0 text-xs"></i>
+                                    <span><?= htmlspecialchars($deliv) ?></span>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <button type="button" onclick="toggleLinkedInPackDetails(this)" class="text-xs font-bold text-primary hover:text-sky-700 flex items-center gap-1.5 mb-6 transition-colors group">
+                                <span>Voir plus (+<?= count($hiddenItems) ?> avantages)</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] group-hover:translate-y-0.5 transition-transform"></i>
+                            </button>
+                            <?php else: ?>
+                            <div class="mb-6"></div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="pt-4 border-t border-gray-100">
@@ -703,6 +721,19 @@ if (empty($testimonials)) {
 
     <!-- SCRIPTS -->
     <script>
+        function toggleLinkedInPackDetails(btn) {
+            const hiddenList = btn.previousElementSibling;
+            if (!hiddenList) return;
+            if (hiddenList.classList.contains('hidden')) {
+                hiddenList.classList.remove('hidden');
+                btn.innerHTML = '<span>Réduire (-)</span> <i class="fa-solid fa-chevron-up text-[10px]"></i>';
+            } else {
+                hiddenList.classList.add('hidden');
+                const count = hiddenList.children.length;
+                btn.innerHTML = `<span>Voir plus (+${count} avantages)</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>`;
+            }
+        }
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');

@@ -38,7 +38,7 @@ require_once __DIR__ . '/../admin/config/db.php';
                     Hire<span class="text-brand-yellow">Me</span>
                 </a>
                 <a href="../index.html" class="text-[11px] font-bold text-slate-400 hover:text-brand-yellow border border-slate-800 bg-slate-900 px-3 py-1 rounded-full transition-colors">
-                    ← MonCvPro.com
+                    ← MonCV Pro
                 </a>
             </div>
             <h1 class="text-3xl font-black text-white">Suivi de Commande LinkedIn</h1>

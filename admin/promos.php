@@ -96,6 +96,9 @@ $promos = $pdo->query("SELECT * FROM promo_codes ORDER BY created_at DESC")->fet
                             <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="senior"> Pack Senior</label>
                             <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="expert"> Pack Expert</label>
                             <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="templates40"> 40 Modèles</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="1"> LinkedIn Essentiel</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="2"> LinkedIn Pro</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" name="products[]" value="3"> LinkedIn Executive</label>
                         </div>
                     </div>
                     <div class="mb-4">

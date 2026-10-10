@@ -99,12 +99,12 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
         <!-- Header Nav -->
         <div class="flex items-center justify-between border-b border-gray-200 pb-6">
             <div class="flex items-center gap-4">
-                <a href="../index.html" class="flex items-center gap-2 group" title="Retourner sur MonCvPro.com">
+                <a href="../index.html" class="flex items-center gap-2 group" title="Retourner sur MonCV Pro">
                     <div class="w-9 h-9 rounded-xl bg-primary text-white font-black flex items-center justify-center text-lg shadow-md shadow-sky-500/20">HM</div>
                     <span class="text-xl font-extrabold text-primary tracking-tight">HireMe<span class="text-neutral">LinkedIn</span></span>
                 </a>
                 <a href="../index.html" class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-sky-600 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg transition-colors">
-                    <i class="fa-solid fa-house text-[10px]"></i> MonCvPro.com
+                    <i class="fa-solid fa-house text-[10px]"></i> MonCV Pro
                 </a>
             </div>
             <div class="text-xs text-gray-500 font-bold flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
@@ -668,6 +668,21 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                         <span>-3 600 FCFA</span>
                     </div>
 
+                    <!-- PROMO CODE INPUT BOX -->
+                    <div class="pt-3 border-t border-gray-200 space-y-1.5">
+                        <label class="block text-[11px] font-bold text-gray-700">Avez-vous un code promo ?</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="linkedinPromoInput" placeholder="Ex: HIREME60" class="flex-1 rounded-xl border-gray-300 border p-2 text-xs font-bold uppercase focus:ring-primary focus:border-primary">
+                            <button type="button" onclick="applyLinkedInPromo()" class="bg-neutral text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors">Appliquer</button>
+                        </div>
+                        <p id="linkedinPromoMessage" class="text-[11px] font-bold min-h-[16px]"></p>
+                    </div>
+
+                    <div id="sumPromoDiscountRow" class="hidden flex justify-between text-xs text-emerald-700 pt-2 border-t border-gray-200 font-bold bg-emerald-50 px-2.5 py-1.5 rounded-xl">
+                        <span>🎟️ Code Promo (<span id="appliedPromoCodeName"></span>)</span>
+                        <span id="appliedPromoDiscountText">-0 FCFA</span>
+                    </div>
+
                     <!-- Total Row -->
                     <div class="pt-4 border-t border-gray-200 flex justify-between items-center">
                         <div>
@@ -897,6 +912,70 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
             calculateTotal();
         }
 
+        let appliedPromoCode = null;
+        let appliedPromoDiscount = 0;
+
+        function calculateRawTotal() {
+            let total = 0;
+            if (isBundleActive) {
+                total += activeBundlePrice;
+            } else {
+                const selectedPkgRadio = document.querySelector('input[name="package_id"]:checked');
+                if (selectedPkgRadio) {
+                    total += parseFloat(selectedPkgRadio.getAttribute('data-price')) || 0;
+                }
+            }
+            const selectedProds = document.querySelectorAll('input[name="product_ids[]"]:checked');
+            selectedProds.forEach(pr => { total += parseFloat(pr.getAttribute('data-price')) || 0; });
+            const selectedAddons = document.querySelectorAll('input[name="addon_ids[]"]:checked');
+            selectedAddons.forEach(ad => { total += parseFloat(ad.getAttribute('data-price')) || 0; });
+            return total;
+        }
+
+        async function applyLinkedInPromo() {
+            const input = document.getElementById('linkedinPromoInput');
+            const msg = document.getElementById('linkedinPromoMessage');
+            if (!input || !msg) return;
+            const code = input.value.trim();
+            if (!code) {
+                msg.className = "text-[11px] font-bold text-red-500";
+                msg.innerText = "Veuillez entrer un code promo.";
+                return;
+            }
+
+            msg.className = "text-[11px] font-bold text-gray-500";
+            msg.innerText = "Vérification...";
+
+            try {
+                const res = await fetch(`../api/check_promo.php?code=${encodeURIComponent(code)}`);
+                const data = await res.json();
+
+                if (data.valid) {
+                    appliedPromoCode = code.toUpperCase();
+                    const rawTotal = calculateRawTotal();
+                    if (data.discount_type === 'percent') {
+                        appliedPromoDiscount = Math.round(rawTotal * (data.discount_value / 100));
+                    } else {
+                        appliedPromoDiscount = Math.min(rawTotal, data.discount_value);
+                    }
+
+                    msg.className = "text-[11px] font-bold text-emerald-600";
+                    msg.innerText = data.message || "Code promo valide !";
+                } else {
+                    appliedPromoCode = null;
+                    appliedPromoDiscount = 0;
+                    msg.className = "text-[11px] font-bold text-red-500";
+                    msg.innerText = data.message || "Code promo invalide.";
+                }
+            } catch (err) {
+                appliedPromoCode = null;
+                appliedPromoDiscount = 0;
+                msg.className = "text-[11px] font-bold text-red-500";
+                msg.innerText = "Erreur de vérification.";
+            }
+            calculateTotal();
+        }
+
         function calculateTotal() {
             let total = 0;
             let pkgName = '';
@@ -961,8 +1040,28 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 summaryContainer.appendChild(item);
             });
 
-            const formattedTotal = total.toLocaleString('fr-FR') + ' FCFA';
+            // Recalculate Promo Discount based on new raw total
+            if (appliedPromoCode && appliedPromoDiscount > 0) {
+                const rawTotal = calculateRawTotal();
+                // recalculate if needed
+            }
+
+            let finalTotal = Math.max(0, total - appliedPromoDiscount);
+            const formattedTotal = finalTotal.toLocaleString('fr-FR') + ' FCFA';
             
+            const promoRow = document.getElementById('sumPromoDiscountRow');
+            const promoNameEl = document.getElementById('appliedPromoCodeName');
+            const promoTextEl = document.getElementById('appliedPromoDiscountText');
+            if (promoRow) {
+                if (appliedPromoCode && appliedPromoDiscount > 0) {
+                    promoRow.classList.remove('hidden');
+                    if (promoNameEl) promoNameEl.innerText = appliedPromoCode;
+                    if (promoTextEl) promoTextEl.innerText = `-${appliedPromoDiscount.toLocaleString('fr-FR')} FCFA`;
+                } else {
+                    promoRow.classList.add('hidden');
+                }
+            }
+
             const elPkgName = document.getElementById('sumPackageName');
             if (elPkgName) elPkgName.innerText = pkgName;
 
@@ -1004,7 +1103,11 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 }
 
                 const formData = new FormData(this);
-                const apiUrl = '/api/linkedin/submit_order.php';
+                if (appliedPromoCode) {
+                    formData.append('promo_code', appliedPromoCode);
+                    formData.append('discount_amount', appliedPromoDiscount);
+                }
+                const apiUrl = '../api/linkedin/submit_order.php';
 
                 fetch(apiUrl, {
                     method: 'POST',
