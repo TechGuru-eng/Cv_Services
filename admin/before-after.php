@@ -12,13 +12,13 @@ $error = '';
 // Handle Upload / Create
 if (isset($_POST['upload_ba'])) {
     $category = trim($_POST['category'] ?? '💼 Gestion & Direction');
-    $beforeTag = trim($_POST['before_tag'] ?? 'CV Ordinaire (Rejeté)');
+    $beforeTag = trim($_POST['before_tag'] ?? 'CV Non Conforme ✗');
     $beforeScore = trim($_POST['before_score'] ?? 'Score ATS : 28%');
     $beforeQuote = trim($_POST['before_quote'] ?? '');
     
-    $afterTag = trim($_POST['after_tag'] ?? 'HireMe CV (Recruté)');
+    $afterTag = trim($_POST['after_tag'] ?? 'CV ATS Optimisé ✓');
     $afterScore = trim($_POST['after_score'] ?? 'Score ATS : 98%');
-    $afterBadge = trim($_POST['after_badge'] ?? 'ATS OPTIMIZED');
+    $afterBadge = trim($_POST['after_badge'] ?? 'ATS OPTIMISÉ');
     $afterQuote = trim($_POST['after_quote'] ?? '');
     $displayOrder = intval($_POST['display_order'] ?? 1);
 

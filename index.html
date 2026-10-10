@@ -643,9 +643,9 @@
                                 <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV Non Conforme ✗</span>
                                 <span id="baBeforeScore" class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Score ATS : 28%</span>
                             </div>
-                            <div class="bg-white border-2 border-red-100 rounded-xl overflow-hidden opacity-80 transform -rotate-1 hover:rotate-0 transition-transform shadow-sm relative group">
-                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="CV Non Conforme" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
-                                <div class="absolute inset-0 bg-red-500/10 pointer-events-none"></div>
+                            <div class="bg-white border-2 border-red-100 rounded-xl overflow-hidden shadow-sm relative group flex items-center justify-center p-1.5 min-h-[450px]">
+                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="CV Non Conforme" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
+                                <div class="absolute inset-0 bg-red-500/5 pointer-events-none rounded-xl"></div>
                             </div>
                             <p id="baBeforeQuote" class="text-sm text-gray-400 italic">"Design dépassé, trop de texte dense, non optimisé pour les robots ATS."</p>
                         </div>
@@ -656,9 +656,9 @@
                                 <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV ATS Optimisé ✓</span>
                                 <span id="baAfterScore" class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Score ATS : 98%</span>
                             </div>
-                            <div class="bg-white border-2 border-primary rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform shadow-xl relative group">
+                            <div class="bg-white border-2 border-primary rounded-xl overflow-hidden shadow-xl relative group flex items-center justify-center p-1.5 min-h-[450px]">
                                 <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">ATS OPTIMISÉ</div>
-                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="CV ATS Optimisé" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
+                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="CV ATS Optimisé" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
                             </div>
                             <p id="baAfterQuote" class="text-sm text-neutral font-medium">"Design épuré, mots-clés stratégiques, impact visuel immédiat."</p>
                         </div>
@@ -2593,6 +2593,7 @@
                     beforeAfterSlides = data.slides;
                     buildBeforeAfterControls();
                     renderBeforeAfterSlide(0);
+                    resetBeforeAfterTimer();
                 }
             } catch (err) {
                 console.log('Using default Before/After slides:', err);
@@ -2605,7 +2606,7 @@
             if (tabsContainer) {
                 tabsContainer.innerHTML = beforeAfterSlides.map((s, i) => `
                     <button type="button" onclick="selectBeforeAfterSlide(${i})" class="ba-tab-btn ${i === currentBaIndex ? 'active bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm" data-index="${i}">
-                        ${s.category}
+                        Slide ${i+1}
                     </button>
                 `).join('');
             }
@@ -2637,16 +2638,17 @@
                 const aImg = document.getElementById('baAfterImg');
                 const aQuote = document.getElementById('baAfterQuote');
 
-                if (bTag) bTag.innerText = slide.before.tag;
-                if (bScore) bScore.innerText = slide.before.score;
+                // Enforce uniform single title tags across all slides
+                if (bTag) bTag.innerText = "CV Non Conforme ✗";
+                if (bScore) bScore.innerText = slide.before.score || "Score ATS : 28%";
                 if (bImg) bImg.src = slide.before.img;
-                if (bQuote) bQuote.innerText = `"${slide.before.quote}"`;
+                if (bQuote) bQuote.innerText = slide.before.quote ? `"${slide.before.quote}"` : "";
 
-                if (aTag) aTag.innerText = slide.after.tag;
-                if (aScore) aScore.innerText = slide.after.score;
-                if (aBadge) aBadge.innerText = slide.after.badge;
+                if (aTag) aTag.innerText = "CV ATS Optimisé ✓";
+                if (aScore) aScore.innerText = slide.after.score || "Score ATS : 98%";
+                if (aBadge) aBadge.innerText = "ATS OPTIMISÉ";
                 if (aImg) aImg.src = slide.after.img;
-                if (aQuote) aQuote.innerText = `"${slide.after.quote}"`;
+                if (aQuote) aQuote.innerText = slide.after.quote ? `"${slide.after.quote}"` : "";
 
                 document.querySelectorAll('.ba-tab-btn').forEach((btn, i) => {
                     if (i === index) {
@@ -2690,7 +2692,7 @@
         function resetBeforeAfterTimer() {
             if (baTimer) clearInterval(baTimer);
             baTimer = setInterval(() => {
-                if (!isBaHovered && beforeAfterSlides.length > 1) {
+                if (beforeAfterSlides.length > 1) {
                     currentBaIndex = (currentBaIndex + 1) % beforeAfterSlides.length;
                     renderBeforeAfterSlide(currentBaIndex);
                 }
@@ -2698,11 +2700,6 @@
         }
 
         function initBeforeAfterCarousel() {
-            const wrapper = document.getElementById('baCarouselWrapper');
-            if (wrapper) {
-                wrapper.addEventListener('mouseenter', () => { isBaHovered = true; });
-                wrapper.addEventListener('mouseleave', () => { isBaHovered = false; });
-            }
             renderBeforeAfterSlide(0);
             resetBeforeAfterTimer();
             loadBeforeAfterSlidesFromApi();
