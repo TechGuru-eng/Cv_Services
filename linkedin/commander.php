@@ -98,10 +98,15 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
         
         <!-- Header Nav -->
         <div class="flex items-center justify-between border-b border-gray-200 pb-6">
-            <a href="index.php" class="flex items-center gap-2 group">
-                <div class="w-9 h-9 rounded-xl bg-primary text-white font-black flex items-center justify-center text-lg shadow-md shadow-sky-500/20">HM</div>
-                <span class="text-xl font-extrabold text-primary tracking-tight">HireMe<span class="text-neutral">LinkedIn</span></span>
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="../index.html" class="flex items-center gap-2 group" title="Retourner sur MonCvPro.com">
+                    <div class="w-9 h-9 rounded-xl bg-primary text-white font-black flex items-center justify-center text-lg shadow-md shadow-sky-500/20">HM</div>
+                    <span class="text-xl font-extrabold text-primary tracking-tight">HireMe<span class="text-neutral">LinkedIn</span></span>
+                </a>
+                <a href="../index.html" class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-sky-600 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg transition-colors">
+                    <i class="fa-solid fa-house text-[10px]"></i> MonCvPro.com
+                </a>
+            </div>
             <div class="text-xs text-gray-500 font-bold flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
                 <i class="fa-solid fa-shield-halved text-primary"></i>
                 <span>Commande & Paiement Sécurisés</span>

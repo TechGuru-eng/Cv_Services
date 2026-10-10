@@ -2,6 +2,8 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -29,7 +31,6 @@
 
         gtag('config', 'G-0WXT4Q08R2');
     </script>
-    <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -630,7 +631,7 @@
                 </div>
 
                 <!-- Carousel Controls / Category Selector -->
-                <div class="flex justify-center items-center gap-2 mb-8 flex-wrap">
+                <div id="baTabButtons" class="flex justify-center items-center gap-2 mb-8 flex-wrap">
                     <button type="button" onclick="selectBeforeAfterSlide(0)" class="ba-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-primary text-white" data-index="0">
                         💼 Gestion & Direction
                     </button>
@@ -681,7 +682,7 @@
                     </button>
 
                     <!-- Indicators Dots -->
-                    <div class="flex justify-center items-center gap-2 mt-4">
+                    <div id="baDotsContainer" class="flex justify-center items-center gap-2 mt-4">
                         <span class="ba-dot w-2.5 h-2.5 rounded-full bg-primary cursor-pointer transition-all" onclick="selectBeforeAfterSlide(0)"></span>
                         <span class="ba-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all" onclick="selectBeforeAfterSlide(1)"></span>
                         <span class="ba-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all" onclick="selectBeforeAfterSlide(2)"></span>
@@ -2477,8 +2478,8 @@
             }
         });
 
-        // ==================== Rotating Before/After CV Carousel Logic ====================
-        const beforeAfterSlides = [
+        // ==================== Rotating Before/After CV Carousel Logic (40s Interval & Admin Synced) ====================
+        let beforeAfterSlides = [
             {
                 category: "💼 Gestion & Direction",
                 before: {
@@ -2532,6 +2533,39 @@
         let currentBaIndex = 0;
         let baTimer = null;
         let isBaHovered = false;
+        const BA_ROTATION_INTERVAL = 40000; // 40 seconds auto-rotation as requested
+
+        async function loadBeforeAfterSlidesFromApi() {
+            try {
+                const res = await fetch('api/get_before_after.php');
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.success && Array.isArray(data.slides) && data.slides.length > 0) {
+                    beforeAfterSlides = data.slides;
+                    buildBeforeAfterControls();
+                    renderBeforeAfterSlide(0);
+                }
+            } catch (err) {
+                console.log('Using default Before/After slides:', err);
+            }
+        }
+
+        function buildBeforeAfterControls() {
+            const tabsContainer = document.getElementById('baTabButtons');
+            const dotsContainer = document.getElementById('baDotsContainer');
+            if (tabsContainer) {
+                tabsContainer.innerHTML = beforeAfterSlides.map((s, i) => `
+                    <button type="button" onclick="selectBeforeAfterSlide(${i})" class="ba-tab-btn ${i === currentBaIndex ? 'active bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm" data-index="${i}">
+                        ${s.category}
+                    </button>
+                `).join('');
+            }
+            if (dotsContainer) {
+                dotsContainer.innerHTML = beforeAfterSlides.map((s, i) => `
+                    <span class="ba-dot ${i === currentBaIndex ? 'w-3 h-3 bg-primary' : 'w-2.5 h-2.5 bg-gray-300'} rounded-full cursor-pointer transition-all" onclick="selectBeforeAfterSlide(${i})"></span>
+                `).join('');
+            }
+        }
 
         function renderBeforeAfterSlide(index) {
             const slide = beforeAfterSlides[index];
@@ -2607,11 +2641,11 @@
         function resetBeforeAfterTimer() {
             if (baTimer) clearInterval(baTimer);
             baTimer = setInterval(() => {
-                if (!isBaHovered) {
+                if (!isBaHovered && beforeAfterSlides.length > 1) {
                     currentBaIndex = (currentBaIndex + 1) % beforeAfterSlides.length;
                     renderBeforeAfterSlide(currentBaIndex);
                 }
-            }, 5500);
+            }, BA_ROTATION_INTERVAL);
         }
 
         function initBeforeAfterCarousel() {
@@ -2622,6 +2656,7 @@
             }
             renderBeforeAfterSlide(0);
             resetBeforeAfterTimer();
+            loadBeforeAfterSlidesFromApi();
         }
     </script>
     <!-- Legacy Exit Popup (DISABLED - Replaced by Spin Wheel) -->

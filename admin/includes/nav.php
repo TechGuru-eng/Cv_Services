@@ -62,6 +62,10 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'cv-models.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">🎨</span> Modèles CV
         </a>
+        <a href="<?= $navBaseUrl ?>before-after.php"
+            class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= $currentPage == 'before-after.php' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
+            <span class="mr-3 text-xl">🔄</span> Avant / Après CV
+        </a>
         <a href="<?= $navBaseUrl ?>blog.php"
             class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 <?= ($currentPage == 'blog.php' || $currentPage == 'blog_edit.php') ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?>">
             <span class="mr-3 text-xl">✏️</span> Blog & Articles
@@ -267,6 +271,13 @@ $navBaseUrl = isset($navBaseUrl) ? $navBaseUrl : '';
             <div>
                 <div class="font-bold">Modèles CV</div>
                 <div class="text-xs text-slate-400">Ajouter ou modifier des designs</div>
+            </div>
+        </a>
+        <a href="<?= $navBaseUrl ?>before-after.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
+            <span class="text-2xl mr-4 group-hover:scale-110 transition-transform">🔄</span>
+            <div>
+                <div class="font-bold">Avant / Après CV</div>
+                <div class="text-xs text-slate-400">Gérer les comparaisons carrousel (40s)</div>
             </div>
         </a>
         <a href="<?= $navBaseUrl ?>blog.php" class="flex items-center p-4 rounded-xl bg-white/5 hover:bg-blue-600/20 hover:text-blue-400 transition-all group">
