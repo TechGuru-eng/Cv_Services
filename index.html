@@ -248,7 +248,7 @@
         class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white text-center py-2.5 px-4 text-[11px] sm:text-xs font-bold relative z-[60] border-b border-white/10 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
             <div class="flex items-center gap-2">
-                <span class="inline-flex items-center justify-center bg-white/20 text-white text-[10px] uppercase font-black px-2 py-0.5 rounded-full tracking-wider">🚀 NOUVEAU</span>
+                <span class="inline-flex items-center justify-center bg-white/20 text-white text-[10px] uppercase font-black px-2 py-0.5 rounded-full tracking-wider">NOUVEAU</span>
                 <span class="font-medium text-blue-50">Boostez votre visibilité auprès des recruteurs avec notre service <strong class="text-white font-extrabold">Optimisation de Profil LinkedIn</strong> !</span>
             </div>
             <a href="linkedin"
@@ -431,7 +431,7 @@
 
     <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative pt-10 pb-16 px-4 sm:pt-20 sm:pb-24 lg:pb-32 overflow-hidden border-b border-gray-100">
+        <section class="relative pt-10 pb-16 px-4 sm:pt-20 sm:pb-24 lg:pb-32 overflow-hidden border-b border-gray-800 bg-gray-950">
             <div class="max-w-7xl mx-auto text-center relative z-10">
                 <!-- Urgency Badge -->
                 <div id="heroPromoBadge" style="display: none;"
@@ -442,14 +442,14 @@
                         finissent bientôt</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl font-extrabold text-neutral tracking-tight mb-6 leading-tight">
+                <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
                     Ne postulez plus. <br class="hidden sm:block">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">Soyez
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-400">Soyez
                         Recruté.</span>
                 </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500 mb-10 leading-relaxed">
+                <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed">
                     Nous ne rédigeons pas seulement des CV. Nous créons des <span
-                        class="text-neutral font-bold italic">machines à décrocher des entretiens</span> optimisées pour
+                        class="text-white font-bold italic">machines à décrocher des entretiens</span> optimisées pour
                     l'international et les systèmes ATS.
                 </p>
 
@@ -492,7 +492,7 @@
 
                 <!-- Trust Bar -->
                 <div
-                    class="pt-8 border-t border-gray-100 flex flex-wrap justify-center items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    class="pt-8 border-t border-white/10 flex flex-wrap justify-center items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                     <div class="flex items-center space-x-2">
                         <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Paiements
                             Sécurisés</span>
@@ -627,21 +627,11 @@
                         Transformations Réelles
                     </span>
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral tracking-tight">Résultats concrets : Avant / Après</h2>
-                    <p class="mt-3 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">Voyez la transformation directe entre un CV ordinaire rejeté et une candidature optimisée HireMe.</p>
+                    <p class="mt-3 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">Voyez la transformation directe entre un CV non conforme rejeté et un CV ATS optimisé HireMe.</p>
                 </div>
 
-                <!-- Carousel Controls / Category Selector -->
-                <div id="baTabButtons" class="flex justify-center items-center gap-2 mb-8 flex-wrap">
-                    <button type="button" onclick="selectBeforeAfterSlide(0)" class="ba-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-primary text-white" data-index="0">
-                        💼 Gestion & Direction
-                    </button>
-                    <button type="button" onclick="selectBeforeAfterSlide(1)" class="ba-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-index="1">
-                        💻 Ingénierie & Tech
-                    </button>
-                    <button type="button" onclick="selectBeforeAfterSlide(2)" class="ba-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-index="2">
-                        📈 Commercial & Marketing
-                    </button>
-                </div>
+                <!-- Carousel Dot Navigation Only (no category tabs) -->
+                <div id="baTabButtons" class="hidden"></div>
 
                 <div class="relative max-w-4xl mx-auto" id="baCarouselWrapper">
                     <!-- Carousel Slide Container -->
@@ -649,11 +639,11 @@
                         <!-- Before -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV Ordinaire (Rejeté)</span>
+                                <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV Non Conforme ✗</span>
                                 <span id="baBeforeScore" class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Score ATS : 28%</span>
                             </div>
                             <div class="bg-white border-2 border-red-100 rounded-xl overflow-hidden opacity-80 transform -rotate-1 hover:rotate-0 transition-transform shadow-sm relative group">
-                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="Exemple CV Avant" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
+                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="CV Non Conforme" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
                                 <div class="absolute inset-0 bg-red-500/10 pointer-events-none"></div>
                             </div>
                             <p id="baBeforeQuote" class="text-sm text-gray-400 italic">"Design dépassé, trop de texte dense, non optimisé pour les robots ATS."</p>
@@ -662,12 +652,12 @@
                         <!-- After -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">HireMe CV (Recruté)</span>
+                                <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV ATS Optimisé ✓</span>
                                 <span id="baAfterScore" class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Score ATS : 98%</span>
                             </div>
                             <div class="bg-white border-2 border-primary rounded-xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform shadow-xl relative group">
-                                <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">ATS OPTIMIZED</div>
-                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="Exemple CV Après" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
+                                <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">ATS OPTIMISÉ</div>
+                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="CV ATS Optimisé" loading="lazy" class="w-full h-auto object-cover max-h-[460px]">
                             </div>
                             <p id="baAfterQuote" class="text-sm text-neutral font-medium">"Design épuré, mots-clés stratégiques, impact visuel immédiat."</p>
                         </div>
@@ -1272,11 +1262,11 @@
                                                 <!-- EBOOK 7: Annuaire entreprises camerounaises -->
                                                 <label class="flex items-center p-4 border-2 border-amber-200 rounded-2xl cursor-pointer hover:border-amber-400 transition-all bg-amber-50/40 group relative overflow-hidden">
                                                     <div class="absolute -top-1 -right-4 bg-amber-500 text-white text-[8px] font-bold px-4 py-1 rotate-12 uppercase tracking-widest shadow-sm">EXCLUSIF</div>
-                                                    <input type="checkbox" id="upsellEbook7" value="5000" onchange="updateOrderTotal()" class="w-5 h-5 text-amber-600 rounded border-gray-300 focus:ring-amber-500">
+                                                    <input type="checkbox" id="upsellEbook7" value="1000" onchange="updateOrderTotal()" class="w-5 h-5 text-amber-600 rounded border-gray-300 focus:ring-amber-500">
                                                     <div class="ml-4 flex-1">
                                                         <div class="flex justify-between items-center">
                                                             <span class="font-extrabold text-neutral group-hover:text-amber-600 transition-colors">🏢 Annuaire des Entreprises Camerounaises</span>
-                                                            <span class="text-sm font-bold text-amber-600">+5 000 FCFA</span>
+                                                            <span class="text-sm font-bold text-amber-600">+1 000 FCFA</span>
                                                         </div>
                                                         <p class="text-xs text-gray-600">R&eacute;pertoire complet des entreprises actives au Cameroun avec coordonn&eacute;es directes pour postuler.</p>
                                                     </div>
@@ -1298,15 +1288,27 @@
                                 <div class="flex items-center gap-3 mb-2">
                                     <span
                                         class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                                    <h3 class="text-lg font-bold text-neutral">Confirmation</h3>
+                                    <h3 class="text-lg font-bold text-neutral">Récapitulatif de votre commande</h3>
                                 </div>
 
                                 <div class="bg-gray-50 rounded-2xl p-5 space-y-3">
+                                    <!-- Main Pack -->
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-gray-500">Service sélectionné :</span>
-                                        <span id="summaryPack" class="font-bold text-neutral">Pack
-                                            Pro</span>
+                                        <span class="text-gray-500 font-medium">📦 Service principal :</span>
+                                        <span id="summaryPack" class="font-bold text-neutral">Pack Pro</span>
                                     </div>
+
+                                    <!-- Selected Options (populated by JS) -->
+                                    <div id="summaryOptions" class="space-y-1.5 pt-1">
+                                        <!-- Dynamically injected -->
+                                    </div>
+
+                                    <!-- Promo Code Applied -->
+                                    <div id="summaryPromoRow" class="hidden flex justify-between text-sm text-green-700 font-bold bg-green-50 px-3 py-1.5 rounded-lg">
+                                        <span>🎟️ Code promo appliqué :</span>
+                                        <span id="summaryPromoCode">-</span>
+                                    </div>
+
                                     <div
                                         class="border-t border-gray-200 pt-3 flex justify-between items-center text-xl">
                                         <span class="font-bold text-neutral">Total :</span>
@@ -1889,6 +1891,52 @@
             if (step === 3) {
                 const packSelect = document.getElementById('packSelect');
                 document.getElementById('summaryPack').textContent = packSelect.options[packSelect.selectedIndex].textContent.split('(')[0].trim();
+
+                // Build detailed options list
+                const optionsList = document.getElementById('summaryOptions');
+                const optionsHTML = [];
+
+                const deliveryOption = document.querySelector('input[name="delivery_time"]:checked');
+                if (deliveryOption && parseInt(deliveryOption.value) > 0) {
+                    const labels = { '1000': '⚡ Livraison Urgente (3h)', '2000': '🔥 Livraison Flash (1h)' };
+                    optionsHTML.push(`<div class="flex justify-between text-xs text-gray-600"><span>${labels[deliveryOption.value] || 'Livraison Express'}</span><span class="font-bold">+${parseInt(deliveryOption.value).toLocaleString('fr-FR')} FCFA</span></div>`);
+                }
+
+                const extraOptions = [
+                    { id: 'upsellLetter', label: '📝 Lettre de Motivation' },
+                    { id: 'upsellEbook1', label: '📋 Guide 32 Cabinets RH' },
+                    { id: 'upsellEbook2', label: '🎙️ 50 Questions d\'Entretien' },
+                    { id: 'upsellEbook3', label: '🌐 Apprendre en Ligne Gratuitement' },
+                    { id: 'upsellEbook4', label: '💬 100 Messages Professionnels' },
+                    { id: 'upsellEbook5', label: '📁 Pack 60 Modèles de CV' },
+                    { id: 'upsellEbook6', label: '✉️ Pack 300 Lettres de Motivation' },
+                    { id: 'upsellEbook7', label: '🏢 Annuaire Entreprises Camerounaises' }
+                ];
+
+                extraOptions.forEach(opt => {
+                    const el = document.getElementById(opt.id);
+                    if (el && el.checked) {
+                        optionsHTML.push(`<div class="flex justify-between text-xs text-gray-600"><span>${opt.label}</span><span class="font-bold">+${parseInt(el.value).toLocaleString('fr-FR')} FCFA</span></div>`);
+                    }
+                });
+
+                if (optionsList) {
+                    optionsList.innerHTML = optionsHTML.length > 0
+                        ? `<div class="border-t border-gray-100 pt-2 space-y-1.5">${optionsHTML.join('')}</div>`
+                        : '';
+                }
+
+                // Show promo code if applied
+                const promoRow = document.getElementById('summaryPromoRow');
+                const promoCodeEl = document.getElementById('summaryPromoCode');
+                if (promoRow && promoCodeEl) {
+                    if (isPromoApplied && promoData) {
+                        promoRow.classList.remove('hidden');
+                        promoCodeEl.textContent = promoData.code + (promoData.discount_type === 'percent' ? ' (-' + promoData.discount_value + '%)' : '');
+                    } else {
+                        promoRow.classList.add('hidden');
+                    }
+                }
             }
 
             // Hide all steps
@@ -2483,15 +2531,15 @@
             {
                 category: "💼 Gestion & Direction",
                 before: {
-                    tag: "CV Ordinaire (Rejeté)",
+                    tag: "CV Non Conforme ✗",
                     score: "Score ATS : 28%",
                     img: "assets/cv-before-messy.png",
                     quote: "Design dépassé, trop de texte dense, non optimisé pour les robots ATS."
                 },
                 after: {
-                    tag: "HireMe CV (Recruté)",
+                    tag: "CV ATS Optimisé ✓",
                     score: "Score ATS : 98%",
-                    badge: "ATS OPTIMIZED",
+                    badge: "ATS OPTIMISÉ",
                     img: "assets/cv-after-professional.png",
                     quote: "Design épuré, mots-clés stratégiques, impact visuel immédiat."
                 }
@@ -2499,13 +2547,13 @@
             {
                 category: "💻 Ingénierie & Tech",
                 before: {
-                    tag: "CV Technique Standard",
+                    tag: "CV Non Conforme ✗",
                     score: "Score ATS : 42%",
                     img: "assets/cv-before-messy.png",
                     quote: "Projets et compétences noyés dans un bloc de texte sans hiérarchie."
                 },
                 after: {
-                    tag: "HireMe CV Tech (Entretien Décroché)",
+                    tag: "CV ATS Optimisé ✓",
                     score: "Score ATS : 96%",
                     badge: "TOP CANDIDAT TECH",
                     img: "assets/img/cv-sample-1.jpg",
@@ -2515,13 +2563,13 @@
             {
                 category: "📈 Commercial & Marketing",
                 before: {
-                    tag: "CV Commercial Classique",
+                    tag: "CV Non Conforme ✗",
                     score: "Score ATS : 35%",
                     img: "assets/cv-before-messy.png",
                     quote: "Aucun indicateur de chiffre d'affaires, mise en page fade et banale."
                 },
                 after: {
-                    tag: "HireMe CV Business (Recruté Top Entreprise)",
+                    tag: "CV ATS Optimisé ✓",
                     score: "Score ATS : 99%",
                     badge: "HIGH CONVERSION",
                     img: "assets/img/cv-sample-2.jpg",
