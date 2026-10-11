@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
-bbox-agent: *
-Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /includes/
+Disallow: /club/
 
 Sitemap: https://moncvpro.hiremeguide.com/sitemap.xml

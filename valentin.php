@@ -11,7 +11,7 @@ $validToken = 'valentin2026'; // Simple access token for tracking if needed
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -44,12 +44,6 @@ $validToken = 'valentin2026'; // Simple access token for tracking if needed
     <meta property="twitter:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop">
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-    
     <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
@@ -125,6 +119,13 @@ $validToken = 'valentin2026'; // Simple access token for tracking if needed
     src="https://www.facebook.com/tr?id=1406940804387366&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Facebook Pixel Code -->
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="romantic-gradient font-[Inter] text-slate-800 antialiased overflow-x-hidden">
 

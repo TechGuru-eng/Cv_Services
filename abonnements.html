@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club HireMe — Abonnements CV</title>
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HireMe Club — Boostez votre carrière">
+    <meta property="og:description" content="Accédez aux packs Basic, Standard et Premium pour des CVs optimisés chaque mois.">
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/club-preview-premium.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/club-preview-premium.png">
+
+    <!-- Favicons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .featured-card {
+            background: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(14,165,233,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .featured-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 160px; height: 160px;
+            background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-answer.open { max-height: 240px; }
+        .chevron-icon { transition: transform 0.3s ease; }
+
+        .pulse-dot { animation: pulse-ring 2s cubic-bezier(0.455,0.03,0.515,0.955) infinite; }
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(14,165,233,0.45); }
+            70%  { box-shadow: 0 0 0 9px rgba(14,165,233,0); }
+            100% { box-shadow: 0 0 0 0 rgba(14,165,233,0); }
+        }
+
+        /* Mobile testimonials carousel */
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+            will-change: transform;
+        }
+        .testimonial-card {
+            flex-shrink: 0;
+            width: 100%;
+        }
+        .carousel-dot {
+            width: 6px; height: 6px; border-radius: 99px;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .carousel-dot.active {
+            width: 20px;
+            background: #0ea5e9;
+        }
+        @media (min-width: 768px) {
+            .testimonials-track {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.25rem;
+                transform: none !important;
+                transition: none;
+            }
+            .testimonial-card { width: auto; flex-shrink: unset; }
+        }
+
+        .face-ring { box-shadow: 0 0 0 3px white; }
+    </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
+</head>
+<body class="bg-white text-slate-900 antialiased overflow-x-hidden">
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+
+        <a href="index.html" class="flex items-center gap-1">
+            <span class="font-black text-slate-900 text-lg tracking-tight">HireMe</span>
+            <span class="font-black text-sky-500 text-lg tracking-tight">Club</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#comment" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Comment ça marche</a>
+            <a href="#tarifs" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Tarifs</a>
+            <a href="#faq" class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">FAQ</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="club/login.php" class="hidden md:block text-sm font-semibold text-slate-600 hover:text-sky-500 transition-colors px-3 py-2">Connexion</a>
+            <a href="#tarifs" class="hidden md:block bg-sky-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-sky-600 transition-all active:scale-95">
+                Voir les offres
+            </a>
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl hover:bg-slate-100 transition-colors touch-manipulation">
+                <i data-lucide="menu" class="w-5 h-5 text-slate-700" id="menu-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-5 space-y-1">
+        <a href="#comment" onclick="toggleMobileMenu()" class="flex items-center gap-3 text-sm font-semibold text-slate-700 py-3 px-2 rounded-xl hover:bg-slate-50 transition-colors">
+            <i data-lucide="info" class="w-4 h-4 text-slate-400"></i> Comment ça marche
+        </a>
+        <a href="#tarifs" onclick="toggleMobileMenu()" class="flex items-center gap-3 text-sm font-semibold text-slate-700 py-3 px-2 rounded-xl hover:bg-slate-50 transition-colors">
+            <i data-lucide="tag" class="w-4 h-4 text-slate-400"></i> Tarifs
+        </a>
+        <a href="#faq" onclick="toggleMobileMenu()" class="flex items-center gap-3 text-sm font-semibold text-slate-700 py-3 px-2 rounded-xl hover:bg-slate-50 transition-colors">
+            <i data-lucide="help-circle" class="w-4 h-4 text-slate-400"></i> FAQ
+        </a>
+        <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <a href="club/login.php" class="w-full py-3.5 text-center text-sm font-bold text-slate-700 border-2 border-slate-200 rounded-2xl hover:bg-slate-50 transition-colors">
+                Se connecter
+            </a>
+            <a href="#tarifs" onclick="toggleMobileMenu()" class="w-full py-3.5 text-center text-sm font-bold text-white bg-sky-500 rounded-2xl hover:bg-sky-600 transition-colors">
+                Voir les offres →
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     HERO — mobile: text first, image below; desktop: side by side
+============================================================ -->
+<section class="pt-20 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4">
+
+        <!-- Mobile: text block -->
+        <div class="pt-10 pb-8 md:hidden">
+            <div class="inline-flex items-center gap-2 bg-sky-50 border border-sky-100 rounded-full px-4 py-1.5 mb-6">
+                <span class="w-2 h-2 bg-sky-500 rounded-full pulse-dot"></span>
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Nouveau — Packs 2026</span>
+            </div>
+            <h1 class="text-4xl font-black text-slate-900 leading-[1.08] tracking-tight mb-5">
+                Votre CV,<br>
+                <span class="gradient-text">chaque offre.</span><br>
+                En 48h.
+            </h1>
+            <p class="text-base text-slate-500 leading-relaxed mb-8">
+                Abonnez-vous et recevez un CV ciblé pour chaque poste que vous visez. Notre équipe s'occupe de tout — vous, vous postulez.
+            </p>
+            <div class="flex flex-col gap-3 mb-8">
+                <a href="#tarifs" class="w-full py-4 bg-sky-500 text-white font-black rounded-2xl text-center text-sm uppercase tracking-wide hover:bg-sky-600 transition-all active:scale-95 shadow-lg shadow-sky-200">
+                    Choisir mon pack
+                </a>
+                <a href="#comment" class="w-full py-4 bg-slate-100 text-slate-700 font-bold rounded-2xl text-center text-sm hover:bg-slate-200 transition-all">
+                    Comment ça marche ?
+                </a>
+            </div>
+            <!-- Social proof -->
+            <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                    <!-- Confirmed Black professionals on Unsplash -->
+                    <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Membre" class="w-9 h-9 rounded-full face-ring object-cover object-top">
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Membre" class="w-9 h-9 rounded-full face-ring object-cover object-top">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Membre" class="w-9 h-9 rounded-full face-ring object-cover object-top">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Membre" class="w-9 h-9 rounded-full face-ring object-cover object-top">
+                </div>
+                <div>
+                    <div class="flex gap-0.5 mb-0.5">
+                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-500">+200 membres satisfaits</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile: hero image full-width -->
+        <div class="md:hidden relative -mx-4">
+            <div class="aspect-[4/3] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&h=600&q=85&crop=faces,center"
+                     alt="Professionnelle camerounaise confiante"
+                     class="w-full h-full object-cover object-top">
+            </div>
+            <!-- Floating badges on image -->
+            <div class="absolute bottom-4 left-4 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-black text-slate-900 leading-none">CV Livré ✓</p>
+                    <p class="text-[10px] text-slate-400 font-medium mt-0.5">Sous 48h garanties</p>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4 bg-sky-500 text-white rounded-2xl px-3 py-2.5 text-center shadow-lg">
+                <p class="text-base font-black leading-none">48h</p>
+                <p class="text-[9px] font-bold uppercase tracking-wide opacity-80 mt-0.5">Livraison</p>
+            </div>
+        </div>
+
+        <!-- Desktop: side-by-side grid -->
+        <div class="hidden md:grid md:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[calc(100vh-64px)] py-12">
+            <!-- Left text -->
+            <div>
+                <div class="inline-flex items-center gap-2 bg-sky-50 border border-sky-100 rounded-full px-4 py-1.5 mb-8">
+                    <span class="w-2 h-2 bg-sky-500 rounded-full pulse-dot"></span>
+                    <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Nouveau — Packs 2026</span>
+                </div>
+                <h1 class="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.06] tracking-tight mb-6">
+                    Votre CV,<br>
+                    <span class="gradient-text">chaque offre.</span><br>
+                    En 48h.
+                </h1>
+                <p class="text-lg text-slate-500 leading-relaxed mb-10 max-w-lg">
+                    Abonnez-vous et recevez un CV sur-mesure pour chaque poste que vous visez.
+                    Notre équipe s'occupe de tout — vous, vous postulez.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 mb-12">
+                    <a href="#tarifs" class="px-8 py-4 bg-sky-500 text-white font-black rounded-2xl hover:bg-sky-600 transition-all shadow-lg shadow-sky-200 active:scale-95 text-sm uppercase tracking-wide text-center">
+                        Choisir mon pack
+                    </a>
+                    <a href="#comment" class="px-8 py-4 bg-slate-100 text-slate-700 font-bold rounded-2xl hover:bg-slate-200 transition-all text-sm text-center">
+                        Comment ça marche ?
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex -space-x-2">
+                        <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Membre" class="w-10 h-10 rounded-full face-ring object-cover object-top">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Membre" class="w-10 h-10 rounded-full face-ring object-cover object-top">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Membre" class="w-10 h-10 rounded-full face-ring object-cover object-top">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Membre" class="w-10 h-10 rounded-full face-ring object-cover object-top">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1 mb-0.5">
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-500">+200 membres satisfaits</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Right image -->
+            <div class="relative">
+                <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/15 aspect-[4/5]">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=85&crop=faces,center"
+                         alt="Professionnelle camerounaise confiante"
+                         class="w-full h-full object-cover object-top">
+                    <div class="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-slate-900/25 to-transparent"></div>
+                </div>
+                <div class="absolute -bottom-5 -left-6 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-500"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-black text-slate-900">CV Livré ✓</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Sous 48h garanties</p>
+                    </div>
+                </div>
+                <div class="absolute -top-4 -right-4 bg-sky-500 text-white rounded-2xl shadow-lg px-4 py-3 text-center">
+                    <p class="text-lg font-black leading-none">48h</p>
+                    <p class="text-[10px] font-bold opacity-80 uppercase tracking-wide">Livraison</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============================================================
+     STATS
+============================================================ -->
+<section class="py-10 px-4 border-y border-slate-100 bg-slate-50">
+    <div class="max-w-4xl mx-auto grid grid-cols-3 gap-4 text-center">
+        <div>
+            <p class="text-2xl md:text-4xl font-black text-slate-900">200+</p>
+            <p class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">CVs livrés</p>
+        </div>
+        <div class="border-x border-slate-200">
+            <p class="text-2xl md:text-4xl font-black text-sky-500">48h</p>
+            <p class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Délai garanti</p>
+        </div>
+        <div>
+            <p class="text-2xl md:text-4xl font-black text-slate-900">3</p>
+            <p class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Formules</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+<section id="comment" class="py-16 md:py-24 px-4">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 md:mb-16">
+            <p class="text-xs font-black text-sky-500 uppercase tracking-widest mb-3">Processus</p>
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight">Simple. Rapide. Efficace.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+
+            <!-- Step 1 -->
+            <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+                <div class="aspect-[16/10] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=600&h=375&q=80"
+                         alt="Choix du pack - professionnelle camerounaise"
+                         class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 flex items-start gap-4">
+                    <div class="w-10 h-10 bg-sky-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-sky-600 font-black text-lg">1</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-slate-900 mb-1.5">Choisissez votre pack</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Sélectionnez la formule adaptée à votre rythme et créez votre compte en 2 minutes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group md:translate-y-5">
+                <div class="aspect-[16/10] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=375&q=80"
+                         alt="Envoi de l'offre - professionnelle sur laptop"
+                         class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 flex items-start gap-4">
+                    <div class="w-10 h-10 bg-indigo-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-indigo-600 font-black text-lg">2</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-slate-900 mb-1.5">Envoyez le lien de l'offre</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Depuis votre tableau de bord, partagez l'offre visée et votre CV actuel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+                <div class="aspect-[16/10] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=600&h=375&q=80"
+                         alt="Téléchargement du CV - professionnel camerounais"
+                         class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 flex items-start gap-4">
+                    <div class="w-10 h-10 bg-emerald-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-emerald-600 font-black text-lg">3</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-slate-900 mb-1.5">Téléchargez votre CV</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Sous 48h, votre CV optimisé est disponible en téléchargement depuis votre espace.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS — horizontal scroll on mobile
+============================================================ -->
+<section class="py-16 md:py-20 px-4 bg-slate-900 overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10 md:mb-14">
+            <p class="text-xs font-black text-sky-400 uppercase tracking-widest mb-3">Témoignages</p>
+            <h2 class="text-2xl md:text-4xl font-black text-white tracking-tight">Ils ont décroché leur poste.</h2>
+        </div>
+
+        <!-- Carousel wrapper (overflow hidden on mobile, visible on desktop) -->
+        <div class="md:hidden overflow-hidden rounded-3xl" id="testimonialsViewport">
+            <div class="testimonials-track" id="testimonialsTrack">
+
+                <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-6">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        "J'envoyais des candidatures sans résultat pendant des mois. Avec HireMe Club, j'ai eu un entretien dès la première semaine."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Kevin M." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                        <div>
+                            <p class="font-black text-white text-sm">Kevin M.</p>
+                            <p class="text-xs text-slate-400">Ingénieur réseau, Douala</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-6">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        "Le CV était parfaitement adapté à l'offre. Les recruteurs ont remarqué la cohérence avec le poste. Je recommande vraiment."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Sandra N." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                        <div>
+                            <p class="font-black text-white text-sm">Sandra N.</p>
+                            <p class="text-xs text-slate-400">Comptable, Yaoundé</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-6">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        "Grâce au Pack Premium, j'ai pu postuler à 14 offres en un mois. 3 entretiens obtenus. Service rapide et très sérieux."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                             alt="Marie-Claire T." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                        <div>
+                            <p class="font-black text-white text-sm">Marie-Claire T.</p>
+                            <p class="text-xs text-slate-400">Marketing, Bafoussam</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Dot indicators (mobile only) -->
+        <div class="md:hidden flex items-center justify-center gap-2 mt-5" id="carouselDots">
+            <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+            <div class="carousel-dot" onclick="goToSlide(1)"></div>
+            <div class="carousel-dot" onclick="goToSlide(2)"></div>
+        </div>
+
+        <!-- Desktop: 3-col grid -->
+        <div class="hidden md:grid grid-cols-3 gap-5">
+            <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-7">
+                <div class="flex items-center gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    "J'envoyais des candidatures sans résultat pendant des mois. Avec HireMe Club, j'ai eu un entretien dès la première semaine."
+                </p>
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Kevin M." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                    <div>
+                        <p class="font-black text-white text-sm">Kevin M.</p>
+                        <p class="text-xs text-slate-400">Ingénieur réseau, Douala</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-7 translate-y-4">
+                <div class="flex items-center gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    "Le CV était parfaitement adapté à l'offre. Les recruteurs ont remarqué la cohérence avec le poste. Je recommande vraiment."
+                </p>
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Sandra N." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                    <div>
+                        <p class="font-black text-white text-sm">Sandra N.</p>
+                        <p class="text-xs text-slate-400">Comptable, Yaoundé</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card bg-white/5 border border-white/10 rounded-3xl p-7">
+                <div class="flex items-center gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    "Grâce au Pack Premium, j'ai pu postuler à 14 offres en un mois. 3 entretiens obtenus. Service rapide et très sérieux."
+                </p>
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=64&h=64&q=80&crop=faces"
+                         alt="Marie-Claire T." class="w-11 h-11 rounded-full object-cover object-top flex-shrink-0">
+                    <div>
+                        <p class="font-black text-white text-sm">Marie-Claire T.</p>
+                        <p class="text-xs text-slate-400">Marketing, Bafoussam</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PRICING
+============================================================ -->
+<section id="tarifs" class="py-16 md:py-24 px-4 bg-slate-50">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 md:mb-16">
+            <p class="text-xs font-black text-sky-500 uppercase tracking-widest mb-3">Tarifs</p>
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">Des packs selon votre rythme</h2>
+            <p class="text-slate-500 text-sm">Aucun engagement annuel. Résiliable à tout moment.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 md:gap-6 items-start">
+
+            <!-- Basic -->
+            <div class="bg-white border border-slate-200 rounded-3xl p-7 flex flex-col hover:shadow-xl hover:border-slate-300 transition-all duration-300">
+                <div class="mb-6">
+                    <span class="inline-block px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full uppercase tracking-wider mb-4">Pack Basic</span>
+                    <p class="text-slate-400 text-sm mb-5">Idéal pour commencer votre recherche.</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-slate-900">5 000</span>
+                        <span class="text-slate-400 font-semibold text-sm">XAF/mois</span>
+                    </div>
+                </div>
+                <ul class="space-y-3 flex-1 mb-7">
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-slate-500"></i>
+                        </div>4 CVs personnalisés / mois
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-slate-500"></i>
+                        </div>Ciblage ATS par mots-clés
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-slate-500"></i>
+                        </div>Tableau de bord de suivi
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-slate-500"></i>
+                        </div>Livraison sous 48h
+                    </li>
+                </ul>
+                <a href="club/register.php?plan=basic" class="w-full py-4 border-2 border-slate-200 text-slate-700 font-black rounded-2xl text-center text-sm uppercase tracking-wide hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all touch-manipulation">
+                    S'inscrire
+                </a>
+            </div>
+
+            <!-- Standard — Featured -->
+            <div class="featured-card rounded-3xl p-7 flex flex-col shadow-2xl shadow-slate-900/20 md:-translate-y-4 relative">
+                <div class="absolute top-5 right-5 bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider z-10">Populaire</div>
+                <div class="mb-6 relative z-10">
+                    <span class="inline-block px-3 py-1 bg-white/10 text-sky-300 text-xs font-bold rounded-full uppercase tracking-wider mb-4">Pack Standard</span>
+                    <p class="text-slate-400 text-sm mb-5">Pour une recherche active et sérieuse.</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-white">7 000</span>
+                        <span class="text-slate-400 font-semibold text-sm">XAF/mois</span>
+                    </div>
+                </div>
+                <ul class="space-y-3 flex-1 mb-7 relative z-10">
+                    <li class="flex items-center gap-3 text-sm text-slate-200 font-medium">
+                        <div class="w-5 h-5 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                        </div>8 CVs personnalisés / mois
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-200 font-medium">
+                        <div class="w-5 h-5 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                        </div>Optimisation ATS avancée
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-200 font-medium">
+                        <div class="w-5 h-5 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                        </div>Conseils de candidature
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-200 font-medium">
+                        <div class="w-5 h-5 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                        </div>Support prioritaire WhatsApp
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-200 font-medium">
+                        <div class="w-5 h-5 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                        </div>Livraison 48h garantie
+                    </li>
+                </ul>
+                <a href="club/register.php?plan=standard" class="w-full py-4 bg-sky-500 text-white font-black rounded-2xl text-center text-sm uppercase tracking-wide hover:bg-sky-400 transition-all shadow-lg shadow-sky-900/40 relative z-10 active:scale-95 touch-manipulation">
+                    Choisir ce pack
+                </a>
+            </div>
+
+            <!-- Premium -->
+            <div class="bg-white border border-slate-200 rounded-3xl p-7 flex flex-col hover:shadow-xl hover:border-slate-300 transition-all duration-300">
+                <div class="mb-6">
+                    <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-full uppercase tracking-wider mb-4">Pack Premium</span>
+                    <p class="text-slate-400 text-sm mb-5">Recherche intensive, résultats maximum.</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-slate-900">10 000</span>
+                        <span class="text-slate-400 font-semibold text-sm">XAF/mois</span>
+                    </div>
+                </div>
+                <ul class="space-y-3 flex-1 mb-7">
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-indigo-600"></i>
+                        </div>14 CVs personnalisés / mois
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-indigo-600"></i>
+                        </div>Audit complet de votre dossier
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-indigo-600"></i>
+                        </div>Livraison express 24h
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-indigo-600"></i>
+                        </div>Lettre de motivation incluse
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-slate-700 font-medium">
+                        <div class="w-5 h-5 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-indigo-600"></i>
+                        </div>Accès prioritaire absolu
+                    </li>
+                </ul>
+                <a href="club/register.php?plan=premium" class="w-full py-4 bg-indigo-600 text-white font-black rounded-2xl text-center text-sm uppercase tracking-wide hover:bg-indigo-700 transition-all touch-manipulation">
+                    S'inscrire
+                </a>
+            </div>
+
+        </div>
+
+        <p class="text-center text-slate-400 text-xs mt-8 md:mt-10">
+            <i data-lucide="shield-check" class="w-4 h-4 inline mr-1 text-emerald-500 align-middle"></i>
+            Paiement via MTN Money ou Orange Money — Activation dans les 4h.
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+     FAQ — accordion only on mobile, image beside on desktop
+============================================================ -->
+<section id="faq" class="py-16 md:py-24 px-4">
+    <div class="max-w-6xl mx-auto">
+
+        <!-- Mobile: just accordion -->
+        <div class="md:hidden">
+            <div class="text-center mb-10">
+                <p class="text-xs font-black text-sky-500 uppercase tracking-widest mb-3">Questions fréquentes</p>
+                <h2 class="text-2xl font-black text-slate-900 tracking-tight">On répond à vos doutes</h2>
+            </div>
+            <div class="space-y-3" id="faq-mobile">
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
+                        <span class="font-bold text-slate-900 text-sm leading-snug">Comment fonctionne l'abonnement ?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Chaque mois, votre quota de CVs se renouvelle. Vous payez via Mobile Money, validation sous 4h, accès activé immédiatement.</p>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
+                        <span class="font-bold text-slate-900 text-sm leading-snug">Puis-je changer de pack ?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Oui. Contactez-nous sur WhatsApp et nous ajustons votre pack au prochain renouvellement, sans frais.</p>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
+                        <span class="font-bold text-slate-900 text-sm leading-snug">Que se passe-t-il si je n'utilise pas tous mes CVs ?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Les CVs non utilisés ne se reportent pas au mois suivant. Choisissez le pack qui correspond à votre rythme.</p>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
+                        <span class="font-bold text-slate-900 text-sm leading-snug">Comment se passe le paiement Mobile Money ?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Un code USSD MTN ou Orange vous est fourni. Vous uploadez la capture ou l'ID de transaction — validation sous 4h.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop: image + accordion side by side -->
+        <div class="hidden md:grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div class="rounded-3xl overflow-hidden shadow-xl aspect-[3/4]">
+                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=700&q=85"
+                     alt="Professionnelle camerounaise en réflexion"
+                     class="w-full h-full object-cover object-top">
+            </div>
+            <div>
+                <p class="text-xs font-black text-sky-500 uppercase tracking-widest mb-3">Questions fréquentes</p>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-10">On répond à vos doutes</h2>
+                <div class="space-y-3">
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors">
+                            <span class="font-bold text-slate-900 text-sm leading-snug">Comment fonctionne l'abonnement mensuel ?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="px-6 pb-5 text-sm text-slate-500 leading-relaxed">Chaque mois, votre quota de CVs se renouvelle selon votre pack. Vous payez via Mobile Money, validation sous 4h, accès activé immédiatement.</p>
+                        </div>
+                    </div>
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors">
+                            <span class="font-bold text-slate-900 text-sm leading-snug">Puis-je changer de pack en cours de mois ?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="px-6 pb-5 text-sm text-slate-500 leading-relaxed">Oui. Contactez-nous sur WhatsApp, nous ajustons au prochain renouvellement. Aucun frais, aucune pénalité.</p>
+                        </div>
+                    </div>
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors">
+                            <span class="font-bold text-slate-900 text-sm leading-snug">Que se passe-t-il si je n'utilise pas tous mes CVs ?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="px-6 pb-5 text-sm text-slate-500 leading-relaxed">Les CVs non utilisés ne se reportent pas. Le quota se réinitialise à chaque renouvellement.</p>
+                        </div>
+                    </div>
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+                        <button onclick="toggleFaq(this)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors">
+                            <span class="font-bold text-slate-900 text-sm leading-snug">Comment se passe le paiement Mobile Money ?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 flex-shrink-0 chevron-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="px-6 pb-5 text-sm text-slate-500 leading-relaxed">Un code USSD (MTN ou Orange) est fourni après inscription. Uploadez capture ou ID de transaction — validation sous 4h.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============================================================
+     BOTTOM CTA
+============================================================ -->
+<section class="py-10 px-4 border-t border-slate-100 bg-slate-50">
+    <div class="max-w-5xl mx-auto">
+        <div class="bg-slate-900 rounded-3xl overflow-hidden">
+
+            <!-- Mobile: stacked -->
+            <div class="md:hidden">
+                <div class="h-52 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=300&q=80"
+                         alt="Membre connecté"
+                         class="w-full h-full object-cover object-top">
+                </div>
+                <div class="p-7">
+                    <h3 class="text-2xl font-black text-white mb-2 tracking-tight">Déjà membre ?</h3>
+                    <p class="text-slate-400 text-sm mb-6">Accédez à votre espace pour soumettre ou suivre vos demandes.</p>
+                    <a href="club/login.php" class="block w-full py-4 bg-white text-slate-900 font-black rounded-2xl text-center hover:bg-sky-400 hover:text-white transition-all text-sm uppercase tracking-wide active:scale-95">
+                        Se connecter →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Desktop: side by side -->
+            <div class="hidden md:grid md:grid-cols-2 items-center">
+                <div class="h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80"
+                         alt="Membre connecté"
+                         class="w-full h-full object-cover object-top opacity-80">
+                </div>
+                <div class="p-10 lg:p-14">
+                    <h3 class="text-3xl font-black text-white mb-3 tracking-tight">Déjà membre ?</h3>
+                    <p class="text-slate-400 text-sm mb-8">Accédez à votre espace pour soumettre ou suivre vos demandes de CV.</p>
+                    <a href="club/login.php" class="inline-block px-10 py-4 bg-white text-slate-900 font-black rounded-2xl hover:bg-sky-400 hover:text-white transition-all text-sm uppercase tracking-wide active:scale-95">
+                        Se connecter →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="py-8 px-4 text-center border-t border-slate-100">
+    <p class="text-slate-400 text-xs font-semibold uppercase tracking-widest">&copy; 2026 HireMe Club Pro. Tous droits réservés.</p>
+    <a href="index.html" class="inline-block mt-2 text-xs text-slate-400 hover:text-sky-500 transition-colors font-medium">← Retour au site principal</a>
+</footer>
+
+<script>
+    lucide.createIcons();
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+        const isOpen = !menu.classList.contains('hidden');
+        document.getElementById('menu-icon').setAttribute('data-lucide', isOpen ? 'x' : 'menu');
+        lucide.createIcons();
+    }
+
+    // ── Testimonials carousel (mobile only) ──────────────────────
+    (function() {
+        const track  = document.getElementById('testimonialsTrack');
+        const dots   = document.querySelectorAll('#carouselDots .carousel-dot');
+        if (!track || !dots.length) return;
+
+        const total = dots.length;
+        let current = 0;
+        let timer;
+
+        function goToSlide(n) {
+            current = (n + total) % total;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        }
+
+        window.goToSlide = goToSlide;
+
+        function startAuto() {
+            timer = setInterval(() => goToSlide(current + 1), 3800);
+        }
+        function stopAuto() { clearInterval(timer); }
+
+        startAuto();
+
+        // Pause on tap, resume after 6s
+        track.addEventListener('touchstart', () => { stopAuto(); }, { passive: true });
+        track.addEventListener('touchend',   () => { stopAuto(); startAuto(); }, { passive: true });
+
+        // Touch swipe support
+        let startX = 0;
+        track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend',   e => {
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) goToSlide(current + (dx < 0 ? 1 : -1));
+        }, { passive: true });
+    })();
+
+    function toggleFaq(btn) {
+        const answer  = btn.nextElementSibling;
+        const chevron = btn.querySelector('.chevron-icon');
+        const isOpen  = answer.classList.contains('open');
+
+        // Close all open ones first
+        document.querySelectorAll('.faq-answer.open').forEach(el => {
+            el.classList.remove('open');
+            const ch = el.previousElementSibling.querySelector('.chevron-icon');
+            if (ch) ch.style.transform = 'rotate(0deg)';
+        });
+
+        if (!isOpen) {
+            answer.classList.add('open');
+            if (chevron) chevron.style.transform = 'rotate(180deg)';
+        }
+    }
+</script>
+</body>
+</html>

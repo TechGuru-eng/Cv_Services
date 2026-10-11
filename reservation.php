@@ -6,7 +6,7 @@ require_once 'admin/config/db.php';
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -22,12 +22,6 @@ require_once 'admin/config/db.php';
     <meta name="description" content="Anticipez votre succès. Commandez votre CV aujourd'hui et recevez-le à la date de votre choix. Paiement à la livraison.">
 
     <!-- Favicons -->
-    <link rel="icon" href="assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png">
-
     <!-- Social Media Preview (Open Graph) -->
     <meta property="og:title" content="Réservez votre CV d'Excellence — HireMe CV" />
     <meta property="og:description" content="Anticipez votre succès. Commandez votre CV aujourd'hui et recevez-le à la date de votre choix. Paiement à la livraison." />
@@ -73,6 +67,13 @@ require_once 'admin/config/db.php';
         }
         .step-inactive { opacity: 0.5; pointer-events: none; }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -95,7 +96,7 @@ require_once 'admin/config/db.php';
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral mb-4">Commandez votre CV en avance</h1>
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto">
                     Vous avez besoin de votre CV pour une date précise ? Anticipez et laissez nos experts travailler pour vous. <br>
-                    <span class="text-primary font-semibold">Payez uniquement au moment de la livraison.</span>
+                    <span class="text-primary font-semibold">Paiement de 50% d'acompte requis à la commande pour validation.</span>
                 </p>
             </div>
 
@@ -113,42 +114,42 @@ require_once 'admin/config/db.php';
                             <label class="block text-sm font-semibold text-gray-700 mb-4">Sélectionnez votre Pack</label>
                             <div class="grid grid-cols-1 gap-3">
                                 <label class="relative flex items-center p-4 border rounded-xl cursor-pointer hover:border-primary transition-all group">
-                                    <input type="radio" name="package" value="Standard" data-price="2100" checked class="peer sr-only">
+                                    <input type="radio" name="package" value="Standard" data-price="2600" checked class="peer sr-only">
                                     <div class="flex-grow">
                                         <div class="font-bold text-gray-900 group-hover:text-primary">Pack Standard</div>
                                         <div class="text-xs text-gray-500">Pour les besoins essentiels</div>
                                     </div>
-                                    <div class="text-lg font-extrabold text-primary">2 100 FCFA</div>
+                                    <div class="text-lg font-extrabold text-primary">2 600 FCFA</div>
                                     <div class="absolute inset-0 border-2 border-primary rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
                                 </label>
                                 
                                 <label class="relative flex items-center p-4 border rounded-xl cursor-pointer hover:border-primary transition-all group">
-                                    <input type="radio" name="package" value="Pro" data-price="4600" class="peer sr-only">
+                                    <input type="radio" name="package" value="Pro" data-price="5100" class="peer sr-only">
                                     <div class="flex-grow">
                                         <div class="font-bold text-gray-900 group-hover:text-primary">Pack Pro</div>
                                         <div class="text-xs text-gray-500">Idéal pour booster sa carrière</div>
                                     </div>
-                                    <div class="text-lg font-extrabold text-primary">4 600 FCFA</div>
+                                    <div class="text-lg font-extrabold text-primary">5 100 FCFA</div>
                                     <div class="absolute inset-0 border-2 border-primary rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
                                 </label>
 
                                 <label class="relative flex items-center p-4 border rounded-xl cursor-pointer hover:border-primary transition-all group">
-                                    <input type="radio" name="package" value="Senior" data-price="12000" class="peer sr-only">
+                                    <input type="radio" name="package" value="Senior" data-price="12500" class="peer sr-only">
                                     <div class="flex-grow">
                                         <div class="font-bold text-gray-900 group-hover:text-primary">Pack Senior</div>
                                         <div class="text-xs text-gray-500">Expertise confirmée</div>
                                     </div>
-                                    <div class="text-lg font-extrabold text-primary">12 000 FCFA</div>
+                                    <div class="text-lg font-extrabold text-primary">12 500 FCFA</div>
                                     <div class="absolute inset-0 border-2 border-primary rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
                                 </label>
 
                                 <label class="relative flex items-center p-4 border rounded-xl cursor-pointer hover:border-primary transition-all group">
-                                    <input type="radio" name="package" value="Expert" data-price="35000" class="peer sr-only">
+                                    <input type="radio" name="package" value="Expert" data-price="35500" class="peer sr-only">
                                     <div class="flex-grow">
                                         <div class="font-bold text-gray-900 group-hover:text-primary">Pack Expert</div>
                                         <div class="text-xs text-gray-500">Carrière internationale</div>
                                     </div>
-                                    <div class="text-lg font-extrabold text-primary">35 000 FCFA</div>
+                                    <div class="text-lg font-extrabold text-primary">35 500 FCFA</div>
                                     <div class="absolute inset-0 border-2 border-primary rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
                                 </label>
                             </div>
@@ -342,8 +343,7 @@ require_once 'admin/config/db.php';
                 const result = await response.json();
 
                 if (result.success) {
-                    const name = formData.get('name');
-                    window.location.href = `merci-reservation?name=${encodeURIComponent(name)}`;
+                    window.location.href = `reservation-payment.php?ref=${encodeURIComponent(result.order_ref)}`;
                 } else {
                     alert(result.message || "Une erreur est survenue.");
                     btn.disabled = false;

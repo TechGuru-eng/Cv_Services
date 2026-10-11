@@ -1,0 +1,72 @@
+.site-language {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(172px, calc(env(safe-area-inset-bottom) + 172px));
+    z-index: 80;
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid #dbe3ed;
+    border-radius: 999px;
+    background: #fff;
+    color: #111827;
+    box-shadow: 0 4px 16px rgb(17 24 39 / 12%);
+    font: 700 13px/1.2 system-ui, sans-serif;
+}
+.site-language button {
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    font: inherit;
+}
+.site-language button[aria-pressed="true"] { background: #111827; color: #fff; }
+.site-language button:hover { background: #e2e8f0; color: #111827; }
+.site-language button:focus-visible { outline: 3px solid #0ea5e9; outline-offset: 2px; }
+.site-language[aria-busy="true"] button[aria-pressed="true"] { opacity: .65; }
+.site-language-status {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    width: min(290px, calc(100vw - 32px));
+    padding: 12px 14px;
+    border: 1px solid #dbe3ed;
+    border-radius: 12px;
+    background: #fff;
+    color: #334155;
+    box-shadow: 0 4px 16px rgb(17 24 39 / 10%);
+    font: 400 13px/1.5 system-ui, sans-serif;
+}
+.site-language-status:empty { display: none; }
+@media print { .site-language { display: none !important; } }
+
+/* The homepage keeps FR/EN beside the mobile menu rather than over its content. */
+.home-language-slot { display: contents; }
+@media (max-width: 767px) {
+    .home-language-slot { display: block; margin-left: auto; margin-right: 8px; flex-shrink: 0; }
+    .home-language-slot .site-language {
+        position: relative;
+        inset: auto;
+        z-index: auto;
+        padding: 3px;
+        gap: 0;
+        box-shadow: none;
+        background: #f8fafc;
+        font-size: 11px;
+    }
+    .home-language-slot .site-language button {
+        min-width: 36px;
+        min-height: 40px;
+        padding: 8px;
+    }
+    .home-language-slot .site-language-status {
+        top: calc(100% + 10px);
+        bottom: auto;
+        z-index: 90;
+        width: min(260px, calc(100vw - 80px));
+    }
+}

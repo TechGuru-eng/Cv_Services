@@ -5,22 +5,27 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once __DIR__ . '/includes/admin-page-schema.php';
+ensureAdminPageTable($pdo, 'before_after_cvs');
+require_once 'includes/csrf.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') verify_csrf();
 
 $msg = '';
+if (isset($_GET['masked'])) $msg = 'Image masquée publiée. Les modifications sont visibles dans la galerie avant/après.';
 $error = '';
 
 // Handle Upload / Create
 if (isset($_POST['upload_ba'])) {
     $category = trim($_POST['category'] ?? '💼 Gestion & Direction');
-    $beforeTag = trim($_POST['before_tag'] ?? 'CV Non Conforme ✗');
-    $beforeScore = trim($_POST['before_score'] ?? 'Score ATS : 28%');
-    $beforeQuote = trim($_POST['before_quote'] ?? '');
+    $beforeTag = 'CV avant';
+    $beforeScore = '';
+    $beforeQuote = '';
     
-    $afterTag = trim($_POST['after_tag'] ?? 'CV ATS Optimisé ✓');
-    $afterScore = trim($_POST['after_score'] ?? 'Score ATS : 98%');
-    $afterBadge = trim($_POST['after_badge'] ?? 'ATS OPTIMISÉ');
-    $afterQuote = trim($_POST['after_quote'] ?? '');
-    $displayOrder = intval($_POST['display_order'] ?? 1);
+    $afterTag = 'CV après';
+    $afterScore = '';
+    $afterBadge = '';
+    $afterQuote = '';
+    $displayOrder = (int)$pdo->query('SELECT COALESCE(MAX(display_order), 0) + 1 FROM before_after_cvs')->fetchColumn();
 
     // Validate files
     $allowed = ['jpg', 'jpeg', 'png', 'webp'];
@@ -98,14 +103,11 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <div>
                     <h1 class="text-3xl font-extrabold text-gray-800 flex items-center gap-3">
-                        <span>🔄</span> Avant / Après CV (Carrousel Accueil)
+                        Avant / Après CV
                     </h1>
-                    <p class="text-sm text-gray-500 mt-1">Gérez les comparaisons CV affichées sur la page d'accueil (rotation automatique toutes les 40 secondes).</p>
+                    <p class="text-sm text-gray-500 mt-1">Ajoutez les images avant et après pour la page d’accueil. Rotation toutes les 20 secondes.</p>
                 </div>
-                <div class="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
-                    <span>Rotation active : 40 secondes</span>
-                </div>
+
             </div>
 
             <?php if ($msg): ?>
@@ -119,18 +121,16 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
             <!-- Form: Add new Before/After Pair -->
             <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 mb-8">
                 <h2 class="text-lg font-extrabold text-gray-800 mb-4 flex items-center gap-2">
-                    <span>➕</span> Ajouter une nouvelle comparaison
+                    Ajouter une comparaison
                 </h2>
                 <form method="POST" enctype="multipart/form-data" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <?php csrf_field(); ?>
+                    <div class="max-w-xl">
                         <div>
                             <label class="block text-gray-700 text-xs font-bold uppercase tracking-wider mb-1">Catégorie / Métier</label>
                             <input type="text" name="category" required class="border border-gray-300 rounded-xl w-full py-2.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 💻 Ingénierie & Tech">
                         </div>
-                        <div>
-                            <label class="block text-gray-700 text-xs font-bold uppercase tracking-wider mb-1">Ordre d'affichage</label>
-                            <input type="number" name="display_order" value="<?= count($items) + 1 ?>" min="1" class="border border-gray-300 rounded-xl w-full py-2.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
+
                     </div>
 
                     <!-- Side-by-side Uploads: Before & After -->
@@ -138,54 +138,22 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
                         <!-- Before Section -->
                         <div class="bg-red-50/50 border border-red-200 rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-extrabold text-red-700 uppercase tracking-wider flex items-center gap-2">
-                                <span>❌</span> 1. CV Avant (Rejeté)
+                                CV avant
                             </h3>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Image du CV Avant *</label>
-                                <input type="file" name="before_img" required accept="image/*" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-sm bg-white">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tag Avant</label>
-                                    <input type="text" name="before_tag" value="CV Ordinaire (Rejeté)" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-700 mb-1">Score ATS</label>
-                                    <input type="text" name="before_score" value="Score ATS : 28%" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Critique / Problème constaté</label>
-                                <input type="text" name="before_quote" value="Design dépassé, trop de texte dense, non optimisé pour les robots ATS." class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
+                                <input type="file" name="before_img" required accept="image/jpeg,image/png,image/webp" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-sm bg-white">
                             </div>
                         </div>
 
                         <!-- After Section -->
                         <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-2">
-                                <span>✅</span> 2. CV Après (HireMe Optimisé)
+                                CV après
                             </h3>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Image du CV Après *</label>
-                                <input type="file" name="after_img" required accept="image/*" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-sm bg-white">
-                            </div>
-                            <div class="grid grid-cols-3 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tag Après</label>
-                                    <input type="text" name="after_tag" value="HireMe CV (Recruté)" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-700 mb-1">Score ATS</label>
-                                    <input type="text" name="after_score" value="Score ATS : 98%" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-gray-700 mb-1">Badge</label>
-                                    <input type="text" name="after_badge" value="ATS OPTIMIZED" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Point fort / Citation résultat</label>
-                                <input type="text" name="after_quote" value="Design épuré, mots-clés stratégiques, impact visuel immédiat." class="border border-gray-300 rounded-xl w-full py-2 px-3 text-xs bg-white">
+                                <input type="file" name="after_img" required accept="image/jpeg,image/png,image/webp" class="border border-gray-300 rounded-xl w-full py-2 px-3 text-sm bg-white">
                             </div>
                         </div>
                     </div>
@@ -200,15 +168,17 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
 
             <!-- List of Existing Items -->
             <div class="bg-white shadow-sm border border-gray-200 rounded-2xl p-6">
-                <h2 class="text-lg font-extrabold text-gray-800 mb-4">Comparaisons actives (<?= count($items) ?>)</h2>
+                <h2 class="text-lg font-extrabold text-gray-800 mb-4">Comparaisons (<?= count($items) ?>)</h2>
                 
+                <?php if (!$items): ?>
+                    <p class="text-gray-500">Aucune comparaison. Ajoutez vos deux premières images ci-dessus.</p>
+                <?php endif; ?>
                 <div class="space-y-6">
                     <?php foreach ($items as $item): ?>
                     <div class="border border-gray-200 rounded-2xl p-5 bg-gray-50/50 flex flex-col lg:flex-row items-center gap-6 justify-between">
                         <div class="flex-1 w-full">
                             <div class="flex items-center gap-3 mb-3">
                                 <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-extrabold"><?= htmlspecialchars($item['category']) ?></span>
-                                <span class="text-xs text-gray-500 font-bold">Ordre : #<?= $item['display_order'] ?></span>
                                 <?php if ($item['is_active']): ?>
                                     <span class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full">Actif</span>
                                 <?php else: ?>
@@ -220,21 +190,15 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
                                 <!-- Before Thumb -->
                                 <div class="bg-white p-3 rounded-xl border border-red-100 flex gap-3 items-center">
                                     <img src="../<?= htmlspecialchars($item['before_img']) ?>" alt="Avant" class="w-16 h-20 object-cover rounded-lg border border-gray-200 shrink-0 shadow-sm">
-                                    <div class="text-xs">
-                                        <div class="font-bold text-red-600"><?= htmlspecialchars($item['before_tag']) ?></div>
-                                        <div class="text-gray-500 text-[11px]"><?= htmlspecialchars($item['before_score']) ?></div>
-                                        <div class="text-gray-400 italic text-[10px] line-clamp-2">"<?= htmlspecialchars($item['before_quote']) ?>"</div>
-                                    </div>
+                                    <a href="before-after-privacy.php?id=<?= (int)$item['id'] ?>&amp;side=before" class="text-blue-600 text-xs font-bold underline">Masquer / modifier avant</a>
+                                    <div class="text-sm font-semibold">Avant</div>
                                 </div>
 
                                 <!-- After Thumb -->
                                 <div class="bg-white p-3 rounded-xl border border-emerald-100 flex gap-3 items-center">
                                     <img src="../<?= htmlspecialchars($item['after_img']) ?>" alt="Après" class="w-16 h-20 object-cover rounded-lg border border-gray-200 shrink-0 shadow-sm">
-                                    <div class="text-xs">
-                                        <div class="font-bold text-emerald-700"><?= htmlspecialchars($item['after_tag']) ?></div>
-                                        <div class="text-gray-500 text-[11px]"><?= htmlspecialchars($item['after_score']) ?> • <span class="font-semibold text-blue-600"><?= htmlspecialchars($item['after_badge']) ?></span></div>
-                                        <div class="text-gray-400 italic text-[10px] line-clamp-2">"<?= htmlspecialchars($item['after_quote']) ?>"</div>
-                                    </div>
+                                    <a href="before-after-privacy.php?id=<?= (int)$item['id'] ?>&amp;side=after" class="text-blue-600 text-xs font-bold underline">Masquer / modifier après</a>
+                                    <div class="text-sm font-semibold">Après</div>
                                 </div>
                             </div>
                         </div>
@@ -242,12 +206,14 @@ $items = $pdo->query("SELECT * FROM before_after_cvs ORDER BY display_order ASC,
                         <!-- Actions -->
                         <div class="flex items-center gap-2 shrink-0">
                             <form method="POST" class="inline">
+                    <?php csrf_field(); ?>
                                 <input type="hidden" name="toggle_id" value="<?= $item['id'] ?>">
                                 <button type="submit" class="px-4 py-2 text-xs font-bold rounded-xl border border-gray-300 hover:bg-gray-100 transition-all">
                                     <?= $item['is_active'] ? 'Désactiver' : 'Activer' ?>
                                 </button>
                             </form>
                             <form method="POST" class="inline" onsubmit="return confirm('Supprimer définitivement cette comparaison ?');">
+                    <?php csrf_field(); ?>
                                 <input type="hidden" name="delete_id" value="<?= $item['id'] ?>">
                                 <button type="submit" class="px-4 py-2 text-xs font-bold text-red-600 rounded-xl border border-red-200 hover:bg-red-50 transition-all">
                                     Supprimer

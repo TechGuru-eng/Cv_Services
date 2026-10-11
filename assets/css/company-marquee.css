@@ -1,0 +1,50 @@
+/* Two equal groups make the company strip loop without a visible jump. */
+.company-marquee {
+    overflow: hidden;
+    width: 100%;
+    padding: 12px 0;
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+.company-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: company-scroll 660s linear infinite;
+}
+.company-marquee-list {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 64px;
+    margin: 0;
+    padding: 0 64px 0 0;
+    list-style: none;
+}
+.company-marquee-list li {
+    white-space: nowrap;
+    color: #a3a3a3;
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+}
+.company-marquee:hover .company-marquee-track,
+.company-marquee:focus-within .company-marquee-track {
+    animation-play-state: paused;
+}
+.company-marquee:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+}
+@keyframes company-scroll {
+    to { transform: translateX(-50%); }
+}
+@media (max-width: 640px) {
+    .company-marquee-list { gap: 32px; padding-right: 32px; }
+    .company-marquee-list li { font-size: 1rem; }
+    .company-marquee-track { animation-duration: 480s; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .company-marquee { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+    .company-marquee-track { animation: none; }
+    .company-marquee-list[aria-hidden="true"] { display: none; }
+}

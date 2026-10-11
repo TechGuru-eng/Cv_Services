@@ -1,0 +1,17 @@
+node_modules/
+_ops/
+uploads/*
+!uploads/.htaccess
+.env
+.env.*
+!.env.example
+*.log
+debug_output*.txt
+admin/config/secrets.php
+scratch/
+tmp/
+*.zip
+admin/config/translation.php
+
+ebook-landing/dev.db
+premium-ebook-page/premium_ebook.sqlite

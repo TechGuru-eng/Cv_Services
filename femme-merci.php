@@ -10,16 +10,11 @@ $waLink = "https://wa.me/" . $adminNumber . "?text=" . urlencode($message);
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commande Reçue ! — HireMe CV Services</title>
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-
     <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -45,6 +40,13 @@ $waLink = "https://wa.me/" . $adminNumber . "?text=" . urlencode($message);
             background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="page-gradient min-h-screen flex items-center justify-center p-6 font-sans antialiased">
 

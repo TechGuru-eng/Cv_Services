@@ -1,4 +1,7 @@
 # Force UTF-8 Encoding
+<FilesMatch "^\.env(?:\..*)?$">
+    Require all denied
+</FilesMatch>
 AddDefaultCharset UTF-8
 AddCharset UTF-8 .html .php .js .css .json
 AddType "text/html; charset=UTF-8" .html
@@ -8,61 +11,15 @@ Options +FollowSymLinks -MultiViews
 RewriteEngine On
 DirectoryIndex index.html index.php
 
-# 1.5 Block sensitive paths (VCS, deps, configs, dumps, private ops scripts)
-RewriteRule (^|/)\.(git|svn|env|htpasswd|DS_Store) - [F,L,NC]
-RewriteRule ^(_ops|node_modules|scratch|tmp|PHPMailer|premium-ebook-page)(/|$) - [F,L,NC]
-RewriteRule ^admin/(config|sql|includes)(/|$) - [F,L,NC]
-RewriteCond %{REQUEST_URI} !(^|/)robots\.txt$
-RewriteRule \.(sql|md|txt|bak|log|zip|lock|ini|sh|yml|yaml)$ - [F,L,NC]
-RewriteRule ^(package(-lock)?\.json|tailwind\.config\.js|input\.css|promos_.*\.json|prospect_cols\.json)$ - [F,L,NC]
-
-# 2. Force HTTPS (Optional but recommended for deployment)
+# Redirect production HTTP requests before entering the security gateway.
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} !=localhost
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1(:[0-9]+)?$
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# 2.5 URL Shortener Router Rewrite
-RewriteRule ^r/([a-zA-Z0-9]+)$ r.php?c=$1 [L,QSA]
-
-# 2.6 Blog CMS Rewrite (e.g., /blog/comment-reussir-son-cv -> article.php?slug=comment-reussir-son-cv)
-RewriteRule ^blog/([a-zA-Z0-9-]+)$ article.php?slug=$1 [L,QSA]
-
-# 2.7 LinkedIn Service Routes
-RewriteRule ^linkedin/?$ linkedin/index.php [L,QSA]
-RewriteRule ^linkedin/commander/?$ linkedin/commander.php [L,QSA]
-RewriteRule ^linkedin/diagnostic/?$ linkedin/diagnostic.php [L,QSA]
-RewriteRule ^suivi-linkedin/?$ linkedin/suivi.php [L,QSA]
-RewriteRule ^linkedin/suivi-linkedin/?$ linkedin/suivi.php [L,QSA]
-RewriteRule ^linkedin/suivi/?$ linkedin/suivi.php [L,QSA]
-RewriteRule ^linkedin/commande/([a-zA-Z0-9-]+)$ linkedin/commande.php?ref=$1 [L,QSA]
-RewriteRule ^admin/linkedin/?$ admin/linkedin/index.php [L,QSA]
-RewriteRule ^admin/linkedin/commandes/?$ admin/linkedin/commandes.php [L,QSA]
-RewriteRule ^admin/linkedin/commandes/([a-zA-Z0-9-]+)$ admin/linkedin/order_details.php?id=$1 [L,QSA]
-RewriteRule ^admin/linkedin/packages/?$ admin/linkedin/packages.php [L,QSA]
-RewriteRule ^admin/linkedin/parametres/?$ admin/linkedin/parametres.php [L,QSA]
-
-# 3. Canonicalize: Remove .php extension (Redirect /file.php to /file)
-RewriteCond %{REQUEST_METHOD} !POST
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
-RewriteRule ^ %1 [R=301,L]
-
-# 4. Handle Root URL
-RewriteRule ^$ index.html [NC,L]
-
-# 5. Handle Extension-less URLs (Internal Rewrite /file to /file.html or .php)
-# If the request is not a directory
-RewriteCond %{REQUEST_FILENAME} !-d
-# And the file.html exists, rewrite to .html
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^\.]+)$ $1.html [NC,L,QSA]
-
-# If the request is not a directory
-RewriteCond %{REQUEST_FILENAME} !-d
-# And the file.php exists, rewrite to .php
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^\.]+)$ $1.php [NC,L,QSA]
-
-
+# Check bans and attack patterns before dispatching pages and assets.
+RewriteRule ^security-gateway\.php$ - [L]
+RewriteRule ^ security-gateway.php [END]
 
 # 5. Security Headers
 <IfModule mod_headers.c>

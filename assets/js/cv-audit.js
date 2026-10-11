@@ -96,7 +96,7 @@ const cvAudit = {
                         <div class="text-center mb-6">
                             <span class="text-4xl">🔍</span>
                             <h2 class="text-2xl font-black text-gray-900 mt-4">Scannez votre CV</h2>
-                            <p class="text-gray-500 mt-2">Découvrez votre score de recrutement en 10 secondes.</p>
+                            <p class="text-gray-500 mt-2">Recevez une analyse indicative du contenu de votre CV.</p>
                         </div>
                         
                         <div class="space-y-4">
@@ -111,8 +111,12 @@ const cvAudit = {
                                 <input type="file" id="auditFileInput" class="hidden" accept=".pdf,.png,.jpg,.jpeg">
                                 <span class="text-3xl">📄</span>
                                 <p class="text-sm font-bold text-gray-700 mt-3" id="auditFileName">Glissez votre CV ou cliquez ici</p>
-                                <p class="text-xs text-gray-400 mt-1">PDF, PNG (Max 5MB)</p>
+                                <p class="text-xs text-gray-400 mt-1">PDF, PNG, JPG (Max 5 Mo)</p>
                             </div>
+                            <label class="flex items-start gap-2 text-xs text-gray-500">
+                                <input type="checkbox" id="auditAnalysisConsent" class="mt-1">
+                                <span>J’accepte que mon CV soit transmis à Google Gemini pour cette analyse. Le résultat est indicatif et ne garantit pas un recrutement.</span>
+                            </label>
                             
                             <button onclick="cvAudit.startAnalysis()" id="auditStartBtn"
                                 class="w-full bg-primary text-white font-black py-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-neutral transition-all disabled:opacity-50">
@@ -165,7 +169,7 @@ const cvAudit = {
                                 </div>
                             </div>
                             <h2 class="text-2xl font-black text-gray-900" id="resultTitle">Analyse Terminée</h2>
-                            <p class="text-gray-500 text-sm" id="resultSub">Voici les points critiques de votre candidature.</p>
+                            <p class="text-gray-500 text-sm" id="resultSub">Estimation indicative basée sur le format et le contenu détectables de votre fichier — un expert HireMe affine l'analyse complète.</p>
                         </div>
 
                         <div id="resultBreakdown" class="grid grid-cols-2 gap-4 mb-6"></div>
@@ -179,16 +183,19 @@ const cvAudit = {
                                 <p class="text-xs text-gray-400 mb-6">Recevez par email votre analyse détaillée par secteur et un plan d'action immédiat pour booster vos entretiens.</p>
                                 
                                 <div id="auditLeadForm">
-                                    <div class="flex flex-col sm:flex-row gap-3 mb-3">
+                                    <div class="flex flex-col gap-3 mb-3 text-left">
                                         <input type="email" id="auditEmailInput" placeholder="Votre email pour le rapport" 
-                                            class="w-full sm:flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-primary">
+                                            class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-primary">
+                                        <input type="text" id="auditWhatsappInput" placeholder="Votre WhatsApp (ex: +237699999999)" 
+                                            class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-primary">
                                         <button onclick="cvAudit.saveLead()" id="saveLeadBtn"
-                                            class="w-full sm:w-auto bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-white hover:text-primary transition-all shadow-lg shadow-black/20">Recevoir & Booster</button>
+                                            class="w-full bg-primary text-white py-3.5 rounded-xl text-sm font-bold hover:bg-white hover:text-primary transition-all shadow-lg shadow-black/20">Recevoir & Booster</button>
                                     </div>
-                                    <p class="text-[10px] text-gray-500 italic">Envoi immédiat du rapport détaillé + Coupon -15%</p>
+                                    <p class="text-[10px] text-gray-500 italic">Votre rapport sera placé dans la file d’envoi.</p>
                                 </div>
 
                                 <div id="auditSuccessCTA" class="hidden">
+                                    <p class="text-xs text-green-700 mb-2">Votre rapport est en attente d’envoi par email.</p>
                                     <a href="#pricing" onclick="cvAudit.close()" 
                                         class="block w-full bg-primary text-white font-bold py-3 rounded-xl hover:scale-105 transition-transform">
                                         Voir les Tarifs (Spécial -60%)
@@ -202,8 +209,8 @@ const cvAudit = {
                     <div class="audit-step" id="auditStep4">
                         <div class="text-center py-8">
                             <span class="text-6xl">🎉</span>
-                            <h2 class="text-2xl font-black text-gray-900 mt-6">C'est envoyé !</h2>
-                            <p class="text-gray-500 mt-2">Consultez votre boîte mail. Votre coupon de -15% est inclus.</p>
+                            <h2 class="text-2xl font-black text-gray-900 mt-6">Rapport enregistré</h2>
+                            <p class="text-gray-500 mt-2">Votre rapport est en attente d’envoi par email.</p>
                             <button onclick="cvAudit.close()" class="mt-8 bg-neutral text-white px-8 py-3 rounded-xl font-bold">Fermer</button>
                         </div>
                     </div>
@@ -258,6 +265,14 @@ const cvAudit = {
             alert("Veuillez entrer un métier et sélectionner votre CV.");
             return;
         }
+        if (!document.getElementById('auditAnalysisConsent').checked) {
+            alert('Votre accord est requis pour transmettre le CV à Google Gemini.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024 || !/\.(pdf|png|jpe?g)$/i.test(file.name)) {
+            alert('Choisissez un PDF, PNG ou JPG de 5 Mo maximum.');
+            return;
+        }
 
         this.showStep(2);
 
@@ -268,6 +283,7 @@ const cvAudit = {
         const formData = new FormData();
         formData.append('cv_file', file);
         formData.append('job_title', job);
+        formData.append('analysis_consent', '1');
 
         try {
             const response = await fetch('api/analyze_cv.php', {
@@ -279,12 +295,13 @@ const cvAudit = {
             if (data.success) {
                 setTimeout(() => { this.showResults(data); }, 3500);
             } else {
-                alert(data.message);
                 this.showStep(1);
+                alert(data.message);
             }
         } catch (error) {
             console.error(error);
             this.showStep(1);
+            alert('Connexion au service d’analyse impossible. Réessayez plus tard.');
         }
     },
 
@@ -299,13 +316,13 @@ const cvAudit = {
         let color = '#ef4444';
         let title = "Analyse Critique";
         let badgeClass = "bg-red-100 text-red-600";
-        let tipText = "Votre CV présente des lacunes majeures qui bloquent votre recrutement. Une refonte structurelle est urgente.";
+        let tipText = "Les observations ci-dessous indiquent les points à revoir dans votre CV.";
 
         if (data.score >= 40) {
             color = '#f97316';
             title = "Potentiel à Développer";
             badgeClass = "bg-orange-100 text-orange-600";
-            tipText = "La base est là, mais le manque de chiffres clés et de précision métier réduit vos chances de 50%.";
+            tipText = "Les observations ci-dessous vous aideront à préciser votre parcours et vos réalisations.";
         }
         if (data.score >= 70) {
             color = '#eab308';
@@ -332,8 +349,8 @@ const cvAudit = {
             path.style.strokeDasharray = `${data.score}, 100`;
         }, 100);
 
-        document.getElementById('resultTitle').textContent = "Bilan Professionnel";
-        document.getElementById('resultSub').textContent = `Secteur détecté : ${data.sector || 'Général'}`;
+        document.getElementById('resultTitle').textContent = "Analyse indicative du CV";
+        document.getElementById('resultSub').textContent = `Secteur : ${data.sector || 'Général'} — Appréciation IA, sans garantie de recrutement.`;
 
         const breakdown = document.getElementById('resultBreakdown');
         breakdown.innerHTML = '';
@@ -342,7 +359,8 @@ const cvAudit = {
             'job_match': 'Précision Métier',
             'ats_friendly': 'Compatibilité ATS',
             'density': 'Structure & Design',
-            'contacts': 'Impact Réseaux'
+            'contacts': 'Coordonnées',
+            'action_verbs': 'Verbes d’action'
         };
 
         Object.entries(labels).forEach(([key, label]) => {
@@ -360,17 +378,21 @@ const cvAudit = {
         findingsDiv.innerHTML = '';
         data.findings.forEach(f => {
             const icon = f.type === 'warning' ? '⚠️' : (f.type === 'success' ? '✅' : 'ℹ️');
-            findingsDiv.innerHTML += `
-                <div class="finding-item ${f.type}">
-                    <span class="mt-0.5">${icon}</span>
-                    <span>${f.text}</span>
-                </div>
-            `;
+            const item = document.createElement('div');
+            item.className = `finding-item ${['warning', 'success', 'info'].includes(f.type) ? f.type : 'info'}`;
+            const symbol = document.createElement('span');
+            symbol.className = 'mt-0.5';
+            symbol.textContent = icon;
+            const text = document.createElement('span');
+            text.textContent = f.text;
+            item.append(symbol, text);
+            findingsDiv.append(item);
         });
     },
 
     async saveLead() {
         const email = document.getElementById('auditEmailInput').value;
+        const whatsapp = document.getElementById('auditWhatsappInput')?.value || '';
         const btn = document.getElementById('saveLeadBtn');
 
         if (!email || !email.includes('@')) {
@@ -383,6 +405,7 @@ const cvAudit = {
 
         const formData = new FormData();
         formData.append('email', email);
+        formData.append('whatsapp', whatsapp);
 
         try {
             const response = await fetch('api/save_audit_lead.php', {

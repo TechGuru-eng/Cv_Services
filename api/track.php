@@ -1,39 +1,20 @@
+<?php
 // api/track.php
 // Advanced visitor tracking system (UTMs + Events)
 // Bot Detection Included
 
 session_start();
 
-require_once '../admin/config/db.php';
+require_once __DIR__ . '/../admin/config/db.php';
+header('Cache-Control: no-store');
 
-// Handle JSON POST requests for events
 $input = json_decode(file_get_contents('php://input'), true);
-
-if ($input && isset($input['event_name'])) {
-    $visit_id = $_SESSION['visit_id'] ?? null;
-    
-    if ($visit_id) {
-        try {
-            // Update activity timestamp even on events
-            $pdo->prepare("UPDATE stats_visits SET updated_at = NOW() WHERE id = ?")->execute([$visit_id]);
-
-            $stmt = $pdo->prepare("INSERT INTO stats_events (visit_id, event_name, event_data) VALUES (?, ?, ?)");
-            $stmt->execute([$visit_id, $input['event_name'], json_encode($input['event_data'] ?? [])]);
-            echo json_encode(['success' => true]);
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'No session visit_id']);
-    }
-    exit;
+$isEvent = is_array($input) && isset($input['event_name']);
+if ($isEvent) {
+    header('Content-Type: application/json');
+} else {
+    header('Content-Type: image/gif');
 }
-
-// Otherwise, handle the standard visit logging (Pixel)
-header("Cache-Control: no-cache, must-revalidate");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-header("Content-Type: image/gif");
-echo base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
 
 // 1. Get basic info
 $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
@@ -50,28 +31,8 @@ elseif (preg_match('/Safari/i', $user_agent)) $browser = 'Safari';
 elseif (preg_match('/Firefox/i', $user_agent)) $browser = 'Firefox';
 elseif (preg_match('/MSIE|Trident/i', $user_agent)) $browser = 'IE';
 
-// Bot Detection logic
-function isBot($ua) {
-    if (empty($ua)) return false;
-    $bot_patterns = [
-        'HeadlessChrome', 'bot', 'crawler', 'spider', 'slurp', 'lighthouse', 
-        'googlebot', 'bingbot', 'yandexbot', 'baiduspider', 'facebookexternalhit',
-        'twitterbot', 'rogerbot', 'linkedinbot', 'embedly', 'quora link preview',
-        'showyoubot', 'outbrain', 'pinterest/0.', 'developers.google.com/+/web/snippet',
-        'slackbot', 'vkShare', 'W3C_Validator', 'redditbot', 'Applebot', 'WhatsApp', 
-        'Flipboard', 'tumblr', 'bitlybot', 'SkypeShell', 'msnbot', 'ZSTV', 'AhrefsBot',
-        'python-requests', 'node-fetch', 'axios', 'curl', 'Go-http-client', 'postman'
-    ];
-    foreach ($bot_patterns as $pattern) {
-        if (stripos($ua, $pattern) !== false) return true;
-    }
-    // Suspiciously short or generic user agents
-    if (strlen($ua) < 30 && !preg_match('/Mobile|Safari|Firefox|Chrome/i', $ua)) return true;
-    
-    return false;
-}
-
-$is_bot = isBot($user_agent) ? 1 : 0;
+require_once __DIR__ . '/../includes/visitor-tracking.php';
+$is_bot = site_visitor_is_bot($user_agent) ? 1 : 0;
 
 // 2. Parse UTMs from Referrer
 $utm_source = null;
@@ -93,33 +54,27 @@ if ($query_str) {
 }
 
 // 3. Identify Country (Geoloc)
-require_once 'includes/geo_helper.php';
+require_once __DIR__ . '/includes/geo_helper.php';
 $country = initVisitorSession();
 
 // 4. Save/Update Visit & Store ID in session
 $visit_id = $_SESSION['visit_id'] ?? null;
 
 try {
-    if ($visit_id) {
-        // Update existing visit
-        $stmt = $pdo->prepare("UPDATE stats_visits SET page_url = ?, updated_at = NOW(), browser = ? WHERE id = ?");
-        $stmt->execute([$page_path, $browser, $visit_id]);
+    $visit_id = record_site_visit($pdo, [
+        'ip' => $ip, 'country' => $country, 'page' => $page_path,
+        'user_agent' => $user_agent, 'browser' => $browser, 'is_bot' => $is_bot,
+        'utm_source' => $utm_source, 'utm_medium' => $utm_medium, 'utm_campaign' => $utm_campaign,
+    ]);
+    if ($isEvent) {
+        $pdo->prepare("INSERT INTO stats_events (visit_id, event_name, event_data) VALUES (?, ?, ?)")
+            ->execute([$visit_id, substr((string)$input['event_name'], 0, 100), json_encode($input['event_data'] ?? [])]);
+        echo json_encode(['success' => true]);
     } else {
-        // Unique visitor check (per day)
-        $is_unique = 0;
-        $today = date('Y-m-d');
-        $stmt = $pdo->prepare("SELECT id FROM stats_visits WHERE ip_address = ? AND DATE(created_at) = ? LIMIT 1");
-        $stmt->execute([$ip, $today]);
-        if (!$stmt->fetch()) {
-            $is_unique = 1;
-        }
-
-        // New visit
-        $stmt = $pdo->prepare("INSERT INTO stats_visits (ip_address, country, page_url, user_agent, browser, is_unique, utm_source, utm_medium, utm_campaign, is_bot) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$ip, $country, $page_path, $user_agent, $browser, $is_unique, $utm_source, $utm_medium, $utm_campaign, $is_bot]);
-        $_SESSION['visit_id'] = $pdo->lastInsertId();
+        echo base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
     }
 } catch (Exception $e) {
+    if ($isEvent) { http_response_code(500); echo json_encode(['success' => false, 'message' => 'Tracking unavailable']); }
     error_log("Tracking Error: " . $e->getMessage());
 }
 ?>

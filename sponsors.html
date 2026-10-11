@@ -2,7 +2,7 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -15,8 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sponsoriser un CV — HireMe</title>
     <link rel="canonical" href="https://moncvpro.hiremeguide.com/sponsors.html" />
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-
     <!-- Social Medias -->
     <meta property="og:title" content="Sponsoriser un CV — HireMe Impact" />
     <meta property="og:description"
@@ -136,6 +134,13 @@
             }
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -737,10 +742,14 @@
                         const packInfo = b.package_name ?
                             `<span class="ml-2 text-[9px] font-bold text-accent uppercase tracking-wider bg-green-50 px-1.5 rounded">${b.package_name}</span>` : '';
 
+                        const statusBadge = (b.is_realized == 1) 
+                            ? `<a href="retrieve-cv.php" class="bg-green-600 text-white font-black px-3 py-1.5 rounded-lg text-[9px] uppercase tracking-wider hover:bg-green-700 transition shadow-sm">CV Prêt — Récupérer</a>`
+                            : `<span class="bg-blue-50 text-blue-500 font-black px-3 py-1 rounded-lg text-[9px] uppercase tracking-wider border border-blue-100 italic">En cours...</span>`;
+
                         beneficiariesHTML += `
                              <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-green-50 text-accent flex items-center justify-center font-black text-sm shadow-inner group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center font-black text-sm shadow-inner group-hover:scale-110 transition-transform">
                                         ${b.name.charAt(0)}
                                     </div>
                                     <div>
@@ -751,7 +760,7 @@
                                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-0.5 truncate max-w-[150px]">${b.motivation || 'Candidat motivé'}</p>
                                     </div>
                                 </div>
-                                <span class="bg-green-50 text-accent font-black px-3 py-1 rounded-lg text-[10px] uppercase tracking-wide">Financé</span>
+                                ${statusBadge}
                             </div>
                         `;
                     });

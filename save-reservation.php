@@ -1,12 +1,23 @@
 <?php
+require_once __DIR__ . '/' . (strpos(__FILE__, DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR) !== false ? '../' : '') . 'includes/upload_helper.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !rate_limit_ok(basename(__FILE__), 20, 600)) { http_response_code(429); header('Content-Type: application/json'); exit(json_encode(['success' => false, 'message' => 'Trop de requêtes. Réessayez plus tard.'])); }
 // save-reservation.php
 header('Content-Type: application/json');
 session_start();
 
 require_once 'admin/config/db.php';
+require_once 'admin/includes/security_helper.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'POST required.']);
+    exit;
+}
+
+// Security Check: Blacklist
+$rawWhatsapp = $_POST['whatsapp'] ?? '';
+$rawEmail = $_POST['email'] ?? '';
+if (isBlacklisted($rawWhatsapp, $pdo) || isBlacklisted($rawEmail, $pdo)) {
+    echo json_encode(['success' => false, 'message' => 'Désolé, votre accès aux services HireMe a été restreint. Veuillez contacter le support.']);
     exit;
 }
 
@@ -18,11 +29,11 @@ $country_city = htmlspecialchars($_POST['location'] ?? '');
 $packageName = $_POST['package'] ?? 'Standard';
 $dueDate = $_POST['due_date'] ?? null;
 
-// Determine Amount based on reservation prices
-$amount = 2100;
-if ($packageName === 'Pro') $amount = 4600;
-elseif ($packageName === 'Senior') $amount = 12000;
-elseif ($packageName === 'Expert') $amount = 35000;
+// Determine Amount based on reservation prices (including 500 XAF fee)
+$amount = 2600;
+if ($packageName === 'Pro') $amount = 5100;
+elseif ($packageName === 'Senior') $amount = 12500;
+elseif ($packageName === 'Expert') $amount = 35500;
 
 if (!$name || !$email || !$whatsapp || !$dueDate) {
     echo json_encode(['success' => false, 'message' => 'Veuillez remplir tous les champs obligatoires.']);
@@ -33,7 +44,7 @@ try {
     $pdo->beginTransaction();
 
     // 2. Create Order
-    $orderRef = 'RSV-' . date('ymd') . '-' . strtoupper(substr(uniqid(), -4));
+    $orderRef = 'RSV-' . date('ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
     
     $stmtOrder = $pdo->prepare("INSERT INTO orders (
         order_ref, name, email, whatsapp, country, city, package_name, 
@@ -72,18 +83,8 @@ try {
 
     $uploadedCvPath = '';
     if ($hasCv === 'yes' && isset($_FILES['cvFile']) && $_FILES['cvFile']['error'] === UPLOAD_ERR_OK) {
-        $fName = $_FILES['cvFile']['name'];
-        $tmpName = $_FILES['cvFile']['tmp_name'];
-        $ext = strtolower(pathinfo($fName, PATHINFO_EXTENSION));
-        $allowed = ['pdf', 'doc', 'docx', 'jpg', 'png'];
-
-        if (in_array($ext, $allowed)) {
-            $newName = 'CV-RSV-' . time() . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
-            if (!is_dir('uploads')) mkdir('uploads', 0777, true);
-            if (move_uploaded_file($tmpName, 'uploads/' . $newName)) {
-                $uploadedCvPath = 'uploads/' . $newName;
-            }
-        }
+        require_once 'includes/upload_helper.php';
+        $uploadedCvPath = secure_upload($_FILES['cvFile'], ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'], 'uploads', 'CV-RSV-') ?? '';
     }
 
     $stmtCv = $pdo->prepare("INSERT INTO cv_details (

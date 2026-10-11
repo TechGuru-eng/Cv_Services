@@ -1,4 +1,8 @@
 <?php
+http_response_code(403);
+exit('Relances email automatiques désactivées.');
+require_once __DIR__ . '/../includes/cron-auth.php';
+if (!getenv('SMTP_PASSWORD')) { http_response_code(503); header('Content-Type: application/json'); exit(json_encode(['success' => false, 'message' => 'Service email non configuré.'])); }
 // api/auto_pilot.php
 // The "Silent Seller" - Automated Email Follow-ups
 // Runs on background to convert abandoned carts.
@@ -21,7 +25,7 @@ if (file_exists('../vendor/autoload.php')) {
 $smtp_config = [
     'host' => 'smtp.hostinger.com',
     'username' => 'newsletter@hiremeguide.com',
-    'password' => 'Dreamer.Sophia#27',
+    'password' => (getenv('SMTP_PASSWORD') ?: ''),
     'port' => 465
 ];
 

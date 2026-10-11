@@ -7,9 +7,11 @@ require_once __DIR__ . '/../admin/config/db.php';
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<?php $linkedinBase = preg_replace('~/(?:linkedin(?:/.*)?|suivi-linkedin)/?$~', '/linkedin/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ?>
+    <base href="<?= htmlspecialchars($linkedinBase, ENT_QUOTES, 'UTF-8') ?>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivi de Commande — LinkedIn | HireMe</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,36 +27,52 @@ require_once __DIR__ . '/../admin/config/db.php';
             }
         }
     </script>
+    <script src="../assets/js/site-language.js?v=6" defer></script>
+<link rel="stylesheet" href="../assets/css/linkedin-landing.css?v=4"><link rel="stylesheet" href="../assets/css/linkedin-order.css?v=3"><script src="../assets/js/linkedin-landing.js?v=2" defer></script><title>Suivi de votre commande LinkedIn | HireMe</title>
+    <meta name="description" content="Consultez l’avancement de votre commande d’optimisation LinkedIn et retrouvez les informations de suivi de votre prestation HireMe.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://moncvpro.hiremeguide.com/suivi-linkedin">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="HireMe">
+    <meta property="og:title" content="Suivi de votre commande LinkedIn | HireMe">
+    <meta property="og:description" content="Consultez l’avancement de votre commande d’optimisation LinkedIn et retrouvez les informations de suivi de votre prestation HireMe.">
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/images/linkedin/linkedin-workspace.jpg">
+    <meta property="og:image:alt" content="Espace de travail professionnel — HireMe LinkedIn">
+    <meta property="og:url" content="https://moncvpro.hiremeguide.com/suivi-linkedin">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Suivi de votre commande LinkedIn | HireMe">
+    <meta name="twitter:description" content="Consultez l’avancement de votre commande d’optimisation LinkedIn et retrouvez les informations de suivi de votre prestation HireMe.">
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/images/linkedin/linkedin-workspace.jpg">
+    <meta name="twitter:image:alt" content="Espace de travail professionnel — HireMe LinkedIn">
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen py-10 px-4">
+<body class="linkedin-landing li-order-page li-tracking-page"><header class="li-header"><a class="li-brand" href="./"><span class="li-brand-mark" aria-hidden="true">H</span><span class="li-brand-name" translate="no">HireMe<span>LinkedIn</span></span></a><nav class="li-desktop-nav"><a href="./">Optimisation LinkedIn</a><a href="commander">Commander</a><a href="suivi-linkedin">Suivi de commande</a></nav><div class="li-language-slot"></div></header>
 
     <div class="max-w-3xl mx-auto space-y-8">
         
         <!-- Header -->
         <div class="text-center space-y-3">
-            <div class="flex items-center justify-center gap-3">
-                <a href="../index.html" class="inline-flex items-center gap-2 font-black text-2xl text-white">
-                    <span class="w-9 h-9 rounded-xl bg-brand-yellow text-slate-950 flex items-center justify-center text-lg">HM</span>
-                    Hire<span class="text-brand-yellow">Me</span>
-                </a>
-                <a href="../index.html" class="text-[11px] font-bold text-slate-400 hover:text-brand-yellow border border-slate-800 bg-slate-900 px-3 py-1 rounded-full transition-colors">
-                    ← MonCV Pro
-                </a>
-            </div>
             <h1 class="text-3xl font-black text-white">Suivi de Commande LinkedIn</h1>
             <p class="text-xs text-slate-400">Entrez votre numéro de référence et vos coordonnées pour consulter l'avancement de votre commande.</p>
         </div>
 
         <!-- Search Form -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-4">
+            <p class="li-tracking-hint">Utilisez les coordonnées renseignées lors de votre commande.</p>
             <form id="trackingSearchForm" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Référence de Commande *</label>
+                        <label for="inputRef" class="block text-xs font-bold text-slate-300 mb-1">Référence de Commande *</label>
                         <input type="text" name="reference" id="inputRef" required placeholder="Ex: HM-LI-284731" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow uppercase">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Email ou Téléphone *</label>
+                        <label for="inputContact" class="block text-xs font-bold text-slate-300 mb-1">Email ou Téléphone *</label>
                         <input type="text" name="contact" id="inputContact" required placeholder="Ex: email@domaine.cm ou 670000000" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-yellow">
                     </div>
                 </div>
@@ -64,9 +82,10 @@ require_once __DIR__ . '/../admin/config/db.php';
                 </button>
             </form>
 
-            <div id="searchError" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold"></div>
+            <div id="searchError" role="alert" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold"></div>
         </div>
 
+        <div class="li-tracking-help"><p>Vous préparez votre première commande ?</p><a href="commander">Créer ma commande →</a><a href="./">Optimisation LinkedIn →</a></div>
         <!-- Result Container -->
         <div id="resultContainer" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
             
@@ -95,7 +114,7 @@ require_once __DIR__ . '/../admin/config/db.php';
                     <span>Voir la fiche détaillée & téléchargeables</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
-                <a href="https://wa.me/237670000000" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 hover:underline">
+                <a href="https://wa.me/237654250688" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 hover:underline">
                     <i class="fa-brands fa-whatsapp"></i> Support WhatsApp
                 </a>
             </div>
@@ -120,13 +139,14 @@ require_once __DIR__ . '/../admin/config/db.php';
             const resBox = document.getElementById('resultContainer');
             const btn = document.getElementById('searchBtn');
 
+            if (btn.disabled) return;
             errBox.classList.add('hidden');
             resBox.classList.add('hidden');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Recherche...';
 
             const formData = new FormData(this);
-            const apiUrl = '<?= (strpos($_SERVER["REQUEST_URI"], "/linkedin/") !== false) ? "../api/linkedin/track_order.php" : "api/linkedin/track_order.php" ?>';
+            const apiUrl = '../api/linkedin/track_order.php';
 
             fetch(apiUrl, {
                 method: 'POST',
@@ -142,8 +162,8 @@ require_once __DIR__ . '/../admin/config/db.php';
                     document.getElementById('resClientName').innerText = o.client_name;
                     document.getElementById('resReference').innerText = o.reference;
                     document.getElementById('resPackage').innerText = o.package_name;
-                    document.getElementById('resDate').innerText = new Date(o.created_at).toLocaleDateString('fr-FR');
-                    document.getElementById('resDirectLink').href = o.view_url;
+                    document.getElementById('resDate').innerText = new Date(o.created_at).toLocaleDateString(document.documentElement.lang === 'en' ? 'en-GB' : 'fr-FR');
+                    document.getElementById('resDirectLink').href = 'commande.php?ref=' + encodeURIComponent(o.reference) + '&token=' + encodeURIComponent(o.access_token);
 
                     renderTimeline(o.order_status);
                     resBox.classList.remove('hidden');

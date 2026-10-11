@@ -29,7 +29,7 @@ function initVisitorSession() {
     try {
         $url = "http://ip-api.com/json/{$visitor_ip}?fields=status,message,country,countryCode";
         $ctx = stream_context_create(['http' => ['timeout' => 2]]); // 2s timeout
-        $response = file_get_contents($url, false, $ctx);
+        $response = @file_get_contents($url, false, $ctx);
         $data = json_decode($response, true);
 
         if ($data && $data['status'] === 'success') {

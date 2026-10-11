@@ -164,7 +164,7 @@ if (isset($_SESSION['ambassador_id'])) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -198,10 +198,10 @@ if (isset($_SESSION['ambassador_id'])) {
     <!-- Meta Preview pour les réseaux sociaux -->
     <meta property="og:title" content="Devenez Ambassadeur HireMe – Gagnez du Cash">
     <meta property="og:description" content="Partagez votre lien et recevez 500 FCFA par recommandation. Le programme d'affiliation le plus simple au Cameroun.">
-    <meta property="og:image" content="assets/ambassadeur-preview-v1.png">
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/ambassadeur-preview-v1.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="assets/ambassadeur-preview-v1.png">
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/ambassadeur-preview-v1.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -276,6 +276,13 @@ if (isset($_SESSION['ambassador_id'])) {
             .stat-card p.text-2xl { font-size: 1.25rem !important; }
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="text-slate-900 min-h-screen flex flex-col">
 

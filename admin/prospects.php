@@ -5,6 +5,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once __DIR__ . '/includes/prospect_helper.php';
+importAbandonedProspects($pdo);
 require_once 'includes/activity_helper.php';
 require_once 'includes/promo_helper.php';
 
@@ -41,11 +43,14 @@ $convertedProspects = $pdo->query("SELECT COUNT(*) FROM prospects WHERE status =
 $totalProspects = $pdo->query("SELECT COUNT(*) FROM prospects")->fetchColumn(); // Re-fetch
 $conversionRate = ($totalProspects > 0) ? round(($convertedProspects / $totalProspects) * 100, 1) : 0;
 
-$prospects = $pdo->query("SELECT * FROM prospects WHERE status = 'pending' ORDER BY updated_at DESC")->fetchAll();
+$statusFilter = $_GET['status'] ?? 'active';
+$statusClauses = ['active' => "status IN ('pending', 'lead_audit')", 'converted' => "status = 'converted'", 'abandoned' => "status = 'abandoned'", 'all' => '1=1'];
+if (!isset($statusClauses[$statusFilter])) $statusFilter = 'active';
+$prospects = $pdo->query("SELECT * FROM prospects WHERE " . $statusClauses[$statusFilter] . " ORDER BY updated_at DESC")->fetchAll();
 
-$totalPending = count($prospects);
+$totalPending = (int)$pdo->query("SELECT COUNT(*) FROM prospects WHERE status IN ('pending', 'lead_audit')")->fetchColumn();
 $potentialRevenue = 0;
-foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
+foreach($prospects as $p) if (in_array($p['status'], ['pending', 'lead_audit'])) $potentialRevenue += $p['total_amount'];
 
 ?>
 <?php include 'includes/header.php'; ?>
@@ -105,6 +110,16 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
                     </div>
                 </div>
 
+                <form method="GET" class="mb-4 flex items-center gap-3">
+                    <label for="prospect-status" class="text-sm font-bold">Afficher les prospects</label>
+                    <select id="prospect-status" name="status" class="border rounded-lg p-2">
+                        <?php foreach (['active' => 'À relancer (paniers + audits)', 'converted' => 'Convertis', 'abandoned' => 'Ignorés', 'all' => 'Tous les prospects'] as $value => $label): ?>
+                            <option value="<?= $value ?>" <?= $statusFilter === $value ? 'selected' : '' ?>><?= $label ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button class="bg-blue-600 text-white rounded-lg px-3 py-2">Afficher</button>
+                </form>
+                <p class="text-xs text-gray-500 mb-4">Les niveaux suivent uniquement les relances WhatsApp ouvertes par un administrateur. Les emails automatiques sont suivis séparément.</p>
                 <!-- Prospects Table (Desktop) / Cards (Mobile) -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="p-6 border-b border-gray-50 font-bold text-gray-700 flex justify-between items-center">
@@ -135,7 +150,7 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
                                     $baseUrl = "https://moncvpro.hiremeguide.com/";
                                     $paymentLink = $baseUrl . "paiement.html?package=" . urlencode($packageName) . "&amount=" . $p['total_amount'] . "&name=" . urlencode($p['name']) . "&whatsapp=" . urlencode($p['whatsapp']);
                                     $modelsLink = $baseUrl . "cv-models";
-                                    $stage = (int)$p['followup_stage'];
+                                    $stage = (int)$p['manual_followup_stage'];
                                     $nextLevel = min(10, $stage + 1);
                                 ?>
                                 <tr class="hover:bg-gray-50 transition-all group">
@@ -151,7 +166,7 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
                                     </td>
                                     <td class="p-4">
                                         <div class="font-bold text-gray-800"><?= htmlspecialchars($p['name']) ?></div>
-                                        <div class="text-[10px] text-gray-400"><?= htmlspecialchars($p['whatsapp']) ?> • <?= htmlspecialchars($p['city']) ?></div>
+                                        <div class="text-[10px] text-gray-400"><?= htmlspecialchars($p['whatsapp']) ?> • <?= htmlspecialchars($p['city'] ?? '') ?></div>
                                     </td>
                                     <td class="p-4">
                                         <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-[10px] font-bold"><?= htmlspecialchars($p['package_name']) ?></span>
@@ -226,7 +241,7 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
 
                                                         foreach($all_templates as $level => $tpl):
                                                             $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $p['whatsapp']) . "?text=" . urlencode($tpl['msg']);
-                                                            $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&url=" . urlencode($waUrl);
+                                                            $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&expected_stage=$stage&url=" . urlencode($waUrl);
                                                             $isNext = ($level == $nextLevel);
                                                     ?>
                                                         <a href="<?= $trackingUrl ?>" target="_blank" class="flex items-center gap-3 px-4 py-3 text-[10px] text-gray-700 hover:bg-blue-50 border-b border-gray-50 last:border-0 font-bold transition-colors <?= $isNext ? 'bg-blue-50 border-l-4 border-l-blue-600' : 'opacity-80' ?>">
@@ -263,14 +278,14 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
                             $baseUrl = "https://moncvpro.hiremeguide.com/";
                             $paymentLink = $baseUrl . "paiement.html?package=" . urlencode($packageName) . "&amount=" . $p['total_amount'] . "&name=" . urlencode($p['name']) . "&whatsapp=" . urlencode($p['whatsapp']);
                             $modelsLink = $baseUrl . "cv-models";
-                            $stage = (int)$p['followup_stage'];
+                            $stage = (int)$p['manual_followup_stage'];
                             $nextLevel = min(10, $stage + 1);
                         ?>
                         <div class="p-6 space-y-4">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <div class="font-bold text-gray-800 text-lg"><?= htmlspecialchars($p['name']) ?></div>
-                                    <div class="text-xs text-gray-400 mt-0.5"><?= htmlspecialchars($p['whatsapp']) ?> • <?= htmlspecialchars($p['city']) ?></div>
+                                    <div class="text-xs text-gray-400 mt-0.5"><?= htmlspecialchars($p['whatsapp']) ?> • <?= htmlspecialchars($p['city'] ?? '') ?></div>
                                 </div>
                                 <?php if($diff < 900): ?>
                                     <span class="px-2 py-1 bg-green-100 text-green-600 text-[10px] font-black rounded-lg animate-pulse">HOT 🔥</span>
@@ -343,7 +358,7 @@ foreach($prospects as $p) $potentialRevenue += $p['total_amount'];
 
                                             foreach($all_templates as $level => $tpl): 
                                                 $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $p['whatsapp']) . "?text=" . urlencode($tpl['msg']);
-                                                $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&url=" . urlencode($waUrl);
+                                                $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&expected_stage=$stage&url=" . urlencode($waUrl);
                                                 $isNext = ($level == $nextLevel);
                                         ?>
                                             <a href="<?= $trackingUrl ?>" target="_blank" class="flex items-center gap-4 px-5 py-4 text-xs text-gray-700 hover:bg-blue-50 border-b border-gray-50 last:border-0 font-bold transition-colors <?= $isNext ? 'bg-blue-50 border-l-4 border-l-blue-600' : '' ?>">

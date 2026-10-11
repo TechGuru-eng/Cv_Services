@@ -57,6 +57,7 @@ $promos = $pdo->query("SELECT * FROM promo_codes ORDER BY created_at DESC")->fet
 
     <main class="p-6 md:p-10 flex-1 overflow-auto">
         <h2 class="text-3xl font-bold mb-8">Gestion des Codes Promo</h2>
+        <p class="mb-6">Pour la roue de sortie, créez quatre codes de 10%, 20%, 30% et 40%, limités aux packs Étudiant, Pro et Senior, puis associez-les dans <a class="text-purple-600 underline" href="exit_popups.php">Configuration Popup de Sortie</a>. Les codes associés à la roue ne sont pas appliqués automatiquement.</p>
 
         <?php if ($msg): ?>
             <div class="bg-green-100 text-green-700 p-3 rounded mb-4"><?= htmlspecialchars($msg) ?></div>

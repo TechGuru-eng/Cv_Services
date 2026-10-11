@@ -2,7 +2,7 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informations Finales – HireMe CV Services</title>
     <meta name="description" content="Formulaire de collecte d'informations pour la rédaction de votre CV.">
@@ -17,16 +17,6 @@
     <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +53,13 @@
             }
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -476,6 +473,7 @@
             const formData = new FormData();
             formData.append('name', document.getElementById('hiddenName').value);
             formData.append('email', document.getElementById('hiddenEmail').value);
+            formData.append('order_ref', new URLSearchParams(window.location.search).get('order_ref') || '');
             formData.append('whatsapp', document.getElementById('whatsapp').value);
             formData.append('location', document.getElementById('location').value);
 
@@ -513,6 +511,8 @@
 
                     // Redirect to Thank You Page
                     const params = new URLSearchParams({ name: document.getElementById('hiddenName').value || 'Client' });
+                    const orderRef = result.order_ref || formData.get('order_ref');
+                    if (orderRef) params.set('order_ref', orderRef);
                     setTimeout(() => {
                         window.location.href = 'merci.html?' + params.toString();
                     }, 2000);
@@ -524,16 +524,9 @@
 
             } catch (error) {
                 console.error('Error:', error);
-                // Fallback for simulation/no-backend environment so flow is not broken
-                console.warn("Backend fail or missing - Proceeding to fallback flow.");
-
-                document.getElementById('detailsForm').style.display = 'none';
-                document.getElementById('successState').classList.remove('hidden');
-                document.getElementById('successState').scrollIntoView({ behavior: 'smooth' });
-                const params = new URLSearchParams({ name: formData.name || 'Client' });
-                setTimeout(() => {
-                    window.location.href = 'merci.html?' + params.toString();
-                }, 2000);
+                alert("Impossible d'enregistrer vos informations. Veuillez réessayer.");
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             }
         });
     </script>

@@ -13,7 +13,8 @@ $stmtPkg = $pdo->query("SELECT id, slug, name, price, tagline, deliverables_json
 $packages = $stmtPkg->fetchAll(PDO::FETCH_ASSOC);
 
 // If no package selected, default to Pack Pro
-if ($selectedPkgId <= 0 && !empty($packages)) {
+if (!in_array($selectedPkgId, array_map('intval', array_column($packages, 'id')), true) && !empty($packages)) {
+    $selectedPkgId = 0;
     foreach ($packages as $p) {
         if ($p['slug'] === 'pro') {
             $selectedPkgId = $p['id'];
@@ -29,29 +30,26 @@ if ($selectedPkgId <= 0 && !empty($packages)) {
 $stmtAdd = $pdo->query("SELECT id, slug, name, description, price FROM linkedin_addons WHERE is_active = 1 ORDER BY sort_order ASC");
 $addons = $stmtAdd->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch Upsell Products
-$stmtProd = $pdo->query("SELECT id, slug, name, description, price, promo_price, is_digital, cta_text, highlight_badge, target_objectives_json, sort_order FROM linkedin_products WHERE is_active = 1 ORDER BY sort_order ASC");
-$products = $stmtProd->fetchAll(PDO::FETCH_ASSOC);
-
-// Fetch Bundles
-$stmtBundle = $pdo->query("SELECT id, slug, name, description, bundle_price FROM linkedin_bundles WHERE is_active = 1");
-$bundles = $stmtBundle->fetchAll(PDO::FETCH_ASSOC);
-$visibiliteBundle = !empty($bundles) ? $bundles[0] : null;
+// Shop resources are separate purchases, rendered from the shared catalogue.
 
 // Fetch Payment Settings
 $stmtSet = $pdo->query("SELECT setting_key, setting_value FROM linkedin_settings");
 $settings = $stmtSet->fetchAll(PDO::FETCH_KEY_PAIR);
-$mtnPhone = $settings['mtn_phone'] ?? '670000000';
-$mtnUssd = $settings['mtn_ussd'] ?? '*126#';
-$orangePhone = $settings['orange_phone'] ?? '690000000';
-$orangeUssd = $settings['orange_ussd'] ?? '*150#';
+$mtnPhone = '654250688';
+$mtnName = 'Njai Dintek Handson';
+$mtnUssd = '*126*14*654250688';
+$orangePhone = '659197506';
+$orangeName = 'Njai Dintek Handson';
+$orangeUssd = '#150*1*1*659197506';
 ?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
+<?php $linkedinBase = preg_replace('~/(?:linkedin(?:/.*)?|suivi-linkedin)/?$~', '/linkedin/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ?>
+    <base href="<?= htmlspecialchars($linkedinBase, ENT_QUOTES, 'UTF-8') ?>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commande — Optimisation Profil LinkedIn | HireMe</title>
+    
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -85,8 +83,33 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
             }
         }
     </script>
+    <script src="../assets/js/site-language.js?v=6" defer></script>
+    <link rel="stylesheet" href="../assets/css/linkedin-hub.css?v=3">
+<link rel="stylesheet" href="../assets/css/linkedin-landing.css?v=4"><link rel="stylesheet" href="../assets/css/linkedin-order.css?v=4"><script src="../assets/js/linkedin-landing.js?v=2" defer></script><script src="../assets/js/linkedin-checkout.js?v=1" defer></script><title>Commander une optimisation LinkedIn | HireMe</title>
+    <meta name="description" content="Choisissez votre pack d’optimisation LinkedIn et transmettez vos informations à HireMe pour créer un profil professionnel adapté à vos objectifs.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://moncvpro.hiremeguide.com/linkedin/commander">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="HireMe">
+    <meta property="og:title" content="Commander une optimisation LinkedIn | HireMe">
+    <meta property="og:description" content="Choisissez votre pack d’optimisation LinkedIn et transmettez vos informations à HireMe pour créer un profil professionnel adapté à vos objectifs.">
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/images/linkedin/linkedin-workspace.jpg">
+    <meta property="og:image:alt" content="Espace de travail professionnel — HireMe LinkedIn">
+    <meta property="og:url" content="https://moncvpro.hiremeguide.com/linkedin/commander">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Commander une optimisation LinkedIn | HireMe">
+    <meta name="twitter:description" content="Choisissez votre pack d’optimisation LinkedIn et transmettez vos informations à HireMe pour créer un profil professionnel adapté à vos objectifs.">
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/images/linkedin/linkedin-workspace.jpg">
+    <meta name="twitter:image:alt" content="Espace de travail professionnel — HireMe LinkedIn">
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
-<body class="bg-bg text-neutral antialiased font-sans min-h-screen py-8 px-4">
+<body class="linkedin-landing li-order-page"><header class="li-header"><a class="li-brand" href="./"><span class="li-brand-mark" aria-hidden="true">H</span><span class="li-brand-name" translate="no">HireMe<span>LinkedIn</span></span></a><nav class="li-desktop-nav"><a href="./">Optimisation LinkedIn</a><a href="commander">Commander</a><a href="suivi-linkedin">Suivi de commande</a></nav><div class="li-language-slot"></div></header>
 
     <!-- Toast Notification (MonCvPro Style) -->
     <div id="toastNotification" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 hidden bg-neutral text-white font-extrabold text-xs px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 border border-sky-400">
@@ -96,23 +119,8 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
 
     <div class="max-w-6xl mx-auto space-y-8">
         
-        <!-- Header Nav -->
-        <div class="flex items-center justify-between border-b border-gray-200 pb-6">
-            <div class="flex items-center gap-4">
-                <a href="../index.html" class="flex items-center gap-2 group" title="Retourner sur MonCV Pro">
-                    <div class="w-9 h-9 rounded-xl bg-primary text-white font-black flex items-center justify-center text-lg shadow-md shadow-sky-500/20">HM</div>
-                    <span class="text-xl font-extrabold text-primary tracking-tight">HireMe<span class="text-neutral">LinkedIn</span></span>
-                </a>
-                <a href="../index.html" class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-sky-600 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-lg transition-colors">
-                    <i class="fa-solid fa-house text-[10px]"></i> MonCV Pro
-                </a>
-            </div>
-            <div class="text-xs text-gray-500 font-bold flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-                <i class="fa-solid fa-shield-halved text-primary"></i>
-                <span>Commande & Paiement Sécurisés</span>
-            </div>
-        </div>
-
+<section class="li-order-intro"><p class="li-eyebrow">VOTRE PROCHAINE ÉTAPE</p><h1>Un profil à la hauteur de votre parcours.</h1><p>Partagez vos objectifs. Nous préparons une optimisation adaptée à votre profil.</p><a href="suivi-linkedin">Déjà une commande ? Suivez votre dossier →</a></section>
+        <p class="li-lead-notice">Vos coordonnées et votre progression sont enregistrées pour vous aider à finaliser votre commande. Notre équipe peut vous contacter à ce sujet. <a href="../politique-confidentialite">Confidentialité</a></p>
         <!-- Progress Steps Bar (MonCvPro Multi-step Indicator) -->
         <div class="bg-white border border-gray-200 rounded-3xl p-4 sm:p-6 shadow-soft overflow-x-auto">
             <div class="flex items-center justify-between min-w-[600px] text-xs font-bold">
@@ -156,7 +164,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
         </div>
 
         <!-- Form Container -->
-        <form id="orderForm" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <form id="orderForm" enctype="multipart/form-data" novalidate class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             <!-- Hidden input for selected Bundle -->
             <input type="hidden" name="bundle_id" id="bundleIdInput" value="0">
@@ -362,57 +370,24 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                     </div>
                 </div>
 
-                <!-- STEP 4: OPTIONS, BUNDLES & UPSELLS -->
+                <!-- STEP 4: FORFAIT -->
                 <div class="step-panel hidden space-y-8" id="stepPanel4">
                     <div class="border-b border-gray-200 pb-4">
-                        <h2 class="text-xl font-extrabold text-neutral">Étape 4 sur 6 : Formule & Outils complémentaires</h2>
-                        <p class="text-xs text-gray-500 font-medium">Complétez votre profil avec les ressources clés pour accélérer vos résultats.</p>
+                        <h2 class="text-xl font-extrabold text-neutral">Étape 4 sur 6 : Choisissez votre forfait</h2>
+                        <p class="text-xs text-gray-500 font-medium">Sélectionnez la formule d'optimisation qui correspond à vos besoins.</p>
                     </div>
-
-                    <!-- FEATURED BUNDLE: PACK VISIBILITÉ PRO -->
-                    <?php if ($visibiliteBundle): ?>
-                    <div class="p-6 rounded-3xl bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 border-2 border-primary relative overflow-hidden shadow-soft">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 pb-4">
-                            <div>
-                                <span class="bg-primary text-white font-extrabold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow">
-                                    Combo recommandé HireMe
-                                </span>
-                                <h3 class="text-xl font-black text-neutral mt-2"><?= htmlspecialchars($visibiliteBundle['name']) ?></h3>
-                                <p class="text-xs text-gray-600 font-medium mt-0.5"><?= htmlspecialchars($visibiliteBundle['description']) ?></p>
-                            </div>
-                            <div class="text-left sm:text-right">
-                                <span class="text-xs text-gray-400 line-through block">35 600 FCFA</span>
-                                <strong class="text-2xl font-black text-primary block"><?= number_format($visibiliteBundle['bundle_price'], 0, ',', ' ') ?> FCFA</strong>
-                                <span class="text-[11px] font-bold text-accent bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                                    Vous économisez 3 600 FCFA
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <ul class="text-xs text-gray-700 font-medium space-y-1.5">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent font-black"></i> <span>Optimisation Profil LinkedIn Pro</span></li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent font-black"></i> <span>Optimisation CV ATS Ciblée (+10 000 FCFA)</span></li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent font-black"></i> <span>100 Messages pour contacter et relancer recruteurs (+600 FCFA)</span></li>
-                            </ul>
-                            <button type="button" id="selectBundleBtn" onclick="toggleBundle(<?= $visibiliteBundle['id'] ?>, <?= $visibiliteBundle['bundle_price'] ?>)" class="w-full sm:w-auto bg-primary hover:bg-sky-600 text-white font-extrabold text-xs px-6 py-3.5 rounded-full shadow-glow transition-all shrink-0">
-                                Choisir le Pack Visibilité Pro
-                            </button>
-                        </div>
-                    </div>
-                    <?php endif; ?>
 
                     <!-- Standard Package Selector -->
                     <div id="packageSelectorBox">
                         <label class="block text-xs font-extrabold text-neutral mb-3 uppercase tracking-wider">Choisissez votre forfait d'optimisation :</label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="li-package-grid">
                             <?php foreach ($packages as $pkg): 
                                 $deliverables = json_decode($pkg['deliverables_json'], true) ?: [];
                                 $isPopular = (bool)($pkg['is_popular'] ?? 0);
                             ?>
-                            <div class="rounded-2xl bg-white border <?= $isPopular ? 'border-2 border-primary bg-sky-50/30' : 'border-gray-200' ?> p-5 flex flex-col justify-between relative transition-all shadow-soft">
+                            <div class="li-package-card <?= $isPopular ? 'li-package-popular' : '' ?>">
                                 <?php if ($isPopular): ?>
-                                <div class="mb-2">
+                                <div class="li-package-badge">
                                     <span class="bg-primary text-white font-extrabold text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 shadow-sm">
                                         <i class="fa-solid fa-star text-[9px]"></i> LE PLUS CHOISI
                                     </span>
@@ -420,28 +395,28 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                                 <?php endif; ?>
 
                                 <div>
-                                    <label class="cursor-pointer flex items-center justify-between gap-2 mb-2">
+                                    <label class="li-package-heading">
                                         <div class="flex items-center gap-2">
                                             <input type="radio" name="package_id" value="<?= $pkg['id'] ?>" data-price="<?= $pkg['price'] ?>" data-name="<?= htmlspecialchars($pkg['name']) ?>" <?= $pkg['id'] == $selectedPkgId ? 'checked' : '' ?> onchange="calculateTotal()" class="accent-sky-500 w-4 h-4">
                                             <strong class="text-sm font-extrabold text-neutral"><?= htmlspecialchars($pkg['name']) ?></strong>
                                         </div>
-                                        <span class="text-xs font-black text-primary shrink-0"><?= number_format($pkg['price'], 0, ',', ' ') ?> FCFA</span>
+                                        <span class="li-package-price"><?= number_format($pkg['price'], 0, ',', ' ') ?> <small>FCFA</small></span>
                                     </label>
 
                                     <!-- Dominant Promise -->
-                                    <div class="p-3 rounded-xl bg-gray-50 border border-gray-200 mb-3">
+                                    <div class="li-package-promise">
                                         <span class="text-[9px] uppercase font-extrabold text-primary block tracking-wider mb-0.5">Promesse :</span>
-                                        <p class="text-xs font-bold text-neutral leading-snug">"<?= htmlspecialchars($pkg['tagline']) ?>"</p>
+                                        <p class="text-xs font-bold text-neutral leading-snug"><?= htmlspecialchars($pkg['tagline']) ?></p>
                                     </div>
 
                                     <!-- Expandable Deliverables -->
                                     <?php if (!empty($deliverables)): ?>
                                     <div class="mb-2">
-                                        <button type="button" onclick="toggleDeliverables(this)" class="w-full py-1.5 px-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 text-[11px] font-bold text-gray-600 flex items-center justify-between transition-colors">
-                                            <span>Voir ce qui est inclus (<?= count($deliverables) ?>)</span>
+                                        <button type="button" onclick="toggleDeliverables(this)" class="li-package-details" aria-expanded="false" aria-controls="package-deliverables-<?= (int)$pkg['id'] ?>">
+                                            <span>Voir ce qui est inclus</span><span class="li-package-count" translate="no"><?= count($deliverables) ?></span>
                                             <i class="fa-solid fa-chevron-down text-[9px] text-primary transition-transform duration-300"></i>
                                         </button>
-                                        <ul class="deliverables-full-list hidden space-y-1 text-[11px] text-gray-600 mt-2 pt-2 border-t border-gray-200">
+                                        <ul id="package-deliverables-<?= (int)$pkg['id'] ?>" class="deliverables-full-list hidden space-y-1 text-[11px] text-gray-600 mt-2 pt-2 border-t border-gray-200">
                                             <?php foreach ($deliverables as $deliv): ?>
                                             <li class="flex items-start gap-1.5">
                                                 <i class="fa-solid fa-check text-accent text-[9px] mt-1 shrink-0 font-black"></i>
@@ -457,75 +432,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                         </div>
                     </div>
 
-                    <!-- MAIN CHECKOUT UPSELL SECTION -->
-                    <div class="space-y-4 pt-4 border-t border-gray-200">
-                        <div>
-                            <h3 class="text-lg font-extrabold text-neutral">Complétez votre optimisation professionnelle</h3>
-                            <p class="text-xs text-gray-500 font-medium mt-0.5">Ajoutez les outils dont vous avez besoin pour transformer votre profil optimisé en candidatures et prises de contact plus efficaces.</p>
-                        </div>
-
-                        <!-- Product Cards Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="upsellProductsContainer">
-                            <?php foreach ($products as $index => $prod): 
-                                $objectives = json_decode($prod['target_objectives_json'], true) ?: [];
-                                $isExtra = ($index >= 2);
-                            ?>
-                            <div class="upsell-card p-5 rounded-2xl bg-white border border-gray-200 hover:border-primary shadow-soft transition-all flex flex-col justify-between <?= $isExtra ? 'extra-upsell hidden' : '' ?>" data-objectives='<?= json_encode($objectives) ?>'>
-                                <div>
-                                    <div class="flex justify-between items-start gap-2 mb-1.5">
-                                        <?php if ($prod['highlight_badge']): ?>
-                                        <span class="bg-sky-100 text-sky-800 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full border border-sky-200">
-                                            <?= htmlspecialchars($prod['highlight_badge']) ?>
-                                        </span>
-                                        <?php else: ?>
-                                        <span></span>
-                                        <?php endif; ?>
-                                        <strong class="text-xs font-black text-primary shrink-0">+<?= number_format($prod['price'], 0, ',', ' ') ?> FCFA</strong>
-                                    </div>
-                                    
-                                    <h4 class="text-xs font-extrabold text-neutral leading-snug mb-1"><?= htmlspecialchars($prod['name']) ?></h4>
-                                    <p class="text-[11px] text-gray-500 leading-relaxed font-medium"><?= htmlspecialchars($prod['description']) ?></p>
-                                </div>
-
-                                <div class="pt-3 flex items-center justify-between border-t border-gray-100 mt-3">
-                                    <label class="cursor-pointer inline-flex items-center gap-2 text-xs font-bold text-gray-700">
-                                        <input type="checkbox" name="product_ids[]" value="<?= $prod['id'] ?>" data-price="<?= $prod['price'] ?>" data-name="<?= htmlspecialchars($prod['name']) ?>" onchange="toggleProductBump(this)" class="accent-sky-500 w-4 h-4">
-                                        <span class="bump-btn-label"><?= htmlspecialchars($prod['cta_text'] ?: 'Ajouter') ?></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- Progressive Disclosure Button -->
-                        <div class="text-center pt-2">
-                            <button type="button" id="showMoreUpsellsBtn" onclick="toggleMoreUpsells()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs px-5 py-2.5 rounded-full border border-gray-300">
-                                <span>Voir plus de ressources HireMe</span>
-                                <i class="fa-solid fa-chevron-down text-xs" id="moreUpsellsIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Select Addons -->
-                    <?php if (!empty($addons)): ?>
-                    <div class="space-y-3 pt-4 border-t border-gray-200">
-                        <label class="block text-xs font-extrabold text-neutral uppercase tracking-wider">Services additionnels sur-mesure</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <?php foreach ($addons as $ad): ?>
-                            <label class="cursor-pointer p-4 rounded-2xl bg-white border border-gray-200 hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-sky-50/50 shadow-soft transition-colors flex items-start gap-3">
-                                <input type="checkbox" name="addon_ids[]" value="<?= $ad['id'] ?>" data-price="<?= $ad['price'] ?>" data-name="<?= htmlspecialchars($ad['name']) ?>" onchange="calculateTotal()" class="accent-sky-500 mt-1">
-                                <div>
-                                    <div class="flex justify-between items-center gap-2">
-                                        <strong class="text-xs font-bold text-neutral"><?= htmlspecialchars($ad['name']) ?></strong>
-                                        <span class="text-[11px] font-black text-primary shrink-0">+<?= number_format($ad['price'], 0, ',', ' ') ?> FCFA</span>
-                                    </div>
-                                    <span class="text-[11px] text-gray-500 mt-0.5 block font-medium"><?= htmlspecialchars($ad['description']) ?></span>
-                                </div>
-                            </label>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
+                    <?php require __DIR__ . '/../includes/linkedin-shop-cards.php'; ?>
 
                     <div class="flex justify-between pt-4">
                         <button type="button" onclick="prevStep(3)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm px-6 py-3.5 rounded-full border border-gray-300">
@@ -541,41 +448,43 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 <div class="step-panel hidden space-y-6" id="stepPanel5">
                     <div class="border-b border-gray-200 pb-4">
                         <h2 class="text-xl font-extrabold text-neutral">Étape 5 sur 6 : Récapitulatif & Paiement</h2>
-                        <p class="text-xs text-gray-500 font-medium">Réglez votre commande via Mobile Money (MTN / Orange Money).</p>
+                        <p class="text-xs text-gray-500 font-medium">Réglez via MTN, Orange Money ou Chariow pour les paiements internationaux.</p>
                     </div>
 
                     <!-- Payment Method Selection -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-3">Choisissez votre mode de paiement Mobile Money *</label>
+                        <label class="block text-xs font-bold text-gray-700 mb-3">Choisissez votre mode de paiement *</label>
                         <div class="grid grid-cols-2 gap-4">
                             <label class="cursor-pointer p-4 rounded-2xl bg-white border border-gray-200 hover:border-yellow-400 has-[:checked]:border-yellow-500 has-[:checked]:bg-yellow-50 shadow-soft flex items-center gap-3">
                                 <input type="radio" name="payment_method" value="MTN" checked onchange="switchPaymentMethod('MTN')" class="accent-yellow-500">
                                 <div>
                                     <strong class="text-sm font-extrabold text-neutral block">MTN Mobile Money</strong>
-                                    <span class="text-[11px] text-yellow-600 font-bold">Cameroun &bull; <?= htmlspecialchars($mtnPhone) ?></span>
+                                    <span class="text-[11px] text-yellow-600 font-bold"><?= htmlspecialchars($mtnPhone) ?> — <?= htmlspecialchars($mtnName) ?></span>
                                 </div>
                             </label>
                             <label class="cursor-pointer p-4 rounded-2xl bg-white border border-gray-200 hover:border-orange-500 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 shadow-soft flex items-center gap-3">
                                 <input type="radio" name="payment_method" value="ORANGE" onchange="switchPaymentMethod('ORANGE')" class="accent-orange-500">
                                 <div>
                                     <strong class="text-sm font-extrabold text-neutral block">Orange Money</strong>
-                                    <span class="text-[11px] text-orange-600 font-bold">Cameroun &bull; <?= htmlspecialchars($orangePhone) ?></span>
+                                    <span class="text-[11px] text-orange-600 font-bold"><?= htmlspecialchars($orangePhone) ?> — <?= htmlspecialchars($orangeName) ?></span>
                                 </div>
                             </label>
                         </div>
                     </div>
 
+                    <label class="li-chariow-choice"><input type="radio" name="payment_method" value="CHARIOW" onchange="switchPaymentMethod('CHARIOW')"><span><strong>Chariow — Paiement international</strong><small>Pour les clients hors du Cameroun</small></span></label>
+                    <div id="chariowInstructionBox" class="hidden li-chariow-box"><h3>Payer sur Chariow</h3><p>Vous serez dirigé vers la boutique correspondant à votre forfait. Après paiement, revenez ici pour suivre votre commande.</p><p>Les options et codes promo du site sont disponibles uniquement avec Mobile Money.</p><p id="chariowUnavailable" class="hidden">Le lien Chariow de ce forfait sera disponible prochainement. Contactez-nous sur WhatsApp.</p></div>
                     <!-- USSD Instructions Box -->
                     <div class="p-5 rounded-2xl bg-sky-50 border border-sky-200 space-y-3" id="ussdInstructionBox">
                         <strong class="text-xs font-bold text-neutral block">Instructions de Paiement Mobile :</strong>
                         <ol class="text-xs text-gray-700 space-y-1.5 list-decimal pl-4 font-medium">
-                            <li>Composez le code USSD <code class="text-primary font-extrabold bg-white px-2 py-0.5 rounded border border-gray-200" id="ussdCodeDisplay"><?= htmlspecialchars($mtnUssd) ?></code> sur votre téléphone.</li>
-                            <li>Effectuez le transfert du montant exact (<strong class="text-neutral font-black" id="ussdAmountDisplay">0 FCFA</strong>) vers le numéro marchand : <strong class="text-primary font-black" id="ussdPhoneDisplay"><?= htmlspecialchars($mtnPhone) ?></strong></li>
+                            <li>Composez le code USSD <code class="text-primary font-extrabold bg-white px-2 py-0.5 rounded border border-gray-200" id="ussdCodeDisplay"></code> sur votre téléphone.</li>
+                            <li>Effectuez le transfert du montant exact (<strong class="text-neutral font-black" id="ussdAmountDisplay">0 FCFA</strong>) vers le numéro marchand : <strong class="text-primary font-black" id="ussdPhoneDisplay"><?= htmlspecialchars($mtnPhone) ?></strong> (<span id="ussdBeneficiaryDisplay"><?= htmlspecialchars($mtnName) ?></span>)</li>
                             <li>Saisissez ci-dessous le numéro de téléphone émetteur et la référence / ID de la transaction reçue par SMS.</li>
                         </ol>
                         
                         <div class="pt-2">
-                            <a id="ussdDialBtn" href="tel:*126%23" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-primary font-bold text-xs px-4 py-2 rounded-full border border-sky-200 shadow-sm">
+                            <a id="ussdDialBtn" href="tel:*126*14*654250688*1%23" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-primary font-bold text-xs px-4 py-2 rounded-full border border-sky-200 shadow-sm">
                                 <i class="fa-solid fa-phone"></i>
                                 <span>Composer automatiquement le code USSD</span>
                             </a>
@@ -583,7 +492,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                     </div>
 
                     <!-- Payment Form Inputs -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div id="mobilePaymentFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1.5">Numéro de téléphone émetteur du paiement *</label>
                             <input type="tel" name="payment_phone" required class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-sm text-neutral focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" placeholder="Ex: 670000000">
@@ -595,7 +504,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Capture / Preuve de paiement (Optionnel)</label>
+                        <label id="paymentProofLabel" class="block text-xs font-bold text-gray-700 mb-1.5">Capture / Preuve de paiement (Optionnel)</label>
                         <input type="file" name="payment_proof" accept="image/*,.pdf" class="w-full text-xs text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-gray-100 file:text-neutral hover:file:bg-gray-200">
                     </div>
 
@@ -630,7 +539,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                     </div>
 
                     <p class="text-xs text-gray-600 max-w-lg mx-auto leading-relaxed font-medium">
-                        Notre équipe vérifie votre règlement et commence l'optimisation de votre profil. Vous pouvez suivre l'avancement en temps réel ou contacter le support HireMe.
+                        Le travail ne commencera qu’après confirmation de votre paiement par notre équipe. Vous pouvez télécharger votre reçu de commande, suivre l’avancement ou contacter le support HireMe. Ce reçu ne constitue pas une confirmation de paiement.
                     </p>
 
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -638,6 +547,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                             <i class="fa-brands fa-whatsapp text-lg"></i>
                             <span>Confirmer sur WhatsApp</span>
                         </a>
+                        <a id="confReceiptBtn" href="#" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-neutral font-bold text-sm px-6 py-3.5 rounded-full border border-gray-300 shadow-sm"><i class="fa-solid fa-download" aria-hidden="true"></i> Télécharger le reçu de commande</a>
                         <a id="confTrackBtn" href="#" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-neutral font-bold text-sm px-6 py-3.5 rounded-full border border-gray-300 shadow-sm">
                             <i class="fa-solid fa-eye text-primary"></i>
                             <span>Suivre ma commande</span>
@@ -736,7 +646,9 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
             const errAlert = document.getElementById('errorAlert');
             if (errAlert) errAlert.classList.add('hidden');
             currentStep = step;
+            document.dispatchEvent(new Event("linkedin-step-change"));
             updateStepIndicators(step);
+            document.querySelectorAll('[id^="stepInd"]').forEach((el, index) => el.setAttribute("aria-current", index + 1 === step ? "step" : "false"));
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -746,7 +658,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 const requiredInputs = currentPanel.querySelectorAll('input[required], select[required]');
                 let valid = true;
                 requiredInputs.forEach(input => {
-                    if (!input.value.trim()) {
+                    if (!input.value.trim() || !input.checkValidity()) {
                         valid = false;
                         input.classList.add('border-red-500');
                     } else {
@@ -798,6 +710,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
             const icon = btn.querySelector('i');
             if (list) {
                 list.classList.toggle('hidden');
+                btn.setAttribute('aria-expanded', String(!list.classList.contains('hidden')));
                 if (icon) {
                     icon.classList.toggle('rotate-180');
                 }
@@ -807,6 +720,9 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
         function handleCvFileChange(input) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
+                if (file.size > 10 * 1024 * 1024 || !/\.(pdf|docx?|jpe?g|png)$/i.test(file.name)) {
+                    removeCvFile(); showError('Fichier invalide ou supérieur à 10 Mo.'); return;
+                }
                 const fn = document.getElementById('cvFileName');
                 const fs = document.getElementById('cvFileSize');
                 const fp = document.getElementById('cvFilePreview');
@@ -914,6 +830,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
 
         let appliedPromoCode = null;
         let appliedPromoDiscount = 0;
+        let promoType = null, promoValue = 0;
 
         function calculateRawTotal() {
             let total = 0;
@@ -952,6 +869,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
 
                 if (data.valid) {
                     appliedPromoCode = code.toUpperCase();
+                    promoType = data.discount_type; promoValue = Math.max(0, Number(data.discount_value) || 0);
                     const rawTotal = calculateRawTotal();
                     if (data.discount_type === 'percent') {
                         appliedPromoDiscount = Math.round(rawTotal * (data.discount_value / 100));
@@ -1043,7 +961,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
             // Recalculate Promo Discount based on new raw total
             if (appliedPromoCode && appliedPromoDiscount > 0) {
                 const rawTotal = calculateRawTotal();
-                // recalculate if needed
+                appliedPromoDiscount = Math.min(rawTotal, promoType === 'percent' ? Math.round(rawTotal * promoValue / 100) : promoValue);
             }
 
             let finalTotal = Math.max(0, total - appliedPromoDiscount);
@@ -1073,22 +991,27 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
 
             const elUssdAmount = document.getElementById('ussdAmountDisplay');
             if (elUssdAmount) elUssdAmount.innerText = formattedTotal;
+            switchPaymentMethod(document.querySelector('[name="payment_method"]:checked')?.value || "MTN");
         }
 
+        const chariowLinks = <?= json_encode(array_filter($settings, fn($key) => str_starts_with($key, 'chariow_url_'), ARRAY_FILTER_USE_KEY), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
         function switchPaymentMethod(method) {
-            const codeDisp = document.getElementById('ussdCodeDisplay');
-            const phoneDisp = document.getElementById('ussdPhoneDisplay');
-            const dialBtn = document.getElementById('ussdDialBtn');
-
-            if (method === 'MTN') {
-                if (codeDisp) codeDisp.innerText = mtnUssd;
-                if (phoneDisp) phoneDisp.innerText = mtnPhone;
-                if (dialBtn) dialBtn.href = `tel:${encodeURIComponent(mtnUssd)}`;
-            } else {
-                if (codeDisp) codeDisp.innerText = orangeUssd;
-                if (phoneDisp) phoneDisp.innerText = orangePhone;
-                if (dialBtn) dialBtn.href = `tel:${encodeURIComponent(orangeUssd)}`;
-            }
+            const international = method === 'CHARIOW';
+            document.getElementById('ussdInstructionBox').classList.toggle('hidden', international);
+            document.getElementById('chariowInstructionBox').classList.toggle('hidden', !international);
+            document.getElementById('mobilePaymentFields').classList.toggle('hidden', international);
+            for (const name of ['payment_phone', 'transaction_ref']) { const input = document.querySelector(`[name="${name}"]`); input.required = !international; input.disabled = international; }
+            const proof = document.querySelector('[name="payment_proof"]'); proof.disabled = international; proof.parentElement.classList.toggle('hidden', international);
+            const pkg = document.querySelector('[name="package_id"]:checked');
+            const available = Boolean(chariowLinks['chariow_url_' + (pkg?.value || '')]);
+            document.getElementById('chariowUnavailable').classList.toggle('hidden', !international || available);
+            const btn = document.getElementById('submitOrderBtn');
+            if (!btn.dataset.submitting) {btn.disabled = international && !available; btn.textContent = international ? 'Continuer vers Chariow' : "J'ai effectué le paiement & Valider";}
+            const amount = Math.max(0, calculateRawTotal() - appliedPromoDiscount);
+            const code = (method === 'ORANGE' ? orangeUssd : mtnUssd) + '*' + Math.round(amount) + '#';
+            document.getElementById('ussdCodeDisplay').textContent = code;
+            document.getElementById('ussdPhoneDisplay').textContent = method === 'ORANGE' ? orangePhone : mtnPhone;
+            document.getElementById('ussdDialBtn').href = 'tel:' + encodeURIComponent(code);
         }
 
         // Submit via AJAX
@@ -1096,9 +1019,18 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
         if (orderFormEl) {
             orderFormEl.addEventListener('submit', function(e) {
                 e.preventDefault();
+                if (currentStep !== 5) return;
+                for (let step = 1; step <= 5; step++) {
+                    const invalid = Array.from(document.querySelectorAll(`#stepPanel${step} [required]`)).find(input => !input.value.trim() || !input.checkValidity());
+                    if (invalid) { showStep(step); showError('Veuillez remplir tous les champs obligatoires avant de continuer.'); if (invalid.type !== 'file') invalid.focus(); return; }
+                }
+                const international = document.querySelector('[name="payment_method"]:checked')?.value === 'CHARIOW';
+                if (international && (isBundleActive || appliedPromoCode || document.querySelector('[name="addon_ids[]"]:checked,[name="product_ids[]"]:checked'))) { showError('Les options et codes promo du site sont disponibles uniquement avec Mobile Money.'); return; }
                 const btn = document.getElementById('submitOrderBtn');
+                if (btn && btn.disabled) return;
                 if (btn) {
                     btn.disabled = true;
+                    btn.dataset.submitting = "1";
                     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Traitement de la commande...';
                 }
 
@@ -1116,6 +1048,11 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
+                        document.dispatchEvent(new Event('linkedin-order-created'));
+                        if (data.checkout_url) {
+                            try {sessionStorage.setItem('hireme.linkedin.chariow-order', JSON.stringify({reference:data.reference,token:data.access_token}));}catch(_){}
+                            location.assign(data.checkout_url); return;
+                        }
                         const refEl = document.getElementById('confOrderRef');
                         const totEl = document.getElementById('confTotalAmount');
                         const waBtn = document.getElementById('confWhatsAppBtn');
@@ -1123,17 +1060,21 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                         const sumTot = document.getElementById('sumTotalPrice');
 
                         if (refEl) refEl.innerText = data.reference;
-                        if (totEl && sumTot) totEl.innerText = sumTot.innerText;
+                        if (totEl) totEl.innerText = Number(data.total_amount).toLocaleString('fr-FR') + ' FCFA';
                         
                         const waText = encodeURIComponent(`Bonjour HireMe, je viens de passer une commande d'optimisation LinkedIn. Ma référence est ${data.reference}.`);
                         if (waBtn) waBtn.href = `https://wa.me/237654250688?text=${waText}`;
-                        if (trkBtn) trkBtn.href = data.redirect_url;
+                        if (trkBtn) trkBtn.href = "commande.php?ref=" + encodeURIComponent(data.reference) + "&token=" + encodeURIComponent(data.access_token);
+                        const receiptBtn = document.getElementById('confReceiptBtn');
+                        if (receiptBtn) receiptBtn.href = "../api/linkedin/receipt.php?ref=" + encodeURIComponent(data.reference) + "&token=" + encodeURIComponent(data.access_token);
 
                         showStep(6);
                     } else {
                         showError(data.message || 'Une erreur est survenue lors de l\'enregistrement.');
                         if (btn) {
-                            btn.disabled = false;
+                            delete btn.dataset.submitting;
+                            delete btn.dataset.submitting;
+                        btn.disabled = false;
                             btn.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> J\'ai effectué le paiement & Valider';
                         }
                     }
@@ -1141,6 +1082,7 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
                 .catch(err => {
                     showError('Erreur réseau ou serveur. Veuillez réessayer.');
                     if (btn) {
+                        delete btn.dataset.submitting;
                         btn.disabled = false;
                         btn.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> J\'ai effectué le paiement & Valider';
                     }
@@ -1150,6 +1092,8 @@ $orangeUssd = $settings['orange_ussd'] ?? '*150#';
 
         // Initial Calculations
         calculateTotal();
+        updateStepIndicators(1);
+        document.getElementById("stepInd1").setAttribute("aria-current", "step");
     </script>
-</body>
+<a class="li-whatsapp-assist" href="https://wa.me/237654250688?text=Bonjour%20HireMe%2C%20j%E2%80%99ai%20besoin%20d%E2%80%99aide%20pour%20ma%20commande%20d%E2%80%99optimisation%20LinkedIn." target="_blank" rel="noopener" aria-label="Assistance WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>Besoin d’aide ?</span></a></body>
 </html>

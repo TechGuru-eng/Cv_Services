@@ -5,7 +5,7 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -29,9 +29,6 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
     <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png">
 
     <!-- Favicon -->
-    <link rel="icon" href="assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -86,6 +83,13 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
             z-index: 10;
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans" oncontextmenu="return false;">
 
@@ -162,7 +166,7 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
                         </div>
                         <div class="p-5 border-t border-gray-100">
                             <h3 class="font-bold text-lg mb-1"><?= htmlspecialchars($design['title']) ?></h3>
-                            <a href="index#choice" class="block text-center mt-3 w-full bg-gray-100 text-blue-600 font-bold py-2 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
+                            <a href="index#pricing" class="block text-center mt-3 w-full bg-gray-100 text-blue-600 font-bold py-2 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
                                 Choisir ce modèle
                             </a>
                         </div>

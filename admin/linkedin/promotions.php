@@ -1,0 +1,9 @@
+<?php require __DIR__ . '/../auth.php'; ?>
+<!doctype html><html lang="fr"><head>
+<base href="<?= htmlspecialchars(rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/', ENT_QUOTES, 'UTF-8') ?>"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Codes promo LinkedIn</title><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="../../assets/css/linkedin-admin.css?v=20261010">
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon-180.png?v=20261011">
+</head><body><div class="li-admin-shell"><?php require __DIR__ . '/navigation.php'; ?><main class="li-admin-content"><p class="text-sm text-sky-700 font-bold mb-3">MARKETING</p><h1 class="text-3xl font-extrabold mb-3">Codes promo</h1><p class="text-slate-500 mb-8">Les promotions LinkedIn utilisent les codes du panneau principal.</p><section class="li-admin-card"><h2 class="text-xl font-bold mb-3">Une gestion centralisée</h2><p class="text-slate-600 mb-5">Créez un code, choisissez sa réduction, ses dates et sa limite d’utilisation. Le client le saisit dans le récapitulatif de sa commande LinkedIn, avant le paiement Mobile Money. Les liens fixes Chariow ne prennent pas en charge ces codes.</p><a class="li-admin-button" href="../promos.php">Gérer les codes promo ↗</a><a class="li-admin-button secondary ml-2" href="../../linkedin/commander.php">Voir le formulaire de commande</a></section></main></div></body></html>

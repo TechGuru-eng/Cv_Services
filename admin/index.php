@@ -20,6 +20,16 @@ $revenue = $pdo->query("SELECT SUM(amount) FROM orders WHERE payment_status = 'v
 
 $todayRevenue = $pdo->query("SELECT SUM(amount) FROM orders WHERE payment_status = 'verified' AND DATE(created_at) = CURDATE()")->fetchColumn() ?: 0;
 
+// Use the same visitor records as the public tracker and live dashboard.
+require_once __DIR__ . '/../includes/visitor-tracking.php';
+$todayVisits = site_visits_today($pdo);
+
+// Monthly Revenue for Sales Goal
+$currentMonthStr = date('Y-m');
+$monthlyRevenue = $pdo->query("SELECT SUM(amount) FROM orders WHERE payment_status = 'verified' AND DATE_FORMAT(created_at, '%Y-%m') = '$currentMonthStr'")->fetchColumn() ?: 0;
+$monthlyGoal = 500000; // Target: 500,000 XAF
+$goalProgress = min(100, ($monthlyRevenue / $monthlyGoal) * 100);
+
 // Prospects Stat
 $pendingProspects = $pdo->query("SELECT COUNT(*) FROM prospects WHERE status = 'pending'")->fetchColumn();
 $lostRevenue = $pdo->query("SELECT SUM(total_amount) FROM prospects WHERE status = 'pending'")->fetchColumn() ?: 0;
@@ -104,6 +114,22 @@ $hotProspects = $pdo->query("SELECT * FROM prospects WHERE status = 'pending' OR
                         </div>
                     </div>
 
+                    <!-- Today Visits -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex items-center group">
+                        <div class="p-4 bg-teal-50 text-teal-500 rounded-2xl mr-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-[10px] font-black uppercase tracking-wider">Visites Aujourd'hui</p>
+                            <p class="text-2xl font-black text-gray-800 text-teal-600"><?= $todayVisits ?></p>
+                        </div>
+                    </div>
+
                     <!-- Pending -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex items-center group">
                         <div class="p-4 bg-purple-50 text-purple-500 rounded-2xl mr-4 group-hover:scale-110 transition-transform">
@@ -150,6 +176,106 @@ $hotProspects = $pdo->query("SELECT * FROM prospects WHERE status = 'pending' OR
                             </div>
                         </div>
                     </a>
+
+                    <!-- School Leads (New CRM) -->
+                    <a href="school_leads.php" class="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 hover:border-indigo-300 hover:shadow-md transition-all flex items-center group">
+                        <div class="p-4 bg-indigo-50 text-indigo-600 rounded-2xl mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-indigo-500 text-[10px] font-black uppercase tracking-wider">Leads Écoles</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-2xl font-black text-gray-800"><?= $pdo->query("SELECT COUNT(*) FROM school_leads")->fetchColumn() ?></p>
+                                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded uppercase tracking-tighter">Gérer CRM</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Club HireMe Subscriptions -->
+                    <a href="club_platform.php" class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all flex items-center group">
+                        <div class="p-4 bg-blue-50 text-blue-600 rounded-2xl mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="zap" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-blue-500 text-[10px] font-black uppercase tracking-wider">Club HireMe</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-2xl font-black text-gray-800"><?= $pdo->query("SELECT COUNT(*) FROM club_members")->fetchColumn() ?></p>
+                                <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded uppercase tracking-tighter">Abonnés</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Sales Goal & Quick Actions (NEW BOOST SALES FEATURES) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 items-start">
+                    <!-- Sales Goal Widget -->
+                    <div class="lg:col-span-2 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2rem] shadow-xl p-8 text-white relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform">
+                            <i data-lucide="target" class="w-32 h-32"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-black tracking-tight">Objectif Mensuel 🎯</h3>
+                                    <p class="text-indigo-100 mt-1">Générer <?= number_format($monthlyGoal, 0, ',', ' ') ?> XAF ce mois-ci</p>
+                                </div>
+                                <div class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-sm font-bold">
+                                    <?= date('F Y') ?>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <div class="flex justify-between text-sm font-bold mb-2">
+                                    <span><?= number_format($monthlyRevenue, 0, ',', ' ') ?> XAF Réalisés</span>
+                                    <span><?= number_format(100 - $goalProgress, 1) ?>% Restant</span>
+                                </div>
+                                <div class="w-full bg-indigo-900/50 rounded-full h-4 overflow-hidden backdrop-blur-sm">
+                                    <div class="bg-white h-4 rounded-full transition-all duration-1000 ease-out relative" style="width: <?= $goalProgress ?>%">
+                                        <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-white/50 animate-pulse"></div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-indigo-200 mt-3 font-medium">Il vous manque <?= number_format(max(0, $monthlyGoal - $monthlyRevenue), 0, ',', ' ') ?> XAF pour atteindre votre objectif !</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions to Boost Sales -->
+                    <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8">
+                        <h3 class="text-xl font-black text-gray-900 tracking-tight mb-1">Boost des Ventes 🚀</h3>
+                        <p class="text-xs text-gray-500 mb-6 font-medium">Actions rapides pour générer du CA</p>
+                        
+                        <div class="space-y-3">
+                            <a href="promos.php" class="w-full flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-purple-200 hover:bg-purple-50 group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-purple-100 text-purple-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
+                                        <i data-lucide="tag" class="w-5 h-5"></i>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-800">Créer Code Promo Flash</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-purple-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                            </a>
+                            
+                            <a href="sms-panel.php" class="w-full flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-green-200 hover:bg-green-50 group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-green-100 text-green-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
+                                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-800">Campagne SMS Relance</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-green-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                            </a>
+
+                            <a href="export-leads.php" class="w-full flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50 group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-blue-100 text-blue-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
+                                        <i data-lucide="download" class="w-5 h-5"></i>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-800">Exporter Leads (Facebook Ads)</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Live Activity Feed Component -->
@@ -314,6 +440,9 @@ $hotProspects = $pdo->query("SELECT * FROM prospects WHERE status = 'pending' OR
         </div>
     </div>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

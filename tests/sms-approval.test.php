@@ -1,0 +1,56 @@
+<?php
+require __DIR__ . '/../admin/config/db.php';
+require __DIR__ . '/../admin/config/sms_helper.php';
+$sql = str_replace('CREATE TABLE IF NOT EXISTS','CREATE TEMPORARY TABLE',file_get_contents(__DIR__ . '/../admin/sql/sms-approval.sql'));
+$pdo->exec($sql);
+$pdo->prepare('INSERT INTO sms_monthly_budget (period,used) VALUES (?,0)')->execute([date('Y-m')]);
+function assertSMS($value,$message) { if (!$value) throw new RuntimeException($message); }
+assertSMS(SMSApproval::segments(str_repeat('a',160))===1,'GSM single segment');
+assertSMS(SMSApproval::segments(str_repeat('a',161))===2,'GSM multipart');
+assertSMS(SMSApproval::segments(str_repeat('😀',36))===2,'Unicode surrogate pairs');
+SMSHelper::sendSMS('654250688','Test approval');
+SMSHelper::sendSMS('+237654250688','Test  approval');
+assertSMS((int)$pdo->query('SELECT COUNT(*) FROM sms_approval_requests')->fetchColumn()===1,'Deduplication across number and whitespace formats');
+$id=(int)$pdo->query('SELECT id FROM sms_approval_requests')->fetchColumn();
+$calls=0;
+$fake=function () use (&$calls) { $calls++; return ['success'=>true,'error'=>'']; };
+$_SERVER['REQUEST_METHOD']='POST';
+$_SESSION=[];
+assertSMS(!SMSApproval::approve($pdo,$id,'token',$fake)['success'],'Unauthenticated send denied');
+$_SESSION=['admin'=>true,'sms_csrf'=>'token'];
+assertSMS(!SMSApproval::edit($pdo,$id,'wrong','Changed')['success'],'Editing requires CSRF');
+assertSMS(SMSApproval::edit($pdo,$id,'token',str_repeat('b',161))['success'],'Pending message editable');
+assertSMS((int)$pdo->query('SELECT segments FROM sms_approval_requests WHERE id='.$id)->fetchColumn()===2,'Edited segment cost recalculated');
+assertSMS($calls===0 && SMSApproval::used($pdo)===0,'Saving never sends or consumes budget');
+assertSMS(SMSApproval::edit($pdo,$id,'token','Test approval')['success'],'Edit preserves original identity');
+assertSMS(!SMSApproval::approve($pdo,$id,'wrong',$fake)['success'],'CSRF required');
+assertSMS($calls===0,'No delivery before approval');
+assertSMS(!SMSApproval::edit($pdo,$id,'wrong','Edited reminder')['success'],'Editing requires CSRF');
+assertSMS(SMSApproval::edit($pdo,$id,'token','Edited reminder with tracking link')['success'],'Pending reminder is editable');
+assertSMS($calls===0,'Editing never sends');
+$edited=$pdo->query('SELECT message,segments FROM sms_approval_requests WHERE id='.$id)->fetch();
+assertSMS($edited['message']==='Edited reminder with tracking link' && (int)$edited['segments']===1,'Saved content and cost recalculated');
+
+assertSMS(SMSApproval::approve($pdo,$id,'token',$fake)['success'],'Approved send');
+assertSMS(!SMSApproval::approve($pdo,$id,'token',$fake)['success'],'Repeated approval blocked');
+assertSMS($calls===1,'Only one provider call');
+assertSMS(!SMSApproval::edit($pdo,$id,'token','Changed after send')['success'],'Already attempted messages cannot be edited');
+assertSMS(!SMSHelper::sendOrderSMS(0)['success'],'Manual SMS cannot use automatic order path');
+assertSMS(!SMSApproval::edit($pdo,$id,'token','Changed after sending')['success'],'Accepted messages cannot be modified');
+SMSHelper::sendSMS('654250688','Another message');
+$id=(int)$pdo->query('SELECT MAX(id) FROM sms_approval_requests')->fetchColumn();
+$pdo->exec('UPDATE sms_monthly_budget SET used=300');
+assertSMS(!SMSApproval::approve($pdo,$id,'token',$fake)['success'],'Monthly cap enforced');
+assertSMS($calls===1,'Cap blocks provider call');
+$pdo->exec('UPDATE sms_monthly_budget SET used=0');
+assertSMS(!SMSApproval::approve($pdo,$id,'token',function () { throw new RuntimeException('Simulated timeout'); })['success'],'Provider failure retained');
+assertSMS(!SMSApproval::approve($pdo,$id,'token',$fake)['success'],'Uncertain delivery never retried');
+assertSMS(SMSApproval::used($pdo)===1,'Attempt consumes reserved budget');
+assertSMS((new ReflectionMethod(SMSHelper::class,'deliverSMS'))->isPrivate(),'Direct gateway sending is private');
+
+SMSHelper::sendSMS('654250688','Automatic order test');
+$autoId=(int)$pdo->query('SELECT MAX(id) FROM sms_approval_requests')->fetchColumn();
+$_SESSION=[]; $_SERVER['REQUEST_METHOD']='GET';
+assertSMS(SMSApproval::dispatch($pdo,$autoId,$fake)['success'],'Trusted order dispatcher runs without manual approval');
+assertSMS(!SMSApproval::dispatch($pdo,$autoId,$fake)['success'],'Automatic order dispatch never duplicates');
+echo "PASS: approval, CSRF, deduplication, monthly cap, segment counts, failures and no retries. No SMS sent.\n";

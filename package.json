@@ -1,0 +1,24 @@
+{
+  "name": "moncv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chariow_widget.js",
+  "scripts": {
+    "test": "npm --prefix tests test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechGuru-eng/Cv_Services.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TechGuru-eng/Cv_Services/issues"
+  },
+  "homepage": "https://github.com/TechGuru-eng/Cv_Services#readme",
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

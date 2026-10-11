@@ -1,23 +1,31 @@
 <?php
 // api/check_promo.php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+require_once __DIR__ . '/../includes/cors.php';
 
 // Database Connection (Path adapted for API folder)
 require_once '../admin/config/db.php';
+require_once '../includes/upload_helper.php';
+if (isset($_GET['code']) && !rate_limit_ok('check-promo', 30, 600)) {
+    http_response_code(429);
+    echo json_encode(['valid' => false, 'message' => 'Trop de tentatives.']);
+    exit;
+}
 
 // 1. Check for Active Promo (for Banner/Auto-apply)
 if (isset($_GET['action']) && $_GET['action'] == 'get_active') {
     $today = date('Y-m-d');
+    require_once __DIR__ . '/../includes/wheel-promos.php';
+    $wheelExclusion = wheel_promo_exclusion($pdo);
     
     // First, try to find the designated 'default' promo
-    $stmt = $pdo->prepare("SELECT * FROM promo_codes WHERE status = 'active' AND is_default = 1 AND (start_date <= ? AND end_date >= ?) AND (usage_limit IS NULL OR usage_count < usage_limit) LIMIT 1");
+    $stmt = $pdo->prepare("SELECT * FROM promo_codes WHERE status = 'active' AND is_default = 1 AND (start_date <= ? AND end_date >= ?) AND (usage_limit IS NULL OR usage_count < usage_limit)" . $wheelExclusion . " LIMIT 1");
     $stmt->execute([$today, $today]);
     $promo = $stmt->fetch();
 
     // If no explicit default, just find the best active one (highest discount)
     if (!$promo) {
-        $stmt = $pdo->prepare("SELECT * FROM promo_codes WHERE status = 'active' AND (start_date <= ? AND end_date >= ?) AND (usage_limit IS NULL OR usage_count < usage_limit) ORDER BY discount_value DESC LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM promo_codes WHERE status = 'active' AND (start_date <= ? AND end_date >= ?) AND (usage_limit IS NULL OR usage_count < usage_limit)" . $wheelExclusion . " ORDER BY discount_value DESC LIMIT 1");
         $stmt->execute([$today, $today]);
         $promo = $stmt->fetch();
     }
@@ -55,6 +63,7 @@ if (isset($_GET['code'])) {
 
         echo json_encode([
             'valid' => true, 
+            'code' => $promo['code'],
             'discount_type' => $promo['discount_type'],
             'discount_value' => (float)$promo['discount_value'],
             'products' => $promo['products'] ? explode(',', $promo['products']) : [],

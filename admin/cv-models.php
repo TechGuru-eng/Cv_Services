@@ -5,9 +5,12 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once __DIR__ . '/includes/csrf.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') verify_csrf();
 
 $msg = '';
 $error = '';
+if (isset($_GET['masked'])) $msg = 'Image masquée publiée. L’ancienne image publique a également été remplacée.';
 
 // Handle Upload
 if (isset($_POST['upload'])) {
@@ -87,6 +90,7 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
             <div class="bg-white shadow rounded-lg p-6 mb-8">
                 <h2 class="text-xl font-bold mb-4">Ajouter un nouveau modèle</h2>
                 <form method="POST" enctype="multipart/form-data" class="flex gap-4 items-end">
+                    <?php csrf_field(); ?>
                     <div class="flex-1">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Titre du modèle</label>
                         <input type="text" name="title" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ex: Moderne Bleu">
@@ -109,9 +113,11 @@ $designs = $pdo->query("SELECT * FROM cv_designs ORDER BY created_at DESC")->fet
                         <div class="p-4">
                             <h3 class="font-bold text-gray-800"><?= htmlspecialchars($design['title']) ?></h3>
                             <p class="text-xs text-gray-500"><?= date('d/m/Y', strtotime($design['created_at'])) ?></p>
+                            <a href="cv-model-privacy.php?id=<?= (int)$design['id'] ?>" class="inline-block mt-3 text-sm font-bold text-blue-600 underline">Masquer les informations</a>
                         </div>
                         
                         <form method="POST" onsubmit="return confirm('Confirmer la suppression ?');" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <?php csrf_field(); ?>
                             <input type="hidden" name="delete_id" value="<?= $design['id'] ?>">
                             <button type="submit" class="bg-red-600 text-white p-2 rounded-full hover:bg-red-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

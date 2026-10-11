@@ -5,6 +5,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once __DIR__ . '/includes/prospect_helper.php';
+importAbandonedProspects($pdo);
 require_once 'includes/activity_helper.php';
 
 // Log access
@@ -49,15 +51,11 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients Étrangers - HireMe Admin</title>
     
     <!-- Favicons -->
-    <link rel="icon" href="../assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -71,6 +69,12 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
         }
         .animate-pulse-green { animation: pulse-green 2s infinite; }
     </style>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="bg-[#F8FAFC]">
     <div class="flex h-screen overflow-hidden">
@@ -202,7 +206,7 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
                                          $baseUrl = "https://moncvpro.hiremeguide.com/";
                                          $paymentLink = $baseUrl . "paiement.html?package=" . urlencode($packageName) . "&amount=" . $p['total_amount'] . "&name=" . urlencode($p['name']) . "&phone=" . urlencode($p['whatsapp']);
                                          $modelsLink = $baseUrl . "cv-models";
-                                         $stage = (int)$p['followup_stage'];
+                                         $stage = (int)$p['manual_followup_stage'];
                                          $nextLevel = min(10, $stage + 1);
                                      ?>
                                      <tr class="hover:bg-slate-50/50 transition-colors group">
@@ -253,7 +257,7 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
 
                                                          foreach($intl_templates as $level => $tpl):
                                                              $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $p['whatsapp']) . "?text=" . urlencode($tpl['msg']);
-                                                             $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&url=" . urlencode($waUrl);
+                                                             $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&expected_stage=$stage&url=" . urlencode($waUrl);
                                                              $isNext = ($level == $nextLevel);
                                                      ?>
                                                          <a href="<?= $trackingUrl ?>" target="_blank" class="flex items-center gap-3 px-4 py-3 text-[10px] text-slate-700 hover:bg-blue-50 border-b border-slate-50 last:border-0 font-bold transition-colors <?= $isNext ? 'bg-blue-50 border-l-4 border-l-blue-600' : 'opacity-80' ?>">
@@ -288,7 +292,7 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
                                  $baseUrl = 'https://moncvpro.hiremeguide.com/';
                                  $paymentLink = $baseUrl . 'paiement.html?package=' . urlencode($packageName) . '&amount=' . $p['total_amount'] . '&name=' . urlencode($p['name']) . '&phone=' . urlencode($p['whatsapp']);
                                  $modelsLink = $baseUrl . 'cv-models';
-                                $stage = (int)$p['followup_stage'];
+                                $stage = (int)$p['manual_followup_stage'];
                                 $nextLevel = min(10, $stage + 1);
                             ?>
                                 <div class="p-6 space-y-4">
@@ -344,7 +348,7 @@ foreach($topCountries as $gi) $totalForeignTraffic += $gi['uniques'];
 
                                                     foreach($intl_templates as $level => $tpl): 
                                                         $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $p['whatsapp']) . "?text=" . urlencode($tpl['msg']);
-                                                        $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&url=" . urlencode($waUrl);
+                                                        $trackingUrl = "api/track_relance.php?id=" . $p['id'] . "&type=L$level&expected_stage=$stage&url=" . urlencode($waUrl);
                                                         $isNext = ($level == $nextLevel);
                                                 ?>
                                                     <a href="<?= $trackingUrl ?>" target="_blank" class="flex items-center gap-4 px-5 py-4 text-xs text-slate-700 hover:bg-blue-50 border-b border-slate-50 last:border-0 font-bold transition-colors <?= $isNext ? 'bg-blue-50 border-l-4 border-l-blue-600' : '' ?>">

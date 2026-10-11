@@ -1,0 +1,266 @@
+<?php
+require_once '../admin/config/db.php';
+require_once __DIR__ . '/../includes/upload_helper.php';
+session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off']);
+session_start();
+
+$error = '';
+$plan = $_GET['plan'] ?? 'standard';
+if (!in_array($plan, ['basic', 'standard', 'premium'])) $plan = 'standard';
+
+$planDetails = [
+    'basic'    => ['id' => 1, 'allowance' => 4,  'price' => 5000,  'label' => 'Pack Basic',    'desc' => '4 CVs / mois'],
+    'standard' => ['id' => 2, 'allowance' => 8,  'price' => 7000,  'label' => 'Pack Standard', 'desc' => '8 CVs / mois'],
+    'premium'  => ['id' => 3, 'allowance' => 14, 'price' => 10000, 'label' => 'Pack Premium',  'desc' => '14 CVs / mois'],
+];
+$selectedPlanInfo = $planDetails[$plan];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fullName     = trim($_POST['full_name']);
+    $whatsapp     = trim($_POST['whatsapp']);
+    $email        = trim($_POST['email']);
+    $password     = $_POST['password'];
+    $selectedPlan = $_POST['plan'];
+
+    if (!in_array($selectedPlan, ['basic', 'standard', 'premium'])) $selectedPlan = 'standard';
+
+    $whatsappDigits = preg_replace('/[^0-9]/', '', $whatsapp);
+    if (!str_starts_with($whatsappDigits, '237')) {
+        $whatsappDigits = '237' . ltrim($whatsappDigits, '0');
+    }
+
+    if (!rate_limit_ok('club-register', 5, 3600)) {
+        http_response_code(429);
+        $error = 'Trop de demandes. Réessayez plus tard.';
+    } elseif (empty($fullName) || empty($whatsapp) || empty($password)) {
+        $error = "Veuillez remplir les champs obligatoires.";
+    } elseif (strlen($password) < 6) {
+        $error = "Le mot de passe doit contenir au moins 6 caractères.";
+    } else {
+        try {
+            $check = $pdo->prepare("SELECT id FROM club_members WHERE whatsapp = ?");
+            $check->execute([$whatsappDigits]);
+            if ($check->fetch()) {
+                $error = "Ce numéro WhatsApp est déjà enregistré au Club.";
+            } else {
+                $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+                $details = $planDetails[$selectedPlan];
+                $stmt = $pdo->prepare("INSERT INTO club_members (full_name, whatsapp, email, password_hash, plan_id, cv_allowance) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$fullName, $whatsappDigits, $email, $passwordHash, $details['id'], $details['allowance']]);
+                $memberId = $pdo->lastInsertId();
+                session_regenerate_id(true);
+                $_SESSION['club_member_id']   = $memberId;
+                $_SESSION['club_member_name'] = $fullName;
+                $_SESSION['pending_plan']     = $selectedPlan;
+                header('Location: payment.php');
+                exit;
+            }
+        } catch (PDOException $e) {
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S'inscrire — HireMe Club</title>
+    <!-- Social Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://moncvpro.hiremeguide.com/assets/club-preview-premium.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/club-preview-premium.png">
+
+    <!-- Favicons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .field { width:100%; padding:13px 18px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:14px; font-weight:500; color:#0f172a; outline:none; transition:all .2s; }
+        .field:focus { border-color:#0ea5e9; box-shadow:0 0 0 3px rgba(14,165,233,.1); background:#fff; }
+        .field::placeholder { color:#94a3b8; font-weight:400; }
+        select.field { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; -webkit-appearance:none; appearance:none; cursor:pointer; }
+    </style>
+    <script src="../assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
+</head>
+<body class="bg-white antialiased min-h-screen">
+
+<!-- Mobile top bar -->
+<div class="md:hidden sticky top-0 z-30 bg-white border-b border-slate-100 px-5 py-3.5 flex items-center justify-between">
+    <a href="../abonnements.html" class="font-black text-slate-900 text-base tracking-tight">HireMe<span class="text-sky-500">Club</span></a>
+    <a href="../abonnements.html" class="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-slate-700">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Retour
+    </a>
+</div>
+
+<div class="flex min-h-screen">
+
+    <!-- LEFT: image panel (desktop only) -->
+    <div class="hidden md:flex md:w-[420px] lg:w-[480px] flex-col justify-between flex-shrink-0 relative overflow-hidden">
+        <!-- Background image -->
+        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=960&q=85"
+             alt="Professionnelle camerounaise" class="absolute inset-0 w-full h-full object-cover object-top">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/90"></div>
+
+        <!-- Content over image -->
+        <div class="relative z-10 p-10 lg:p-12 flex flex-col justify-between h-full">
+            <!-- Logo -->
+            <a href="../abonnements.html" class="font-black text-white text-xl tracking-tight">
+                HireMe<span class="text-sky-400">Club</span>
+            </a>
+
+            <!-- Middle -->
+            <div>
+                <!-- Plan badge -->
+                <div class="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 rounded-full px-4 py-1.5 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    <span class="text-xs font-bold text-sky-300 uppercase tracking-wider" id="plan-badge"><?= htmlspecialchars($selectedPlanInfo['label']) ?></span>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 tracking-tight">
+                    Votre prochaine<br>opportunité commence ici.
+                </h2>
+                <p class="text-slate-300 text-sm leading-relaxed mb-10">
+                    Un CV sur-mesure pour chaque offre. Notre équipe s'en charge, vous postulez avec confiance.
+                </p>
+                <!-- Plan card -->
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-5">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Pack sélectionné</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-black text-white text-lg" id="plan-name-d"><?= htmlspecialchars($selectedPlanInfo['label']) ?></span>
+                        <span class="text-sky-400 font-black text-sm" id="plan-price-d"><?= number_format($selectedPlanInfo['price'], 0, ',', ' ') ?> XAF/mois</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2.5 text-sm text-slate-300">
+                            <div class="w-4 h-4 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="check" class="w-2.5 h-2.5 text-white"></i>
+                            </div>
+                            <span id="plan-cvs-d"><?= $selectedPlanInfo['desc'] ?></span>
+                        </div>
+                        <div class="flex items-center gap-2.5 text-sm text-slate-300">
+                            <div class="w-4 h-4 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="check" class="w-2.5 h-2.5 text-white"></i>
+                            </div>
+                            <span>Ciblage ATS par offre</span>
+                        </div>
+                        <div class="flex items-center gap-2.5 text-sm text-slate-300">
+                            <div class="w-4 h-4 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="check" class="w-2.5 h-2.5 text-white"></i>
+                            </div>
+                            <span>Livraison sous 48h</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500 font-medium">&copy; 2026 HireMe Club Pro</p>
+        </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div class="flex-1 bg-white flex flex-col justify-center overflow-y-auto">
+        <div class="max-w-md w-full mx-auto px-5 py-10 md:px-10">
+
+            <a href="../abonnements.html" class="hidden md:inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors mb-8 group">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform"></i>
+                Retour aux offres
+            </a>
+
+            <h1 class="text-2xl md:text-3xl font-black text-slate-900 mb-1 tracking-tight">Créer mon compte</h1>
+            <p class="text-slate-500 text-sm mb-8">Rejoignez HireMe Club et commencez dès aujourd'hui.</p>
+
+            <?php if ($error): ?>
+            <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5"></i>
+                <p class="text-red-600 text-sm font-medium"><?= htmlspecialchars($error) ?></p>
+            </div>
+            <?php endif; ?>
+
+            <form method="POST" class="space-y-4">
+
+                <div>
+                    <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">Nom Complet *</label>
+                    <input type="text" name="full_name" required placeholder="Ex : Sandrine Mballa"
+                           class="field" value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">WhatsApp *</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-semibold select-none">+237</span>
+                            <input type="tel" name="whatsapp" required placeholder="6XX XXX XXX"
+                                   class="field pl-[68px]" value="<?= htmlspecialchars($_POST['whatsapp'] ?? '') ?>">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">Pack *</label>
+                        <select name="plan" onchange="syncPlan(this.value)" class="field">
+                            <option value="basic"    <?= $plan=='basic'    ? 'selected':'' ?>>Basic — 5 000 XAF</option>
+                            <option value="standard" <?= $plan=='standard' ? 'selected':'' ?>>Standard — 7 000 XAF</option>
+                            <option value="premium"  <?= $plan=='premium'  ? 'selected':'' ?>>Premium — 10 000 XAF</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">E-mail <span class="normal-case font-normal">(optionnel)</span></label>
+                    <input type="email" name="email" placeholder="votre@email.com"
+                           class="field" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">Mot de Passe *</label>
+                    <div class="relative">
+                        <input type="password" name="password" id="pwd" required placeholder="Min. 6 caractères" class="field pr-12">
+                        <button type="button" onclick="togglePwd()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                            <i data-lucide="eye" class="w-4 h-4" id="pwd-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-4 bg-sky-500 text-white font-black rounded-2xl hover:bg-sky-600 transition-all shadow-lg shadow-sky-200 active:scale-95 text-sm uppercase tracking-wide">
+                        Créer mon compte &amp; Payer →
+                    </button>
+                </div>
+
+                <p class="text-center text-sm text-slate-400 pt-1">
+                    Déjà membre ? <a href="login.php" class="text-sky-500 font-bold hover:underline">Se connecter</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+lucide.createIcons();
+const plans = {
+    basic:    { label:'Pack Basic',    price:'5 000 XAF/mois',  cvs:'4 CVs / mois' },
+    standard: { label:'Pack Standard', price:'7 000 XAF/mois',  cvs:'8 CVs / mois' },
+    premium:  { label:'Pack Premium',  price:'10 000 XAF/mois', cvs:'14 CVs / mois' },
+};
+function syncPlan(p) {
+    const d = plans[p]; if(!d) return;
+    ['plan-badge','plan-name-d'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=d.label; });
+    const pr=document.getElementById('plan-price-d'); if(pr) pr.textContent=d.price;
+    const cv=document.getElementById('plan-cvs-d');  if(cv) cv.textContent=d.cvs;
+}
+function togglePwd() {
+    const i=document.getElementById('pwd'), ic=document.getElementById('pwd-icon');
+    i.type = i.type==='password' ? 'text' : 'password';
+    ic.setAttribute('data-lucide', i.type==='password' ? 'eye' : 'eye-off');
+    lucide.createIcons();
+}
+</script>
+</body>
+</html>

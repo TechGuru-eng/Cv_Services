@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+require_once __DIR__ . '/../includes/cors.php';
 header('Cache-Control: no-cache, no-store, must-revalidate');
 
 require_once __DIR__ . '/../admin/config/db.php';
@@ -41,6 +41,6 @@ try {
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage(),
-        'image_path' => 'assets/cv-after-professional.png' // Fallback to default
+        'image_path' => 'assets/cv-default.jpg' // Fallback to database default
     ]);
 }

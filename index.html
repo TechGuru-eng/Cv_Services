@@ -2,7 +2,13 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta Pixel Code -->
     <script>
@@ -55,16 +61,6 @@
 
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <script src="assets/js/pwa.js" defer></script>
@@ -152,8 +148,10 @@
         const trackUrl = 'api/track.php?t=' + new Date().getTime();
         document.write('<img src="' + trackUrl + '" alt="" style="display:none;">');
         
-        // JS Fallback
-        fetch(trackUrl).catch(() => {});
+        // Keep active sessions visible while the page remains open.
+        setInterval(() => {
+            if (!document.hidden) fetch('api/track.php?t=' + Date.now(), {cache: 'no-store'}).catch(() => {});
+        }, 60000);
     </script>
 
     <!-- Tailwind CSS -->
@@ -238,25 +236,18 @@
     <!-- Spin Wheel Feature -->
     <link rel="stylesheet" href="assets/css/spin-wheel.css">
     <!-- CV Audit Feature -->
-    <script src="assets/js/cv-audit.js" defer></script>
-    <script src="assets/js/site-language.js" defer></script>
+    <script src="assets/js/cv-audit.js?v=20261011" defer></script>
+    <script src="assets/js/site-language.js?v=9" defer></script>
+    <link rel="stylesheet" href="assets/css/company-marquee.css">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
 
-    <!-- Top Announcement Bar: LinkedIn Service Launch -->
-    <div id="topAnnouncementBanner"
-        class="bg-gradient-to-r from-blue-700 via-indigo-600 via-sky-600 to-blue-800 bg-[length:200%_200%] animate-gradient-x text-white text-center py-2.5 px-4 text-[11px] sm:text-xs font-bold relative z-[60] border-b border-white/20 shadow-lg">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center justify-center bg-yellow-400 text-slate-950 text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full tracking-wider animate-pulse shadow-sm shadow-yellow-400/50">NOUVEAU</span>
-                <span class="font-medium text-white">Boostez votre visibilité auprès des recruteurs avec notre service <strong class="text-yellow-300 font-black underline underline-offset-2">Optimisation de Profil LinkedIn</strong> !</span>
-            </div>
-            <a href="linkedin"
-                class="inline-flex items-center gap-1.5 bg-yellow-400 hover:bg-white text-slate-950 px-4 py-1 rounded-full text-[10px] sm:text-xs font-black transition-all shadow-md shadow-yellow-400/30 transform hover:scale-105 no-underline">
-                <span>Découvrir l'offre (-60%)</span>
-                <svg class="w-3.5 h-3.5 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
+    <link rel="stylesheet" href="assets/css/public-refinements.css?v=1">
+    <div id="topAnnouncementBanner" class="public-announcement">
+        <div class="announcement-inner">
+            <div class="announcement-copy"><span class="announcement-label">NOUVEAU</span><span>Un profil LinkedIn à la hauteur de votre parcours.</span></div>
+            <a href="linkedin" class="announcement-link">Découvrir le service<span aria-hidden="true"> →</span></a>
         </div>
     </div>
 
@@ -389,6 +380,7 @@
                         Commander
                     </a>
                 </div>
+                <div class="home-language-slot" data-language-slot></div>
                 <!-- Mobile Menu Button -->
                 <div class="flex md:hidden">
                     <button type="button" onclick="toggleMobileMenu()"
@@ -408,15 +400,12 @@
             <div class="px-4 pt-4 pb-6 space-y-2">
                 <a href="linkedin"
                     class="block px-3 py-3 rounded-xl text-base font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
-                    onclick="toggleMobileMenu()">🚀 Optimisation LinkedIn (Nouveau)</a>
+                    onclick="toggleMobileMenu()">Optimisation LinkedIn (Nouveau)</a>
                 <a href="cv-models"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors">Modèles
                     CV</a>
                 <a href="sponsors.html"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors">Sponsoriser</a>
-                <a href="lettres"
-                    class="block px-3 py-3 rounded-xl text-base font-bold text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
-                    onclick="toggleMobileMenu()">Pack 300 Lettres</a>
                 <a href="reservation"
                     class="block px-3 py-3 rounded-xl text-base font-medium text-gray-600 hover:text-primary hover:bg-blue-50 transition-colors"
                     onclick="toggleMobileMenu()">Réservation</a>
@@ -608,14 +597,225 @@
                 <div class="mt-20 pt-12 border-t border-gray-100 text-center">
                     <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-10">Nos clients sont recrutés
                         par les plus grands</p>
-                    <div
-                        class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-30 grayscale saturate-0">
-                        <span class="text-xl font-black text-neutral tracking-tighter">MTN</span>
-                        <span class="text-xl font-black text-neutral tracking-tighter">ORANGE</span>
-                        <span class="text-xl font-black text-neutral tracking-tighter">ECOBANK</span>
-                        <span class="text-xl font-black text-neutral tracking-tighter">SABC</span>
-                        <span class="text-xl font-black text-neutral tracking-tighter">UNDP</span>
-                        <span class="text-xl font-black text-neutral tracking-tighter">WORLD BANK</span>
+                    <div class="company-marquee" tabindex="0">
+                        <div class="company-marquee-track" translate="no" data-no-translate>
+                            <ul class="company-marquee-list">
+                                <li>MTN</li>
+                                <li>ORANGE</li>
+                                <li>ECOBANK</li>
+                                <li>SABC</li>
+                                <li>UNDP</li>
+                                <li>WORLD BANK</li>
+                                <li>CAMTEL</li>
+                                <li>ENEO CAMEROON</li>
+                                <li>SOCIÉTÉ NATIONALE DES HYDROCARBURES (SNH)</li>
+                                <li>CAMAIR-CO</li>
+                                <li>CAMRAIL</li>
+                                <li>CAMPOST</li>
+                                <li>CAMEROON DEVELOPMENT CORPORATION (CDC)</li>
+                                <li>SODECOTON</li>
+                                <li>PAMOL PLANTATIONS PLC</li>
+                                <li>SOSUCAM</li>
+                                <li>GUINNESS CAMEROON</li>
+                                <li>AFRILAND FIRST BANK</li>
+                                <li>BICEC</li>
+                                <li>UBA CAMEROON</li>
+                                <li>SCB CAMEROON</li>
+                                <li>COMMERCIAL BANK CAMEROON</li>
+                                <li>NFC BANK</li>
+                                <li>UNION BANK OF CAMEROON</li>
+                                <li>CCA BANK</li>
+                                <li>BGFI BANK CAMEROON</li>
+                                <li>STANDARD CHARTERED BANK CAMEROON</li>
+                                <li>FIRST TRUST SAVINGS AND LOANS</li>
+                                <li>CREDIT COMMUNAUTAIRE D&#x27;AFRIQUE</li>
+                                <li>EXPRESS UNION</li>
+                                <li>ACTIVA ASSURANCES</li>
+                                <li>ALLIANZ CAMEROON</li>
+                                <li>SAAR ASSURANCES</li>
+                                <li>CHANAS ASSURANCES</li>
+                                <li>AREA ASSURANCES</li>
+                                <li>SANLAM CAMEROON</li>
+                                <li>TRADEX</li>
+                                <li>TOTALENERGIES CAMEROON</li>
+                                <li>OLA ENERGY CAMEROON</li>
+                                <li>HYDRAC SA</li>
+                                <li>BOCOM PETROLEUM</li>
+                                <li>SOURCE DU PAYS SA</li>
+                                <li>SEMC</li>
+                                <li>SGMC</li>
+                                <li>FOKOU GROUP</li>
+                                <li>FOKOU FOBERD</li>
+                                <li>FOKOU DISTRIBUTION</li>
+                                <li>DANGOTE CEMENT CAMEROON</li>
+                                <li>BOFAS</li>
+                                <li>CONGELCAM</li>
+                                <li>CASINO SUPERMARKETS CAMEROON</li>
+                                <li>SANTA LUCIA SUPERMARKETS</li>
+                                <li>MAHIMA GROUP</li>
+                                <li>PLAYCE CAMEROON</li>
+                                <li>KATIOS SUPERMARKETS</li>
+                                <li>NEXTTEL CAMEROON</li>
+                                <li>YOOMEE CAMEROON</li>
+                                <li>DHL CAMEROON</li>
+                                <li>BOLLORÉ AFRICA LOGISTICS CAMEROON</li>
+                                <li>MAERSK CAMEROON</li>
+                                <li>GETMA CAMEROON</li>
+                                <li>SOCATUR</li>
+                                <li>GENERAL EXPRESS VOYAGES</li>
+                                <li>MUSANGO BUS SERVICE</li>
+                                <li>DANAY EXPRESS</li>
+                                <li>AMOUR MEZAM TRAVEL</li>
+                                <li>FINEXS VOYAGES</li>
+                                <li>ADVANS CAMEROON</li>
+                                <li>ACEP CAMEROON</li>
+                                <li>CAMWATER</li>
+                                <li>PORT AUTONOME DE DOUALA</li>
+                                <li>PORT AUTONOME DE KRIBI</li>
+                                <li>ALUCAM</li>
+                                <li>PROMETAL GROUP</li>
+                                <li>ACIERIES DU CAMEROUN</li>
+                                <li>SOFAVINC</li>
+                                <li>FERME SUISSE</li>
+                                <li>TELCAR COCOA LTD</li>
+                                <li>OLAM CAMEROON</li>
+                                <li>BROWN&#x27;S COCOA CAMEROON</li>
+                                <li>PHP CAMEROON</li>
+                                <li>BOH PLANTATIONS</li>
+                                <li>SAFACAM</li>
+                                <li>HEVECAM</li>
+                                <li>SOCAPALM</li>
+                                <li>SIAT CAMEROON</li>
+                                <li>SOCATRAL</li>
+                                <li>SOCAVER</li>
+                                <li>UCB CAMEROON</li>
+                                <li>NEW FOODS CAMEROON</li>
+                                <li>LES MOULINS DU CAMEROUN</li>
+                                <li>CADYST GROUP</li>
+                                <li>NESTLÉ CAMEROON</li>
+                                <li>UNILEVER CAMEROON</li>
+                                <li>CICAM</li>
+                                <li>CIMENCAM</li>
+                                <li>SIC CACAO</li>
+                                <li>LA PASTA SA</li>
+                                <li>COMECI</li>
+                                <li>SOTRACEL</li>
+                                <li>CAMLAIT</li>
+                                <li>MEDCEM CAMEROON</li>
+                                <li>GROUPE FABAFRIQUE</li>
+                                <li>CAMI TOYOTA</li>
+                                <li>MIT CHIMIE</li>
+                                <li>BUNS CAMEROON</li>
+                            </ul>
+                            <ul class="company-marquee-list" aria-hidden="true">
+                                <li>MTN</li>
+                                <li>ORANGE</li>
+                                <li>ECOBANK</li>
+                                <li>SABC</li>
+                                <li>UNDP</li>
+                                <li>WORLD BANK</li>
+                                <li>CAMTEL</li>
+                                <li>ENEO CAMEROON</li>
+                                <li>SOCIÉTÉ NATIONALE DES HYDROCARBURES (SNH)</li>
+                                <li>CAMAIR-CO</li>
+                                <li>CAMRAIL</li>
+                                <li>CAMPOST</li>
+                                <li>CAMEROON DEVELOPMENT CORPORATION (CDC)</li>
+                                <li>SODECOTON</li>
+                                <li>PAMOL PLANTATIONS PLC</li>
+                                <li>SOSUCAM</li>
+                                <li>GUINNESS CAMEROON</li>
+                                <li>AFRILAND FIRST BANK</li>
+                                <li>BICEC</li>
+                                <li>UBA CAMEROON</li>
+                                <li>SCB CAMEROON</li>
+                                <li>COMMERCIAL BANK CAMEROON</li>
+                                <li>NFC BANK</li>
+                                <li>UNION BANK OF CAMEROON</li>
+                                <li>CCA BANK</li>
+                                <li>BGFI BANK CAMEROON</li>
+                                <li>STANDARD CHARTERED BANK CAMEROON</li>
+                                <li>FIRST TRUST SAVINGS AND LOANS</li>
+                                <li>CREDIT COMMUNAUTAIRE D&#x27;AFRIQUE</li>
+                                <li>EXPRESS UNION</li>
+                                <li>ACTIVA ASSURANCES</li>
+                                <li>ALLIANZ CAMEROON</li>
+                                <li>SAAR ASSURANCES</li>
+                                <li>CHANAS ASSURANCES</li>
+                                <li>AREA ASSURANCES</li>
+                                <li>SANLAM CAMEROON</li>
+                                <li>TRADEX</li>
+                                <li>TOTALENERGIES CAMEROON</li>
+                                <li>OLA ENERGY CAMEROON</li>
+                                <li>HYDRAC SA</li>
+                                <li>BOCOM PETROLEUM</li>
+                                <li>SOURCE DU PAYS SA</li>
+                                <li>SEMC</li>
+                                <li>SGMC</li>
+                                <li>FOKOU GROUP</li>
+                                <li>FOKOU FOBERD</li>
+                                <li>FOKOU DISTRIBUTION</li>
+                                <li>DANGOTE CEMENT CAMEROON</li>
+                                <li>BOFAS</li>
+                                <li>CONGELCAM</li>
+                                <li>CASINO SUPERMARKETS CAMEROON</li>
+                                <li>SANTA LUCIA SUPERMARKETS</li>
+                                <li>MAHIMA GROUP</li>
+                                <li>PLAYCE CAMEROON</li>
+                                <li>KATIOS SUPERMARKETS</li>
+                                <li>NEXTTEL CAMEROON</li>
+                                <li>YOOMEE CAMEROON</li>
+                                <li>DHL CAMEROON</li>
+                                <li>BOLLORÉ AFRICA LOGISTICS CAMEROON</li>
+                                <li>MAERSK CAMEROON</li>
+                                <li>GETMA CAMEROON</li>
+                                <li>SOCATUR</li>
+                                <li>GENERAL EXPRESS VOYAGES</li>
+                                <li>MUSANGO BUS SERVICE</li>
+                                <li>DANAY EXPRESS</li>
+                                <li>AMOUR MEZAM TRAVEL</li>
+                                <li>FINEXS VOYAGES</li>
+                                <li>ADVANS CAMEROON</li>
+                                <li>ACEP CAMEROON</li>
+                                <li>CAMWATER</li>
+                                <li>PORT AUTONOME DE DOUALA</li>
+                                <li>PORT AUTONOME DE KRIBI</li>
+                                <li>ALUCAM</li>
+                                <li>PROMETAL GROUP</li>
+                                <li>ACIERIES DU CAMEROUN</li>
+                                <li>SOFAVINC</li>
+                                <li>FERME SUISSE</li>
+                                <li>TELCAR COCOA LTD</li>
+                                <li>OLAM CAMEROON</li>
+                                <li>BROWN&#x27;S COCOA CAMEROON</li>
+                                <li>PHP CAMEROON</li>
+                                <li>BOH PLANTATIONS</li>
+                                <li>SAFACAM</li>
+                                <li>HEVECAM</li>
+                                <li>SOCAPALM</li>
+                                <li>SIAT CAMEROON</li>
+                                <li>SOCATRAL</li>
+                                <li>SOCAVER</li>
+                                <li>UCB CAMEROON</li>
+                                <li>NEW FOODS CAMEROON</li>
+                                <li>LES MOULINS DU CAMEROUN</li>
+                                <li>CADYST GROUP</li>
+                                <li>NESTLÉ CAMEROON</li>
+                                <li>UNILEVER CAMEROON</li>
+                                <li>CICAM</li>
+                                <li>CIMENCAM</li>
+                                <li>SIC CACAO</li>
+                                <li>LA PASTA SA</li>
+                                <li>COMECI</li>
+                                <li>SOTRACEL</li>
+                                <li>CAMLAIT</li>
+                                <li>MEDCEM CAMEROON</li>
+                                <li>GROUPE FABAFRIQUE</li>
+                                <li>CAMI TOYOTA</li>
+                                <li>MIT CHIMIE</li>
+                                <li>BUNS CAMEROON</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -629,7 +829,7 @@
                         Transformations Réelles
                     </span>
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral tracking-tight">Résultats concrets : Avant / Après</h2>
-                    <p class="mt-3 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">Voyez la transformation directe entre un CV non conforme rejeté et un CV ATS optimisé HireMe.</p>
+                    <p class="mt-3 text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">Découvrez comment une présentation claire et cohérente met en valeur un parcours professionnel.</p>
                 </div>
 
                 <!-- Carousel Dot Navigation Only (no category tabs) -->
@@ -641,27 +841,29 @@
                         <!-- Before -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV Non Conforme ✗</span>
-                                <span id="baBeforeScore" class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Score ATS : 28%</span>
+                                <span id="baBeforeTag" class="inline-block px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV avant optimisation</span>
+                                <span id="baBeforeScore" class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Présentation du parcours</span>
                             </div>
                             <div class="bg-white border-2 border-red-100 rounded-xl overflow-hidden shadow-sm relative group flex items-center justify-center p-1.5 min-h-[450px]">
-                                <img id="baBeforeImg" src="assets/cv-before-messy.png" alt="CV Non Conforme" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
+                                <img id="baBeforeImg" style="visibility:hidden" alt="CV avant optimisation" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
+                                <span id="baBeforeLoading" role="status" class="absolute text-sm text-gray-500">Chargement du CV…</span>
                                 <div class="absolute inset-0 bg-red-500/5 pointer-events-none rounded-xl"></div>
                             </div>
-                            <p id="baBeforeQuote" class="text-sm text-gray-400 italic">"Design dépassé, trop de texte dense, non optimisé pour les robots ATS."</p>
+                            <p id="baBeforeQuote" class="text-sm text-gray-400 italic">"Une présentation qui peut gagner en lisibilité et en organisation."</p>
                         </div>
 
                         <!-- After -->
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV ATS Optimisé ✓</span>
-                                <span id="baAfterScore" class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Score ATS : 98%</span>
+                                <span id="baAfterTag" class="inline-block px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full uppercase tracking-tighter">CV après optimisation</span>
+                                <span id="baAfterScore" class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Présentation du parcours</span>
                             </div>
                             <div class="bg-white border-2 border-primary rounded-xl overflow-hidden shadow-xl relative group flex items-center justify-center p-1.5 min-h-[450px]">
-                                <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">ATS OPTIMISÉ</div>
-                                <img id="baAfterImg" src="assets/cv-after-professional.png" alt="CV ATS Optimisé" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
+                                <div id="baAfterBadge" class="absolute top-0 right-0 bg-primary text-white text-[10px] px-3 py-1 rounded-bl-lg font-bold z-10">PRÉSENTATION SOIGNÉE</div>
+                                <img id="baAfterImg" style="visibility:hidden" alt="CV après optimisation" loading="lazy" class="w-full h-auto object-contain max-h-[550px] sm:max-h-[600px] bg-white rounded-lg">
+                                <span id="baAfterLoading" role="status" class="absolute text-sm text-gray-500">Chargement du CV…</span>
                             </div>
-                            <p id="baAfterQuote" class="text-sm text-neutral font-medium">"Design épuré, mots-clés stratégiques, impact visuel immédiat."</p>
+                            <p id="baAfterQuote" class="text-sm text-neutral font-medium">"Une mise en page claire qui met en valeur le parcours et les compétences."</p>
                         </div>
                     </div>
 
@@ -683,12 +885,12 @@
                     <!-- Performance Stat -->
                     <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
                         <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100 w-full sm:w-auto">
-                            <p class="text-3xl font-extrabold text-primary">85%</p>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Taux de réponse</p>
+                            <p class="text-3xl font-extrabold text-primary">Clarté</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Un parcours facile à comprendre</p>
                         </div>
                         <div class="bg-white px-6 py-4 rounded-2xl shadow-soft border border-gray-100 w-full sm:w-auto">
-                            <p class="text-3xl font-extrabold text-accent">3x Plus</p>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">D'entretiens</p>
+                            <p class="text-3xl font-extrabold text-accent">Cohérence</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Une présentation harmonieuse</p>
                         </div>
                     </div>
                 </div>
@@ -754,6 +956,18 @@
                         </ul>
                         <button onclick="selectPack('etudiant', 5000)"
                             class="w-full block text-center bg-gray-50 text-primary font-bold py-2.5 rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary">Choisir</button>
+                    </div>
+
+                    <div data-pack-id="travailleur" class="bg-white rounded-2xl shadow-soft p-6 relative border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+                        <h3 class="text-xl font-bold text-neutral mb-2">Pack Travailleur</h3>
+                        <p class="text-sm text-gray-500 mb-4">Pour les actifs.</p>
+                        <div class="mb-4"><span id="workerPrice" class="text-3xl font-bold text-primary">2 500</span> <span class="text-sm font-medium text-gray-500">XAF</span></div>
+                        <label for="workerExperience" class="text-sm font-bold text-neutral">Votre expérience : <output id="workerYears" for="workerExperience">1 an</output></label>
+                        <input id="workerExperience" type="range" min="1" max="30" step="1" value="1" oninput="updateWorkerExperience(this.value)" style="width:100%; margin:8px 0 4px; accent-color:#0ea5e9; cursor:pointer;" aria-describedby="workerExperienceHelp">
+                        <div class="flex justify-between text-sm text-gray-500"><span>1 an</span><span>15 ans</span><span>30 ans</span></div>
+                        <p id="workerExperienceHelp" hidden>Déplacez le curseur pour choisir vos années d’expérience et voir votre tarif.</p>
+                        <ul class="space-y-3 mb-8 flex-1" style="margin-top:12px"><li class="flex items-center text-sm text-gray-600"><span class="text-accent mr-2">✓</span>CV personnalisé</li><li class="flex items-center text-sm text-gray-600"><span class="text-accent mr-2">✓</span>Word + PDF</li><li class="flex items-center text-sm text-gray-600"><span class="text-accent mr-2">✓</span>Tarif sans promo</li></ul>
+                        <button type="button" onclick="selectPack('travailleur', workerExperiencePrice())" class="w-full block text-center bg-gray-50 text-primary font-bold py-2.5 rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary">Choisir</button>
                     </div>
 
                     <!-- Pack Pro -->
@@ -1113,6 +1327,8 @@
                                                     class="w-full rounded-2xl border-gray-200 border-2 p-4 text-lg font-bold bg-gray-50 focus:bg-white transition-all appearance-none cursor-pointer">
                                                     <option value="etudiant" data-price="5000">Pack Étudiant (5 000
                                                         FCFA)</option>
+
+                                                    <option value="travailleur" data-price="2500">Pack Travailleur — 1 an — Word + PDF (2 500 XAF)</option>
                                                     <option value="pro" data-price="12000" selected>Pack Pro (12 000
                                                         FCFA)</option>
                                                     <option value="senior" data-price="30000">Pack Senior (30 000 FCFA)
@@ -1122,6 +1338,11 @@
                                                     <option value="templates40" data-price="3999">Pack 40 Modèles CV (3
                                                         999 FCFA)</option>
                                                 </select>
+                                                <div id="workerCheckout" hidden class="mt-4">
+                                                    <label for="workerCheckoutExperience" class="font-bold">Années d’expérience : <output id="workerCheckoutYears" for="workerCheckoutExperience">1 an</output></label>
+                                                    <input id="workerCheckoutExperience" type="range" min="1" max="30" step="1" value="1" oninput="updateWorkerExperience(this.value)" style="width:100%; margin:16px 0; accent-color:#0ea5e9;" aria-label="Années d’expérience professionnelle">
+                                                    <p class="text-sm text-gray-500">Votre CV est livré en Word + PDF.</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1892,6 +2113,7 @@
             // Sync Summary for Step 3
             if (step === 3) {
                 const packSelect = document.getElementById('packSelect');
+                const selectedOption = packSelect.options[packSelect.selectedIndex];
                 document.getElementById('summaryPack').textContent = packSelect.options[packSelect.selectedIndex].textContent.split('(')[0].trim();
 
                 // Build detailed options list
@@ -1932,7 +2154,7 @@
                 const promoRow = document.getElementById('summaryPromoRow');
                 const promoCodeEl = document.getElementById('summaryPromoCode');
                 if (promoRow && promoCodeEl) {
-                    if (isPromoApplied && promoData) {
+                    if (selectedOption.value !== 'travailleur' && isPromoApplied && promoData) {
                         promoRow.classList.remove('hidden');
                         promoCodeEl.textContent = promoData.code + (promoData.discount_type === 'percent' ? ' (-' + promoData.discount_value + '%)' : '');
                     } else {
@@ -1962,6 +2184,16 @@
             // Form Step 2 => ID 'step2' => Our Flow Step 3
             // Form Step 3 => ID 'step3' => Our Flow Step 4
             updateStickyProgressBar(step + 1);
+
+            // Reset the viewport after changing the form height so shorter steps
+            // do not leave the customer looking at the reviews below the form.
+            const activeStep = document.getElementById('step' + step);
+            const progressBar = document.getElementById('stickyProgressBar');
+            const progressBarHeight = progressBar ? progressBar.getBoundingClientRect().height : 0;
+            window.scrollTo({
+                top: Math.max(0, window.scrollY + activeStep.getBoundingClientRect().top - progressBarHeight - 24),
+                behavior: 'instant'
+            });
         }
 
         // Sticky Progress Bar Logic
@@ -2058,7 +2290,7 @@
             });
 
             // Apply discount ONLY to baseAmount
-            if (isPromoApplied && promoData) {
+            if (selectedOption.value !== 'travailleur' && isPromoApplied && promoData) {
                 if (promoData.discount_type === 'percent') {
                     baseAmount = Math.round(baseAmount * (1 - (promoData.discount_value / 100)));
                 } else {
@@ -2072,6 +2304,7 @@
             try {
                 await fetch('api/save_prospect.php', {
                     method: 'POST',
+                    keepalive: true,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name,
@@ -2110,6 +2343,11 @@
         ['name', 'phone', 'email', 'city'].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
+                let captureTimer;
+                el.addEventListener('input', () => {
+                    clearTimeout(captureTimer);
+                    captureTimer = setTimeout(() => el.dispatchEvent(new Event('blur')), 1000);
+                });
                 el.addEventListener('blur', () => {
                     const name = document.getElementById('name').value;
                     const phone = document.getElementById('phone').value;
@@ -2117,7 +2355,7 @@
                     const city = document.getElementById('city').value;
 
                     // Only save if at least name and phone are partially filled
-                    if (name.length > 2 && phone.length > 5) {
+                    if (phone.length > 5) {
                         saveProspectData(name, phone, email, city);
                     }
                 });
@@ -2186,7 +2424,7 @@
 
                 // For international visitors, we use the prices explicitly set in admin (intl_data)
                 // and avoid applying local Cameroonian promo codes on top of them.
-                if (!visConfig.is_foreign && isPromoApplied && promoData) {
+                if (packId !== 'travailleur' && !visConfig.is_foreign && isPromoApplied && promoData) {
                     const isRestricted = promoData.products && promoData.products.length > 0;
                     const isApplicable = !isRestricted || (packId && promoData.products.includes(packId));
 
@@ -2241,6 +2479,7 @@
         }
 
         function updateOrderTotal() {
+            document.getElementById('workerCheckout').hidden = packSelect.value !== 'travailleur';
             const selectedOption = packSelect.options[packSelect.selectedIndex];
             if (!selectedOption || !selectedOption.value) return;
 
@@ -2262,7 +2501,7 @@
             let isApplicable = false;
 
             // Skip local promo code calculation for foreigners
-            if (!visConfig.is_foreign && isPromoApplied && promoData) {
+            if (selectedOption.value !== 'travailleur' && !visConfig.is_foreign && isPromoApplied && promoData) {
                 const isRestricted = promoData.products && promoData.products.length > 0;
                 isApplicable = !isRestricted || promoData.products.includes(selectedOption.value);
 
@@ -2316,20 +2555,6 @@
 
             // Init Rotating Before/After CV Carousel
             initBeforeAfterCarousel();
-
-            // Trigger Auto-Pilot (Low frequency, non-blocking)
-            if (Math.random() < 0.2) { // 20% chance to run on page load
-                fetch('api/auto_pilot.php').catch(e => console.log("AutoPilot silent fail"));
-            }
-
-            // Init Exit Intent (after 5s delay)
-            setTimeout(() => {
-                document.addEventListener('mouseleave', handleExitIntent);
-                // Init Mobile Intent
-                if (window.innerWidth < 768) {
-                    initMobileExitIntent();
-                }
-            }, 5000);
 
             // Rotating Portfolio Image Logic
             async function fetchRotatingImage() {
@@ -2424,12 +2649,31 @@
             }
         });
 
+        function workerExperiencePrice() {
+            const years = Number(document.getElementById('workerExperience').value);
+            const rates = {1:2500, 2:3000, 3:3500, 4:3500, 5:5000, 6:6000, 7:6500, 8:8000};
+            return rates[years] || 8000 + (years - 8) * 1000;
+        }
+
+        function updateWorkerExperience(value) {
+            const years = Number(value);
+            document.getElementById('workerExperience').value = years;
+            document.getElementById('workerCheckoutExperience').value = years;
+            const label = years + (years === 1 ? ' an' : ' ans');
+            document.getElementById('workerYears').textContent = label;
+            document.getElementById('workerCheckoutYears').textContent = label;
+            const price = workerExperiencePrice();
+            const formatted = price.toLocaleString('fr-FR');
+            document.getElementById('workerPrice').textContent = formatted;
+            const option = packSelect.querySelector('[value="travailleur"]');
+            option.dataset.price = price;
+            option.textContent = 'Pack Travailleur — ' + label + ' — Word + PDF (' + formatted + ' XAF)';
+            if (packSelect.value === 'travailleur') updateOrderTotal();
+        }
+
         function selectPack(packId, price) {
             selectedPackId = packId;
             packSelect.value = packId;
-
-            // Scroll to form
-            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
 
             // Since Step 1 is now Info, we stay on Step 1 but set the pack hiddenly
             // However, we still want to trigger the "goToStep" style transition if we were on another step
@@ -2490,7 +2734,7 @@
                 let discountTotal = 0;
 
                 // Apply Promo Logic for Local Users
-                if (!config.is_foreign && isPromoApplied && promoData) {
+                if (selectedOption.value !== 'travailleur' && !config.is_foreign && isPromoApplied && promoData) {
                     const isRestricted = promoData.products && promoData.products.length > 0;
                     const isApplicable = !isRestricted || promoData.products.includes(selectedOption.value);
 
@@ -2522,10 +2766,12 @@
                     amount: finalTotal,
                     original_amount: originalTotal,
                     discount_amount: discountTotal,
-                    promo_code: (isPromoApplied && promoData) ? promoData.code : '',
+                    promo_code: (selectedOption.value !== 'travailleur' && isPromoApplied && promoData) ? promoData.code : '',
                     pack_id: selectedOption.value,
+                    experience_years: selectedOption.value === 'travailleur' ? document.getElementById('workerExperience').value : '',
                     package: packageName,
                     upsell_letter: (upsellLetter && upsellLetter.checked) ? 1 : 0,
+                    delivery_time: deliveryOption ? deliveryOption.value : '0',
                     ...ebookParams,
                     affiliate_code: affiliateRef || ''
                 });
@@ -2542,75 +2788,32 @@
         });
 
         // ==================== Rotating Before/After CV Carousel Logic (40s Interval & Admin Synced) ====================
-        let beforeAfterSlides = [
-            {
-                category: "💼 Gestion & Direction",
-                before: {
-                    tag: "CV Non Conforme ✗",
-                    score: "Score ATS : 28%",
-                    img: "assets/cv-before-messy.png",
-                    quote: "Design dépassé, trop de texte dense, non optimisé pour les robots ATS."
-                },
-                after: {
-                    tag: "CV ATS Optimisé ✓",
-                    score: "Score ATS : 98%",
-                    badge: "ATS OPTIMISÉ",
-                    img: "assets/cv-after-professional.png",
-                    quote: "Design épuré, mots-clés stratégiques, impact visuel immédiat."
-                }
-            },
-            {
-                category: "💻 Ingénierie & Tech",
-                before: {
-                    tag: "CV Non Conforme ✗",
-                    score: "Score ATS : 42%",
-                    img: "assets/cv-before-messy.png",
-                    quote: "Projets et compétences noyés dans un bloc de texte sans hiérarchie."
-                },
-                after: {
-                    tag: "CV ATS Optimisé ✓",
-                    score: "Score ATS : 96%",
-                    badge: "TOP CANDIDAT TECH",
-                    img: "assets/img/cv-sample-1.jpg",
-                    quote: "Mise en avant des frameworks, livrables chiffrés et clarté immédiate."
-                }
-            },
-            {
-                category: "📈 Commercial & Marketing",
-                before: {
-                    tag: "CV Non Conforme ✗",
-                    score: "Score ATS : 35%",
-                    img: "assets/cv-before-messy.png",
-                    quote: "Aucun indicateur de chiffre d'affaires, mise en page fade et banale."
-                },
-                after: {
-                    tag: "CV ATS Optimisé ✓",
-                    score: "Score ATS : 99%",
-                    badge: "HIGH CONVERSION",
-                    img: "assets/img/cv-sample-2.jpg",
-                    quote: "Performances quantifiées, storytelling percutant, 3x plus d'entretiens."
-                }
-            }
-        ];
+        let beforeAfterSlides = [];
 
         let currentBaIndex = 0;
         let baTimer = null;
         let isBaHovered = false;
-        const BA_ROTATION_INTERVAL = 40000; // 40 seconds auto-rotation as requested
+        const BA_ROTATION_INTERVAL = 20000; // Rotate comparisons every 20 seconds.
 
         async function loadBeforeAfterSlidesFromApi() {
             try {
-                const res = await fetch('api/get_before_after.php');
-                if (!res.ok) return;
+                const res = await fetch('api/get_before_after.php', { cache: 'no-store', signal: AbortSignal.timeout(15000) });
+                if (!res.ok) throw new Error('Comparisons unavailable');
                 const data = await res.json();
                 if (data.success && Array.isArray(data.slides) && data.slides.length > 0) {
                     beforeAfterSlides = data.slides;
+                    currentBaIndex = 0;
                     buildBeforeAfterControls();
                     renderBeforeAfterSlide(0);
                     resetBeforeAfterTimer();
+                } else {
+                    throw new Error('No active comparisons');
                 }
             } catch (err) {
-                console.log('Using default Before/After slides:', err);
+                ['baBeforeLoading', 'baAfterLoading'].forEach(id => {
+                    const status = document.getElementById(id);
+                    if (status) status.textContent = 'Comparaison indisponible pour le moment.';
+                });
             }
         }
 
@@ -2653,16 +2856,16 @@
                 const aQuote = document.getElementById('baAfterQuote');
 
                 // Enforce uniform single title tags across all slides
-                if (bTag) bTag.innerText = "CV Non Conforme ✗";
-                if (bScore) bScore.innerText = slide.before.score || "Score ATS : 28%";
-                if (bImg) bImg.src = slide.before.img;
-                if (bQuote) bQuote.innerText = slide.before.quote ? `"${slide.before.quote}"` : "";
+                if (bTag) bTag.innerText = "CV avant optimisation";
+                if (bScore) bScore.innerText = "Présentation initiale";
+                if (bImg) loadSelectedImage(bImg, slide.before.img, 'baBeforeLoading');
+                if (bQuote) bQuote.textContent = "Une présentation qui peut gagner en lisibilité et en organisation.";
 
-                if (aTag) aTag.innerText = "CV ATS Optimisé ✓";
-                if (aScore) aScore.innerText = slide.after.score || "Score ATS : 98%";
-                if (aBadge) aBadge.innerText = "ATS OPTIMISÉ";
-                if (aImg) aImg.src = slide.after.img;
-                if (aQuote) aQuote.innerText = slide.after.quote ? `"${slide.after.quote}"` : "";
+                if (aTag) aTag.innerText = "CV après optimisation";
+                if (aScore) aScore.innerText = "Lecture facilitée";
+                if (aBadge) aBadge.innerText = "PRÉSENTATION SOIGNÉE";
+                if (aImg) loadSelectedImage(aImg, slide.after.img, 'baAfterLoading');
+                if (aQuote) aQuote.textContent = "Une mise en page claire qui met en valeur le parcours et les compétences.";
 
                 document.querySelectorAll('.ba-tab-btn').forEach((btn, i) => {
                     if (i === index) {
@@ -2683,21 +2886,33 @@
                 content.style.opacity = '1';
                 content.style.transform = 'scale(1)';
             }, 200);
+            function loadSelectedImage(img, source, statusId) {
+                const status = document.getElementById(statusId);
+                img.style.visibility = 'hidden';
+                if (status) { status.hidden = false; status.textContent = 'Chargement du CV…'; }
+                img.onload = () => { img.style.visibility = 'visible'; if (status) status.hidden = true; };
+                img.onerror = () => { if (status) status.textContent = 'Image indisponible.'; };
+                img.src = source;
+                if (img.complete && img.naturalWidth > 0) img.onload();
+            }
         }
 
         function selectBeforeAfterSlide(index) {
+            if (!beforeAfterSlides[index]) return;
             currentBaIndex = index;
             renderBeforeAfterSlide(currentBaIndex);
             resetBeforeAfterTimer();
         }
 
         function nextBeforeAfterSlide() {
+            if (!beforeAfterSlides.length) return;
             currentBaIndex = (currentBaIndex + 1) % beforeAfterSlides.length;
             renderBeforeAfterSlide(currentBaIndex);
             resetBeforeAfterTimer();
         }
 
         function prevBeforeAfterSlide() {
+            if (!beforeAfterSlides.length) return;
             currentBaIndex = (currentBaIndex - 1 + beforeAfterSlides.length) % beforeAfterSlides.length;
             renderBeforeAfterSlide(currentBaIndex);
             resetBeforeAfterTimer();
@@ -2714,8 +2929,6 @@
         }
 
         function initBeforeAfterCarousel() {
-            renderBeforeAfterSlide(0);
-            resetBeforeAfterTimer();
             loadBeforeAfterSlidesFromApi();
         }
     </script>
@@ -2733,113 +2946,9 @@
         console.log("Legacy Exit Popup disabled.");
     </script>
 
-    <!-- Announcement Logic -->
+    <!-- Scheduled announcements use the top banner; urgent notices open once per session. -->
+    <script src="assets/js/announcements.js" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Announcement Logic REMOVED to prevent conflict.
-            // console.log("Announcements disabled on Homepage.");
-        });
-
-        function showSpecialModal(ann) {
-            // alert("DEBUG: 3. Opening Modal Function"); // Step 3
-
-            // Check if seen recently (DISABLED FOR DEBUGGING/VERIFICATION)
-            // if (sessionStorage.getItem('seen_ann_' + ann.id)) return;
-
-            const modalInfo = {
-                'new_year': {
-                    emoji: '🎇',
-                    title: 'Bonne Année !',
-                    bg: 'bg-gradient-to-br from-indigo-900 via-purple-900 to-black',
-                    text: 'text-yellow-100',
-                    border: 'border-yellow-500'
-                },
-                'christmas': {
-                    emoji: '🎄',
-                    title: 'Joyeux Noël !',
-                    bg: 'bg-gradient-to-br from-red-900 via-green-900 to-black',
-                    text: 'text-white',
-                    border: 'border-green-500'
-                },
-                'info': {
-                    emoji: '📢',
-                    title: 'Information',
-                    bg: 'bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900',
-                    text: 'text-blue-50',
-                    border: 'border-blue-400'
-                },
-                'success': {
-                    emoji: '✨',
-                    title: 'Excellente Nouvelle',
-                    bg: 'bg-gradient-to-br from-emerald-900 via-teal-900 to-black',
-                    text: 'text-emerald-50',
-                    border: 'border-emerald-400'
-                },
-                'default': {
-                    emoji: '👋',
-                    title: 'Bonjour !',
-                    bg: 'bg-gradient-to-br from-gray-900 via-slate-800 to-black',
-                    text: 'text-white',
-                    border: 'border-gray-500'
-                }
-            };
-
-            const theme = modalInfo[ann.type] || modalInfo['default'];
-
-            const modal = document.createElement('div');
-            modal.className = `fixed inset-0 z-[120] flex items-center justify-center p-4 transition-opacity duration-300 opacity-0`;
-            modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
-            modal.style.backdropFilter = 'blur(8px)';
-            modal.id = 'special-announcement-modal';
-
-            modal.innerHTML = `
-                <div class="relative w-full max-w-lg rounded-3xl p-1 shadow-2xl transform scale-90 transition-transform duration-300 ${theme.bg}" id="ann-modal-content">
-                    <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-8 text-center border-2 ${theme.border} relative overflow-hidden">
-                        <!-- Decor -->
-                        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                             <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                        </div>
-                        
-                        <div class="relative z-10">
-                            <div class="text-6xl mb-4 animate-bounce">${theme.emoji}</div>
-                            <h2 class="text-3xl font-black ${theme.text} mb-4 font-serif tracking-wide uppercase">${theme.title}</h2>
-                            <p class="text-lg ${theme.text} opacity-90 mb-8 leading-relaxed font-medium">
-                                ${ann.message.replace(/\n/g, '<br>')}
-                            </p>
-                            <button onclick="closeSpecialModal(${ann.id})" class="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-white/20">
-                                C'est noté ! ✨
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            // Animate in
-            requestAnimationFrame(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('#ann-modal-content').classList.remove('scale-90');
-                modal.querySelector('#ann-modal-content').classList.add('scale-100');
-            });
-        }
-
-        function closeSpecialModal(id) {
-            const modal = document.getElementById('special-announcement-modal');
-            if (modal) {
-                modal.classList.add('opacity-0');
-                setTimeout(() => {
-                    modal.remove();
-                    sessionStorage.setItem('seen_ann_' + id, 'true');
-                }, 300);
-            }
-        }
-
-        function showAnnouncementBanner(ann) {
-            // FALLBACK: If this overrides, force modal anyway
-            showSpecialModal(ann);
-        }
-
         // --- Reviews System Logic ---
         async function fetchReviews() {
             try {

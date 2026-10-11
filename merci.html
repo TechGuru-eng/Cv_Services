@@ -2,7 +2,7 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merci ! – HireMe CV Services</title>
     <meta name="description" content="Confirmation de votre commande HireMe CV Services.">
@@ -16,16 +16,6 @@
     <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +44,13 @@
             }
         }
     </script>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -128,6 +125,17 @@
 
             </div>
 
+            <section id="orderTracking" aria-labelledby="trackingTitle" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 text-center">
+                <h2 id="trackingTitle" class="text-xl font-bold text-neutral">Où en est mon CV ?</h2>
+                <p class="text-gray-600 mt-2">Suivez l'avancement de votre commande et retrouvez votre CV dès qu'il est prêt.</p>
+                <p id="trackingReference" class="hidden text-sm text-gray-600 mt-4">
+                    <span>Référence de votre commande :</span>
+                    <strong id="orderReference" translate="no" class="text-neutral break-all"></strong>
+                </p>
+                <a id="trackOrderLink" href="track-cv.php" class="inline-flex items-center justify-center w-full sm:w-auto mt-5 px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-sky-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-600">Suivre ma commande</a>
+                <p class="text-xs text-gray-500 mt-3">Conservez votre lien de suivi pour consulter le statut de votre CV à tout moment.</p>
+            </section>
+
             <!-- Community Section -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
                 <h2 class="text-center text-2xl font-bold text-neutral mb-8">Rejoignez la Communauté HireMe !</h2>
@@ -153,7 +161,7 @@
                     </a>
 
                     <!-- WhatsApp Channel -->
-                    <a href="https://www.whatsapp.com/channel/0029Vb6p4bz1HspyhLe2CB0O" target="_blank"
+                    <a href="https://whatsapp.com/channel/0029Vb6XRzI1t90bk6USq33g" target="_blank"
                         class="flex items-center p-4 rounded-xl border border-gray-100 hover:shadow-md hover:border-green-100 transition-all group">
                         <div
                             class="w-12 h-12 flex-shrink-0 bg-green-50 rounded-lg flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
@@ -263,6 +271,14 @@
             const urlParams = new URLSearchParams(window.location.search);
             const name = urlParams.get('name');
             const type = urlParams.get('type');
+            const orderRef = urlParams.get('order_ref') || urlParams.get('ref');
+            if (type === 'digital' || type === 'ebook') {
+                document.getElementById('orderTracking').hidden = true;
+            } else if (orderRef) {
+                document.getElementById('trackOrderLink').href = 'track-cv.php?ref=' + encodeURIComponent(orderRef);
+                document.getElementById('orderReference').textContent = orderRef;
+                document.getElementById('trackingReference').classList.remove('hidden');
+            }
 
             const isValentin = urlParams.get('valentin');
 

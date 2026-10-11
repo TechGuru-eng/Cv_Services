@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/' . (strpos(__FILE__, DIRECTORY_SEPARATOR . 'api' . DIRECTORY_SEPARATOR) !== false ? '../' : '') . 'includes/upload_helper.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !rate_limit_ok(basename(__FILE__), 20, 600)) { http_response_code(429); header('Content-Type: application/json'); exit(json_encode(['success' => false, 'message' => 'Trop de requêtes. Réessayez plus tard.'])); }
 // api/save_prospect.php
 // Captures leads as they enter information, before payment.
 
@@ -13,7 +15,7 @@ if (!$input) {
     exit;
 }
 
-$name = htmlspecialchars($input['name'] ?? '');
+$name = htmlspecialchars(trim($input['name'] ?? '') ?: 'Visiteur');
 $whatsapp = htmlspecialchars($input['whatsapp'] ?? '');
 $email = filter_var($input['email'] ?? '', FILTER_SANITIZE_EMAIL);
 $city = htmlspecialchars($input['city'] ?? '');
@@ -29,9 +31,15 @@ if (empty($name) || empty($whatsapp)) {
 
 // 0. Ensure Missing Columns Exist
 try {
-    $pdo->query("ALTER TABLE prospects ADD COLUMN IF NOT EXISTS country VARCHAR(100) DEFAULT NULL");
-    $pdo->query("ALTER TABLE prospects ADD COLUMN IF NOT EXISTS source VARCHAR(100) DEFAULT 'Direct'");
-} catch (Exception $e) {}
+    $pdo->query("SELECT country FROM prospects LIMIT 1");
+} catch (Exception $e) {
+    $pdo->query("ALTER TABLE prospects ADD COLUMN country VARCHAR(100) DEFAULT NULL");
+}
+try {
+    $pdo->query("SELECT source FROM prospects LIMIT 1");
+} catch (Exception $e) {
+    $pdo->query("ALTER TABLE prospects ADD COLUMN source VARCHAR(100) DEFAULT 'Direct'");
+}
 
 $country = htmlspecialchars($input['country'] ?? 'Unknown');
 $source = htmlspecialchars($input['source'] ?? 'Direct');

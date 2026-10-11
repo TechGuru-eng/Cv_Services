@@ -1,0 +1,20 @@
+.public-announcement{position:relative;z-index:60;background:#0d2942;color:#fff;font-family:Inter,sans-serif}
+.public-announcement[hidden]{display:none}
+.public-announcement[data-theme="success"]{background:#14532d}
+.public-announcement[data-theme="warning"]{background:#713f12}
+.public-announcement[data-theme="danger"]{background:#991b1b}
+.public-announcement[data-theme="new_year"],.public-announcement[data-theme="christmas"]{background:#433878}
+.announcement-message{white-space:pre-line;overflow-wrap:anywhere;min-width:0}
+.announcement-copy{min-width:0}
+.announcement-close{flex:none;margin-left:auto;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;width:36px;height:36px;font-size:24px;cursor:pointer}
+.announcement-dialog{width:calc(100% - 32px);max-width:480px;max-height:80vh;overflow:auto;border:0;border-radius:16px;padding:28px;color:#172033;background:white}
+.announcement-dialog::backdrop{background:rgba(0,0,0,.6)}
+.announcement-dialog h2{font-size:22px;font-weight:700;margin-bottom:16px}
+.announcement-dialog p{white-space:pre-line;overflow-wrap:anywhere;margin-bottom:20px}
+.announcement-dialog button{background:#991b1b;color:white;border:0;border-radius:8px;padding:10px 20px;cursor:pointer}
+.announcement-inner{max-width:1200px;margin:auto;padding:12px 20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.announcement-copy{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.55;font-weight:500}
+.announcement-label{flex:none;background:#d4e8f3;color:#0d2942;border-radius:4px;padding:2px 7px;font-size:9px;letter-spacing:.07em;font-weight:800;margin-top:1px}
+.announcement-link{display:inline-flex;gap:10px;align-items:center;font-size:12px;line-height:1.4;font-weight:700;color:#fff;padding:5px 0;border-bottom:1px solid #7cabbf;text-decoration:none;margin-left:72px;min-height:36px}
+.announcement-link:hover{color:#d4e8f3}.announcement-link:focus-visible{outline:2px solid white;outline-offset:4px}
+@media(min-width:640px){.announcement-inner{flex-direction:row;justify-content:center;align-items:center;gap:28px;padding:10px 24px}.announcement-copy{align-items:center;font-size:13px}.announcement-link{margin-left:0;flex-shrink:0}}

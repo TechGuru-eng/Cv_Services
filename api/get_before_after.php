@@ -32,7 +32,7 @@ try {
     echo json_encode([
         'success' => true,
         'count' => count($slides),
-        'rotation_interval_seconds' => 40,
+        'rotation_interval_seconds' => 20,
         'slides' => $slides
     ], JSON_UNESCAPED_UNICODE);
 

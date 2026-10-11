@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Subscriber {
+  id         Int      @id @default(autoincrement())
+  fullName   String
+  email      String
+  whatsapp   String
+  city       String
+  profession String
+  optIn      Boolean  @default(true)
+  createdAt  DateTime @default(now())
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  sessionId String   @unique
+  ip        String?
+  userAgent String?
+  referrer  String?
+  email     String?  // Partial save
+  whatsapp  String?  // Partial save
+  converted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -19,7 +19,7 @@ $price = 6000;
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Candidature CAMTEL 2026 - Pack Expert | HireMe</title>
     <meta name="description" content="Ne ratez pas votre chance chez CAMTEL ! Obtenez un CV professionnel et une lettre de motivation sur mesure pour 6000 FCFA. Offre Spéciale Candidature 2026.">
@@ -34,12 +34,6 @@ $price = 6000;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-    
     <script>
         tailwind.config = {
             theme: {
@@ -61,6 +55,13 @@ $price = 6000;
             border: 1px solid rgba(229, 231, 235, 0.5);
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="bg-gray-50 text-gray-900 font-[Inter] antialiased">
 

@@ -1,7 +1,11 @@
 <?php
 // admin/login.php
+session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])]);
 session_start();
+require_once __DIR__ . '/../includes/upload_helper.php';
 require_once 'config/db.php';
+require_once 'includes/Security.php';
+Security::init($pdo);
 require_once 'includes/csrf.php';
 require_once 'includes/activity_helper.php';
 
@@ -14,7 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // 2. Anti-Brute Force (Basic)
-    sleep(1); // Slow down attacks
+    if (!rate_limit_ok('admin-login', 8, 900)) {
+        http_response_code(429);
+        $error = 'Trop de tentatives. Réessayez dans 15 minutes.';
+    } else {
+    usleep(400000);
 
     // Verify admin
     $stmt = $pdo->prepare("SELECT * FROM admins WHERE email = ?");
@@ -22,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin = $stmt->fetch();
 
     if ($admin && password_verify($password, $admin['password'])) {
+        session_regenerate_id(true); // prevent session fixation
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin'] = true; // For compatibility
         $_SESSION['admin_id'] = $admin['id'];
@@ -31,25 +40,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         if (class_exists('Security')) {
-            Security::logSuspicious("Failed login - Email: " . htmlspecialchars($email));
+            Security::recordFailedLogin();
         }
         log_activity("Échec de connexion", "Tentative échouée avec l'email: " . htmlspecialchars($email));
         $error = "Identifiants incorrects.";
     }
+    } // end rate-limit else
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion Admin — HireMe</title>
 
     <!-- Favicons -->
-    <link rel="icon" href="../assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -64,6 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); }
     </style>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="mesh-bg min-h-screen flex items-center justify-center p-6 text-slate-200">
 

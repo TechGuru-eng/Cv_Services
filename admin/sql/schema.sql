@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `whatsapp` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `package_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `package_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `original_amount` decimal(10,2) DEFAULT NULL,
   `discount_amount` decimal(10,2) DEFAULT NULL,

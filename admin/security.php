@@ -1,34 +1,34 @@
 <?php
-session_start();
-if (!isset($_SESSION['admin'])) {
-    header('Location: login.php');
-    exit;
-}
-require_once 'config/db.php';
+require_once 'auth.php';
+require_once 'includes/csrf.php';
+require_once 'includes/Security.php';
+Security::init($pdo);
 
-// Handle Actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])) {
-        if ($_POST['action'] === 'ban_ip') {
-            $ip = $_POST['ip'];
-            $reason = $_POST['reason'] ?? 'Banni manuellement';
-            if (Security::banIP($ip, $reason, $_SESSION['admin']['username'] ?? 'Admin')) {
-                $success = "IP $ip a été bannie.";
-            } else {
-                $error = "Impossible de bannir l'IP (peut-être déjà bannie).";
-            }
-        } elseif ($_POST['action'] === 'unban_ip') {
-            $id = $_POST['id'];
-            if (Security::unbanIP($id)) {
-                $success = "Le bannissement a été levé.";
-            } else {
-                $error = "Erreur lors du débannissement.";
-            }
-        } elseif ($_POST['action'] === 'clear_logs') {
-            $pdo->exec("TRUNCATE TABLE security_logs");
-            $success = "Historique vidé.";
+    if (!is_string($_POST['csrf_token'] ?? null) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        http_response_code(403);
+        exit('Requête invalide. Actualisez la page.');
+    }
+    foreach (['action', 'ip', 'reason', 'id'] as $field) {
+        if (isset($_POST[$field]) && !is_string($_POST[$field])) {
+            http_response_code(422);
+            exit('Données invalides.');
         }
     }
+    verify_csrf();
+    try {
+        $action = $_POST['action'] ?? '';
+        if ($action === 'ban_ip') {
+            $ok = Security::banIP(trim($_POST['ip'] ?? ''), trim($_POST['reason'] ?? '') ?: 'Banni manuellement', $_SESSION['admin_email'] ?? 'Admin');
+            $success = $ok ? 'Adresse IP bannie.' : 'Cette adresse IP est déjà bannie.';
+        } elseif ($action === 'unban_ip') {
+            Security::unbanIP((int)($_POST['id'] ?? 0));
+            $success = 'Bannissement levé.';
+        } elseif ($action === 'clear_logs') {
+            $pdo->exec('DELETE FROM security_logs');
+            $success = 'Historique vidé.';
+        }
+    } catch (InvalidArgumentException $e) { $error = $e->getMessage(); }
 }
 
 // Fetch Data
@@ -60,6 +60,19 @@ $bans = $pdo->query("SELECT * FROM banned_ips ORDER BY banned_at DESC")->fetchAl
                 </div>
             <?php endif; ?>
 
+            <div class="bg-white rounded-xl shadow-sm border p-6 mb-6">
+                <h2 class="text-xl font-bold mb-2">Protection active</h2>
+                <p class="text-sm text-gray-600 mb-4">Les requêtes suspectes sont bloquées et journalisées. Après 3 détections ou 8 échecs de connexion en 15 minutes, l’IP est bannie. Localhost est journalisé sans bannissement automatique. Les adresses IP ne permettent pas d’identifier une personne avec certitude.</p>
+                <form method="POST" class="flex flex-wrap gap-3 items-end">
+                    <?php csrf_field(); ?>
+                    <input type="hidden" name="action" value="ban_ip">
+                    <label>Adresse IP<input name="ip" required maxlength="45" placeholder="203.0.113.10" class="block border rounded p-2"></label>
+                    <label>Raison<input name="reason" required maxlength="1000" class="block border rounded p-2"></label>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded" type="submit">Bannir cette IP</button>
+                </form>
+                <p class="text-sm mt-4">Les alertes apparaissent dans le journal ci-dessous. Actualisation automatique toutes les 30 secondes, sauf pendant la saisie. Aucun email de sécurité n’est envoyé.</p>
+                <button type="button" onclick="location.reload()" class="text-blue-600 underline mt-2">Actualiser les alertes</button>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
                 <!-- Banned IPs -->
@@ -86,6 +99,7 @@ $bans = $pdo->query("SELECT * FROM banned_ips ORDER BY banned_at DESC")->fetchAl
                                         <td class="p-4 text-xs text-gray-500"><?= date('d/m/Y H:i', strtotime($ban['banned_at'])) ?></td>
                                         <td class="p-4 text-right">
                                             <form method="POST" onsubmit="return confirm('Débannir cette IP ?');">
+                                                <?php csrf_field(); ?>
                                                 <input type="hidden" name="action" value="unban_ip">
                                                 <input type="hidden" name="id" value="<?= $ban['id'] ?>">
                                                 <button type="submit" class="text-green-600 hover:text-green-800 font-bold text-xs bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition">Levé</button>
@@ -108,7 +122,8 @@ $bans = $pdo->query("SELECT * FROM banned_ips ORDER BY banned_at DESC")->fetchAl
                     <div class="p-6 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
                         <h2 class="text-xl font-bold text-gray-800">📋 Journal d'activité (100 derniers)</h2>
                         <form method="POST" onsubmit="return confirm('Vider tout l\'historique ?');">
-                            <input type="hidden" name="action" value="clear_logs">
+                            <?php csrf_field(); ?>
+                                                <input type="hidden" name="action" value="clear_logs">
                             <button type="submit" class="text-xs text-gray-500 hover:text-red-500 underline">Tout effacer</button>
                         </form>
                     </div>
@@ -135,8 +150,9 @@ $bans = $pdo->query("SELECT * FROM banned_ips ORDER BY banned_at DESC")->fetchAl
                                         </td>
                                         <td class="p-4 text-right">
                                             <form method="POST" onsubmit="return confirm('Bannir cette IP ?');">
+                                                <?php csrf_field(); ?>
                                                 <input type="hidden" name="action" value="ban_ip">
-                                                <input type="hidden" name="ip" value="<?= $log['ip_address'] ?>">
+                                                <input type="hidden" name="ip" value="<?= htmlspecialchars($log['ip_address'], ENT_QUOTES, 'UTF-8') ?>">
                                                 <input type="hidden" name="reason" value="Suite à log: <?= htmlspecialchars($log['reason']) ?>">
                                                 <button type="submit" class="text-red-600 hover:text-red-800 font-bold text-xs bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition">Bannir</button>
                                             </form>
@@ -156,5 +172,12 @@ $bans = $pdo->query("SELECT * FROM banned_ips ORDER BY banned_at DESC")->fetchAl
             </div>
         </main>
     </div>
+<script>
+setInterval(() => {
+    if (document.hidden) return;
+    const typing = [...document.querySelectorAll('input:not([type="hidden"])')].some(input => input.value || input === document.activeElement);
+    if (!typing) location.reload();
+}, 30000);
+</script>
 </body>
 </html>

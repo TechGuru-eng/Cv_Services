@@ -5,9 +5,22 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once 'includes/security_helper.php';
 
 $error = null;
+$warning = null;
 $success = null;
+
+// AJAX check for blacklist (Simple implementation for now)
+if (isset($_GET['check_blacklist'])) {
+    $id = $_GET['check_blacklist'];
+    if (isBlacklisted($id, $pdo)) {
+        echo json_encode(['blacklisted' => true]);
+    } else {
+        echo json_encode(['blacklisted' => false]);
+    }
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Gather Input
@@ -203,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="flex justify-end pt-4">
-                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition font-bold">
+                            <button type="submit" id="submitBtn" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition font-bold">
                                 Créer la Commande
                             </button>
                         </div>
@@ -220,6 +233,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const price = select.options[select.selectedIndex].getAttribute('data-price');
             amountInput.value = price;
         }
+
+        // Blacklist Check
+        async function checkBlacklist(val, type) {
+            if (!val || val.length < 5) return;
+            try {
+                const response = await fetch(`create-order.php?check_blacklist=${val}`);
+                const data = await response.json();
+                const warningId = `warning-${type}`;
+                let warningEl = document.getElementById(warningId);
+                
+                if (data.blacklisted) {
+                    if (!warningEl) {
+                        warningEl = document.createElement('div');
+                        warningEl.id = warningId;
+                        warningEl.className = 'text-red-600 text-[10px] font-bold mt-1 animate-pulse';
+                        warningEl.innerHTML = '⚠️ ATTENTION : Cet identifiant est sur liste noire (Non-payeur) !';
+                        document.querySelector(`input[name="${type}"]`).parentNode.appendChild(warningEl);
+                    }
+                } else {
+                    if (warningEl) warningEl.remove();
+                }
+            } catch (e) {
+                console.error("Check failed", e);
+            }
+        }
+
+        document.querySelector('input[name="whatsapp"]').addEventListener('blur', (e) => checkBlacklist(e.target.value, 'whatsapp'));
+        document.querySelector('input[name="email"]').addEventListener('blur', (e) => checkBlacklist(e.target.value, 'email'));
     </script>
 </body>
 </html>

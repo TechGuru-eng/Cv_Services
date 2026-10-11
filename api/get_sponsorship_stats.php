@@ -53,7 +53,7 @@ try {
         // Based on debug step 244: allocated_pool_id EXISTS.
         
         $stmtBen = $pdo->query("
-            SELECT r.name, r.motivation, r.created_at, p.package_name 
+            SELECT r.name, r.motivation, r.created_at, r.is_realized, r.recovery_link, p.package_name 
             FROM sponsorship_requests r
             LEFT JOIN sponsorship_pool p ON r.allocated_pool_id = p.id
             WHERE r.status IN ('approved', 'granted', 'completed') 

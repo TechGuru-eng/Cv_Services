@@ -8,6 +8,13 @@ class SpinWheel {
         this.winner = null;
         this.popupData = null;
 
+        this.browser = localStorage.getItem('hireme_wheel_browser');
+        if (!this.browser) {
+            const bytes = new Uint8Array(16);
+            crypto.getRandomValues(bytes);
+            this.browser = Array.from(bytes, n => n.toString(16).padStart(2, '0')).join('');
+            localStorage.setItem('hireme_wheel_browser', this.browser);
+        }
         this.ensureModalExists();
     }
 
@@ -15,12 +22,12 @@ class SpinWheel {
         console.log("SpinWheel: Initializing...");
         // Prevent showing if already interacted or recently shown
         if (localStorage.getItem('hireme_spin_played') || sessionStorage.getItem('hireme_spin_session_dismissed')) {
-            console.log("SpinWheel: Blocked by storage (played or dismissed). IGNORING for debug.");
-            // return; // Commented out for testing purposes if needed
+            console.log("SpinWheel: Already played or dismissed.");
+            return;
         }
 
         try {
-            const response = await fetch('api/get_exit_popup.php');
+            const response = await fetch('api/get_exit_popup.php?browser=' + encodeURIComponent(this.browser));
             const data = await response.json();
 
             if (data.success && data.data && data.data.popup_type === 'spin_wheel') {
@@ -30,32 +37,28 @@ class SpinWheel {
                     try {
                         this.slices = JSON.parse(this.popupData.slices);
                     } catch (e) {
-                        this.slices = this.getDefaultSlices();
+                        this.slices = [];
                     }
                 } else if (Array.isArray(this.popupData.slices)) {
                     this.slices = this.popupData.slices;
                 } else {
-                    this.slices = this.getDefaultSlices();
+                    this.slices = [];
                 }
 
+                if (this.slices.length !== 5 || this.slices.some(s => ![0,10,20,30,40].includes(Number(s.value)))) return;
                 this.setupDOM();
+                this.modal.querySelector('.choice-title').textContent = this.popupData.title;
+                this.modal.querySelector('.choice-text').textContent = this.popupData.message + ' Tentez de gagner 10%, 20%, 30% ou 40% de réduction sur les packs Étudiant, Pro et Senior.';
+                this.modal.querySelector('.result-view .btn-play').textContent = this.popupData.cta_text;
+                this.modal.querySelector('.choice-text').textContent += ' Une seule participation par navigateur et adresse IP. Vous pouvez aussi ne rien gagner.';
+                this.modal.setAttribute('role', 'dialog');
+                this.modal.setAttribute('aria-modal', 'true');
                 this.drawWheel();
                 this.bindEvents(); // Bind exit intent here if not global
             }
         } catch (e) {
             console.error("SpinWheel init error:", e);
         }
-    }
-
-    getDefaultSlices() {
-        return [
-            { text: '10% OFF', color: '#fbbf24', value: '10' },
-            { text: '50% OFF', color: '#ef4444', value: '50' }, // Targeted winner usually
-            { text: '20% OFF', color: '#fbbf24', value: '20' },
-            { text: '30% OFF', color: '#ef4444', value: '30' },
-            { text: '5% OFF', color: '#fbbf24', value: '5' },
-            { text: '40% OFF', color: '#ef4444', value: '40' }
-        ];
     }
 
     ensureModalExists() {
@@ -67,7 +70,7 @@ class SpinWheel {
                     <div class="choice-view" id="choiceView">
                         <div class="choice-icon">🎰</div>
                         <h2 class="choice-title">Tentez votre chance !</h2>
-                        <p class="choice-text">Ne partez pas sans rien. Tournez la roue pour gagner jusqu'à <strong>-60%</strong> sur votre CV !</p>
+                        <p class="choice-text">Tentez de gagner une réduction sur votre CV.</p>
                         <div class="choice-buttons">
                             <button id="btnSpinAccept" class="btn-play">OUI, JE VEUX JOUER</button>
                             <button id="btnSpinDecline" class="btn-decline">Non merci, je paie plein tarif</button>
@@ -80,7 +83,7 @@ class SpinWheel {
                          <div class="wheel-container">
                             <canvas id="wheelCanvas" width="350" height="350"></canvas>
                             <div class="wheel-marker"></div>
-                            <div class="spin-btn-center" id="spinTrigger">SPIN</div>
+                            <button type="button" class="spin-btn-center" id="spinTrigger">TOURNER</button>
                         </div>
                     </div>
 
@@ -88,10 +91,10 @@ class SpinWheel {
                     <div class="result-view" id="resultView">
                         <div class="result-title">FÉLICITATIONS !</div>
                         <p>Vous avez gagné :</p>
-                        <div class="result-value" id="resultValue">50% OFF</div>
+                        <div class="result-value" id="resultValue"></div>
                         <p>Utilisez ce code maintenant :</p>
-                        <div class="coupon-box" id="couponCode">HIREME50</div>
-                         <p style="margin-bottom: 20px; font-size: 14px;">Expire dans <span id="spinTimer" style="color:red; font-weight:bold">15:00</span></p>
+                        <div class="coupon-box" id="couponCode"></div>
+                         <p style="margin-bottom: 20px; font-size: 14px;"><span id="spinTimer"></span></p>
                         <a href="#pricing" class="btn-play" onclick="document.getElementById('spinWheelModal').classList.remove('active');">PROFITER DE L'OFFRE</a>
                     </div>
                 </div>
@@ -123,7 +126,7 @@ class SpinWheel {
 
             // Slice
             this.ctx.beginPath();
-            this.ctx.fillStyle = i % 2 === 0 ? '#ef4444' : '#fbbf24'; // Red and Gold/Yellow
+            this.ctx.fillStyle = this.slices[i].color; // Red and Gold/Yellow
             this.ctx.moveTo(cx, cy);
             this.ctx.arc(cx, cy, radius, angle, angle + arc);
             this.ctx.lineTo(cx, cy);
@@ -142,7 +145,7 @@ class SpinWheel {
     }
 
     show() {
-        if (!localStorage.getItem('hireme_spin_played')) {
+        if (!localStorage.getItem('hireme_spin_played') && !sessionStorage.getItem('hireme_spin_session_dismissed') && !sessionStorage.getItem('hireme_order_placed')) {
             this.modal.classList.add('active');
         }
     }
@@ -166,33 +169,91 @@ class SpinWheel {
             this.spin();
         };
 
+        const claim = this.resultView.querySelector('.btn-play');
+        claim.href = '#order';
+        claim.removeAttribute('onclick');
+        claim.onclick = async (event) => {
+            event.preventDefault();
+            const response = await fetch('api/check_promo.php?code=' + encodeURIComponent(this.winner.code));
+            const reward = await response.json();
+            if (!reward.valid) {
+                document.getElementById('couponCode').textContent = reward.message || 'Code indisponible';
+                return;
+            }
+            const input = document.getElementById('promoInput');
+            if (input) input.value = reward.code;
+            if (typeof applyDiscount === 'function') applyDiscount(reward, true);
+            this.modal.classList.remove('active');
+            document.getElementById('order')?.scrollIntoView({behavior: 'smooth'});
+        };
+        this.modal.addEventListener('click', e => {
+            if (e.target === this.modal && !this.isSpinning) {
+                this.modal.classList.remove('active');
+                sessionStorage.setItem('hireme_spin_session_dismissed', 'true');
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !this.isSpinning) {
+                this.modal.classList.remove('active');
+                sessionStorage.setItem('hireme_spin_session_dismissed', 'true');
+            }
+        });
+        const eligibleAfter = Date.now() + 5000;
+        // Mobile exit proxy: rapid upward scrolling after engagement.
+        let lastY = window.scrollY, lastTime = Date.now();
+        window.addEventListener('scroll', () => {
+            const now = Date.now(), y = window.scrollY;
+            if (window.matchMedia('(pointer: coarse)').matches && now >= eligibleAfter && y > 100 && (lastY - y) / Math.max(1, now - lastTime) > 2) this.show();
+            lastY = y; lastTime = now;
+        }, {passive: true});
         // Global Exit Intent Trigger (Desktop)
         let exitIntentTriggered = false;
         document.addEventListener('mouseleave', (e) => {
             console.log("SpinWheel: Mouse leave detected. Y:", e.clientY);
             // Strict check: User must be exiting from the TOP of the viewport
-            if (e.clientY < 50 && !exitIntentTriggered) { // Increased to 50 for easier testing
+            if (e.clientY <= 0 && Date.now() >= eligibleAfter && !exitIntentTriggered) {
                 console.log("SpinWheel: Triggering Popup!");
                 exitIntentTriggered = true;
                 this.show();
             }
         });
 
-        // Mobile Trigger (Idle or Scroll Up fast - Simplified to just timer or scroll for now, keeping simple mouseleave as requested)
     }
 
-    spin() {
+    async spin() {
+        if (this.isSpinning || localStorage.getItem('hireme_spin_played')) return;
         this.isSpinning = true;
+        document.getElementById('spinTrigger').disabled = true;
 
-        // Determine winner
-        // Logic: Check DB discount_percent. Find the slice that matches.
-        // If not found, default to 50% or random.
-        const targetPercent = this.popupData.discount_percent || 50;
-        let winnerIndex = this.slices.findIndex(s => s.value == targetPercent);
-
-        if (winnerIndex === -1) {
-            winnerIndex = Math.floor(Math.random() * this.slices.length); // Fallback
+        // The server selects and records the one permitted result.
+        let reward;
+        try {
+            const response = await fetch('api/spin_exit_wheel.php', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({browser: this.browser, token: this.popupData.token})
+            });
+            const result = await response.json();
+            if (!result.success) {
+                this.isSpinning = false;
+                if (result.played) localStorage.setItem('hireme_spin_played', 'true');
+                this.wheelView.style.display = 'none';
+                this.resultView.style.display = 'block';
+                this.resultView.querySelector('.result-title').textContent = 'PARTICIPATION';
+                document.getElementById('resultValue').textContent = result.message;
+                document.getElementById('couponCode').style.display = 'none';
+                document.getElementById('spinTimer').parentElement.style.display = 'none';
+                this.resultView.querySelector('.btn-play').style.display = 'none';
+                return;
+            }
+            reward = result.reward;
+            localStorage.setItem('hireme_spin_played', 'true');
+        } catch (error) {
+            this.isSpinning = false;
+            this.wheelView.querySelector('div').textContent = 'Connexion interrompue. Rechargez la page.';
+            document.getElementById('spinTrigger').onclick = null;
+            return;
         }
+        const winnerIndex = this.slices.findIndex(s => Number(s.value) === Number(reward.value));
 
         // Calculate rotation
         // We need to rotate so the winner slice aligns with the marker (top, -90deg or 270deg)
@@ -231,43 +292,36 @@ class SpinWheel {
 
         // Wait for animation
         setTimeout(() => {
-            this.showResult(this.slices[winnerIndex]);
+            this.showResult(reward);
         }, 5000);
     }
 
     showResult(winnerSlice) {
         this.isSpinning = false;
+        this.winner = winnerSlice;
         localStorage.setItem('hireme_spin_played', 'true');
 
         this.wheelView.style.display = 'none';
         this.resultView.style.display = 'block';
 
         // Confetti
-        this.fireConfetti();
+        if (Number(winnerSlice.value) > 0) this.fireConfetti();
+        else {
+            this.resultView.querySelector('.result-title').textContent = 'MERCI D’AVOIR JOUÉ';
+            this.resultView.querySelector('p').textContent = 'Pas de réduction cette fois-ci.';
+            document.getElementById('couponCode').style.display = 'none';
+            this.resultView.querySelectorAll('p')[1].style.display = 'none';
+            const action = this.resultView.querySelector('.btn-play');
+            action.textContent = 'DÉCOUVRIR LES PACKS';
+            action.onclick = () => this.modal.classList.remove('active');
+        }
 
         // Update Text
         document.getElementById('resultValue').textContent = winnerSlice.text;
-        document.getElementById('couponCode').textContent = this.popupData.discount_code || 'HIREME50';
+        document.getElementById('couponCode').textContent = winnerSlice.code;
 
-        // Start countdown
-        this.startTimer(15 * 60, document.getElementById('spinTimer'));
-    }
-
-    startTimer(duration, display) {
-        let timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            display.textContent = minutes + ":" + seconds;
-
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
+        // Coupon validity is enforced by the promo system.
+        document.getElementById('spinTimer').parentElement.textContent = Number(winnerSlice.value) > 0 ? 'Validité et disponibilité selon les conditions du code promo.' : 'Une seule participation. Aucun nouvel essai.';
     }
 
     fireConfetti() {

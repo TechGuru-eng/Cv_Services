@@ -5,42 +5,45 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 require_once 'config/db.php';
+require_once 'includes/csrf.php';
 
 $message = '';
 $messageType = '';
 
-// Handle Actions
+// All publication and management actions require a valid admin session and CSRF token.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action']) && $_POST['action'] === 'create') {
-        $announcement_message = $_POST['message'];
-        $type = $_POST['type'];
-        $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : NULL;
-        $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : NULL;
-        $is_active = isset($_POST['is_active']) ? 1 : 0;
-
-        $stmt = $pdo->prepare("INSERT INTO announcements (message, type, start_date, end_date, is_active) VALUES (?, ?, ?, ?, ?)");
-        if ($stmt->execute([$announcement_message, $type, $start_date, $end_date, $is_active])) {
-            $message = "Annonce créée avec succès !";
-            $messageType = "success";
-        } else {
-            $message = "Erreur lors de la création.";
-            $messageType = "error";
+    verify_csrf();
+    try {
+        $action = $_POST['action'] ?? '';
+        if ($action === 'create') {
+            $text = trim($_POST['message'] ?? '');
+            $type = $_POST['type'] ?? 'info';
+            if ($text === '' || mb_strlen($text) > 2000) throw new InvalidArgumentException('Le message doit contenir entre 1 et 2000 caractères.');
+            if (!in_array($type, ['info', 'success', 'warning', 'danger', 'new_year', 'christmas'], true)) throw new InvalidArgumentException('Thème invalide.');
+            $dates = [];
+            foreach (['start_date', 'end_date'] as $field) {
+                $raw = $_POST[$field] ?? '';
+                $date = $raw === '' ? null : DateTimeImmutable::createFromFormat('!Y-m-d\TH:i', $raw);
+                if ($raw !== '' && (!$date || $date->format('Y-m-d\TH:i') !== $raw)) throw new InvalidArgumentException('Date invalide.');
+                $dates[$field] = $date ? $date->format('Y-m-d H:i:s') : null;
+            }
+            if ($dates['end_date'] && $dates['end_date'] <= ($dates['start_date'] ?: date('Y-m-d H:i:s'))) throw new InvalidArgumentException('La fin doit être après le début de publication.');
+            $stmt = $pdo->prepare('INSERT INTO announcements (message, type, start_date, end_date, is_active) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$text, $type, $dates['start_date'], $dates['end_date'], isset($_POST['is_active']) ? 1 : 0]);
+            $message = 'Annonce enregistrée. Elle sera affichée pendant les dates prévues si elle est activée.';
+            $messageType = 'success';
+        } elseif (in_array($action, ['delete', 'toggle'], true)) {
+            $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
+            if (!$id || $id < 1) throw new InvalidArgumentException('Annonce invalide.');
+            $sql = $action === 'delete' ? 'DELETE FROM announcements WHERE id = ?' : 'UPDATE announcements SET is_active = NOT is_active WHERE id = ?';
+            $pdo->prepare($sql)->execute([$id]);
+            header('Location: announcements');
+            exit;
         }
+    } catch (InvalidArgumentException $e) {
+        $message = $e->getMessage();
+        $messageType = 'error';
     }
-}
-
-if (isset($_GET['delete_id'])) {
-    $stmt = $pdo->prepare("DELETE FROM announcements WHERE id = ?");
-    $stmt->execute([$_GET['delete_id']]);
-    header('Location: announcements.php');
-    exit;
-}
-
-if (isset($_GET['toggle_id'])) {
-    $stmt = $pdo->prepare("UPDATE announcements SET is_active = NOT is_active WHERE id = ?");
-    $stmt->execute([$_GET['toggle_id']]);
-    header('Location: announcements.php');
-    exit;
 }
 
 // Fetch Announcements
@@ -66,12 +69,14 @@ $announcements = $stmt->fetchAll();
             <!-- Formulaire Création -->
             <div class="bg-white shadow-md rounded-lg p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">Créer une nouvelle annonce</h2>
+                <p class="text-sm text-gray-600 mb-4">Affichage dans la bannière en haut de l’accueil. Le thème Urgent ouvre aussi un popup une fois par session. La dernière annonce publiée et disponible est prioritaire. Dates en heure du Cameroun (UTC+1).</p>
                 <form action="announcements.php" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <?php csrf_field(); ?>
                     <input type="hidden" name="action" value="create">
                     
                     <div class="md:col-span-2">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Message</label>
-                        <textarea name="message" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-24" placeholder="Ex: Joyeux Noël à tous nos clients ! Profitez de -50%..."></textarea>
+                        <textarea name="message" required maxlength="2000" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-24" placeholder="Ex: Joyeux Noël à tous nos clients ! Profitez de -50%..."></textarea>
                     </div>
 
                     <div>
@@ -80,14 +85,14 @@ $announcements = $stmt->fetchAll();
                             <option value="info">Info (Bleu)</option>
                             <option value="success">Succès (Vert)</option>
                             <option value="warning">Attention (Jaune)</option>
-                            <option value="danger">Danger (Rouge)</option>
+                            <option value="danger">Urgent (Rouge + popup)</option>
                             <option value="new_year">Nouvel An (Festif)</option>
                             <option value="christmas">Noël (Festif)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Actif Immédiatement ?</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Annonce activée ?</label>
                         <div class="mt-2">
                             <label class="inline-flex items-center">
                                 <input type="checkbox" name="is_active" class="form-checkbox h-5 w-5 text-blue-600" checked>
@@ -130,17 +135,11 @@ $announcements = $stmt->fetchAll();
                         <?php foreach ($announcements as $row): ?>
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <?php if ($row['is_active']): ?>
-                                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Actif</span>
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                            <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Inactif</span>
-                                        </span>
-                                    <?php endif; ?>
+                                    <?php
+                                    $now = date('Y-m-d H:i:s');
+                                    $status = !$row['is_active'] ? 'Inactif' : (($row['end_date'] && $row['end_date'] < $now) ? 'Expiré' : (($row['start_date'] && $row['start_date'] > $now) ? 'Programmé' : 'Disponible'));
+                                    ?>
+                                    <span class="inline-block px-3 py-1 rounded-full bg-gray-100 font-semibold"><?= $status ?></span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap"><?= htmlspecialchars(substr($row['message'], 0, 50)) ?>...</p>
@@ -153,12 +152,18 @@ $announcements = $stmt->fetchAll();
                                     <div class="text-xs">Fin: <?= $row['end_date'] ? $row['end_date'] : '-' ?></div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="announcements.php?toggle_id=<?= $row['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Activer/Désactiver">
-                                        <i class="fas fa-power-off"></i>
-                                    </a>
-                                    <a href="announcements.php?delete_id=<?= $row['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Êtes-vous sûr ?')" title="Supprimer">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    <form method="POST" class="inline">
+                                        <?php csrf_field(); ?>
+                                        <input type="hidden" name="action" value="toggle">
+                                        <input type="hidden" name="id" value="<?= (int)$row['id'] ?>">
+                                        <button class="text-blue-600 mr-3" title="Activer/Désactiver"><i class="fas fa-power-off"></i></button>
+                                    </form>
+                                    <form method="POST" class="inline" onsubmit="return confirm('Supprimer cette annonce ?');">
+                                        <?php csrf_field(); ?>
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="id" value="<?= (int)$row['id'] ?>">
+                                        <button class="text-red-600" title="Supprimer"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

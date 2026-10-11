@@ -21,7 +21,7 @@ $isPaid = ($order['payment_status'] === 'verified');
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reçu #<?= htmlspecialchars($order['order_ref'] ?: $order['id']) ?> — MonCv</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -73,6 +73,12 @@ $isPaid = ($order['payment_status'] === 'verified');
             transition: all 0.3s;
         }
     </style>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 <body class="p-0 md:p-10">
 

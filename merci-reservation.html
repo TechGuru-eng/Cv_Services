@@ -2,17 +2,11 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réservation Confirmée — HireMe CV Services</title>
 
     <!-- Favicons -->
-    <link rel="icon" href="assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -20,6 +14,13 @@
             font-family: 'Inter', sans-serif;
         }
     </style>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
@@ -32,8 +33,7 @@
 
         <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Félicitations <span id="userName"
                 class="text-primary">!</span></h1>
-        <p class="text-slate-500 mb-8">Votre réservation a bien été enregistrée. Un expert a été notifié et vous
-            contactera très prochainement.</p>
+        <p class="text-slate-500 mb-8">Votre acompte de réservation a bien été soumis. Notre équipe vérifie votre transaction et vous contactera très prochainement sur WhatsApp.</p>
 
         <div class="bg-slate-50 rounded-2xl p-6 mb-8 text-left">
             <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Prochaines étapes :</h2>
@@ -41,17 +41,22 @@
                 <li class="flex items-start">
                     <span
                         class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">1</span>
-                    <p class="text-sm text-slate-600">Confirmation de la date sur WhatsApp.</p>
+                    <p class="text-sm text-slate-600">Vérification de votre paiement d'acompte par notre équipe.</p>
                 </li>
                 <li class="flex items-start">
                     <span
                         class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">2</span>
-                    <p class="text-sm text-slate-600">Rédaction de votre CV par nos experts.</p>
+                    <p class="text-sm text-slate-600">Confirmation de la date de livraison sur WhatsApp.</p>
                 </li>
                 <li class="flex items-start">
                     <span
                         class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">3</span>
-                    <p class="text-sm text-slate-600">Paiement et livraison le jour convenu.</p>
+                    <p class="text-sm text-slate-600">Rédaction de votre CV par nos experts.</p>
+                </li>
+                <li class="flex items-start">
+                    <span
+                        class="bg-primary/10 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">4</span>
+                    <p class="text-sm text-slate-600">Paiement du solde restant (50%) et livraison finale.</p>
                 </li>
             </ul>
         </div>

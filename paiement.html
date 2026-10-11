@@ -2,7 +2,7 @@
 <html lang="fr" class="scroll-smooth">
 
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXT4Q08R2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -27,16 +27,6 @@
     <meta name="twitter:image" content="https://moncvpro.hiremeguide.com/assets/hireme-preview-v2.png" />
 
     <!-- Favicons -->
-    <link rel="icon" href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="48x48"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/favicon-48.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://moncvpro.hiremeguide.com/assets/favicons/apple-touch-icon-180.png">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +53,13 @@
             }
         }
     </script>
+    <script src="assets/js/site-language.js?v=4" defer></script>
+
+    <!-- Shared HireMe favicon -->
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png?v=20261011">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png?v=20261011">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180.png?v=20261011">
 </head>
 
 <body class="bg-bg text-neutral antialiased font-sans flex flex-col min-h-screen">
@@ -293,7 +290,7 @@
                         <div>
                             <label for="transactionId" class="block text-sm font-medium text-gray-700 mb-1">Numéro de
                                 transaction ou Hash USDT</label>
-                            <input type="text" id="transactionId" required placeholder="Ex: 2356894125 ou Hash..."
+                            <input type="text" id="transactionId" maxlength="100" required placeholder="Ex: 2356894125 ou Hash..."
                                 class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-primary focus:border-primary">
                         </div>
 
@@ -506,8 +503,10 @@
             const email = document.getElementById('email').value;
             const name = document.getElementById('fullName').value;
 
-            if (visConfig.intl_data) {
-                const link = visConfig.intl_data[`intl_pack_${packId}_chariow`];
+            if (packId === 'travailleur' || visConfig.intl_data) {
+                const link = packId === 'travailleur'
+                    ? 'https://boutique.hiremeguide.com/packpro'
+                    : visConfig.intl_data[`intl_pack_${packId}_chariow`];
                 if (link) {
                     const finalUrl = new URL(link);
                     if (email) finalUrl.searchParams.append('email', email);
@@ -615,10 +614,12 @@
                 if (urlParams.get('original_amount')) formData.append('original_amount', urlParams.get('original_amount'));
                 if (urlParams.get('discount_amount')) formData.append('discount_amount', urlParams.get('discount_amount'));
                 if (urlParams.get('promo_code')) formData.append('promo_code', urlParams.get('promo_code'));
-                if (urlParams.get('phone')) formData.append('whatsapp', urlParams.get('phone'));
                 if (urlParams.get('city')) formData.append('city', urlParams.get('city'));
                 if (urlParams.get('country')) formData.append('country', urlParams.get('country'));
                 if (urlParams.get('package')) formData.append('package_name', urlParams.get('package'));
+                if (urlParams.get('pack_id')) formData.append('pack_id', urlParams.get('pack_id'));
+                if (urlParams.get('experience_years')) formData.append('experience_years', urlParams.get('experience_years'));
+                if (urlParams.get('delivery_time')) formData.append('delivery_time', urlParams.get('delivery_time'));
                 if (urlParams.get('upsell_letter')) formData.append('upsell_letter', urlParams.get('upsell_letter'));
                 ['upsellEbook1','upsellEbook2','upsellEbook3','upsellEbook4','upsellEbook5','upsellEbook6','upsellEbook7'].forEach(function(id) {
                     if (urlParams.get(id)) formData.append(id, urlParams.get(id));
@@ -646,6 +647,7 @@
                 const result = await response.json();
 
                 if (result.success) {
+                    sessionStorage.setItem('hireme_order_placed', 'true');
                     // Success UI
                     const packageName = urlParams.get('package');
                     const packId = urlParams.get('pack_id');
@@ -668,7 +670,8 @@
                     const nextParams = new URLSearchParams({
                         name: document.getElementById('fullName').value,
                         email: document.getElementById('email').value,
-                        package: packageName || 'Standard'
+                        package: packageName || 'Standard',
+                        order_ref: result.order_ref
                     });
 
                     setTimeout(() => {

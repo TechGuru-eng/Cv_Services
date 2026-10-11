@@ -4,6 +4,8 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../../admin/config/db.php';
+require_once __DIR__ . '/../../includes/upload_helper.php';
+require_once __DIR__ . '/../../includes/order-notifications.php';
 
 function generateUuid() {
     $data = random_bytes(16);
@@ -56,6 +58,19 @@ try {
     $paymentPhone = trim($_POST['payment_phone'] ?? '');
     $transactionRef = trim($_POST['transaction_ref'] ?? '');
 
+    $international = $paymentMethod === 'CHARIOW';
+    $checkoutUrl = null;
+    if ($international) {
+        $stmtLink = $pdo->prepare('SELECT setting_value FROM linkedin_settings WHERE setting_key=?');
+        $stmtLink->execute(['chariow_url_' . $packageId]);
+        $checkoutUrl = $stmtLink->fetchColumn();
+        if (!$checkoutUrl || !filter_var($checkoutUrl, FILTER_VALIDATE_URL) || parse_url($checkoutUrl, PHP_URL_SCHEME) !== 'https') {
+            echo json_encode(['success'=>false,'message'=>'Le lien Chariow de ce forfait sera disponible prochainement. Contactez-nous sur WhatsApp.']); exit;
+        }
+        if ($bundleId || $selectedAddonIds || $selectedProductIds || !empty($_POST['promo_code'])) {
+            echo json_encode(['success'=>false,'message'=>'Les options et codes promo du site sont disponibles uniquement avec Mobile Money.']); exit;
+        }
+    }
     // Validation
     $errors = [];
     if (empty($name)) $errors[] = 'Le nom est obligatoire.';
@@ -64,14 +79,24 @@ try {
     if (!$email) $errors[] = 'L\'adresse email est invalide.';
     if (empty($linkedinUrl)) {
         $errors[] = 'L\'URL du profil LinkedIn est obligatoire.';
-    } elseif (!preg_match('/^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_%-]+/i', $linkedinUrl)) {
-        if (strpos($linkedinUrl, 'linkedin.com') === false) {
-            $errors[] = 'L\'URL renseignée doit être un lien de profil LinkedIn valide (ex: https://www.linkedin.com/in/votreprofil).';
-        }
+    } elseif (!preg_match('~^https?://(?:www\.)?linkedin\.com/in/[a-zA-Z0-9_%\-]+/?(?:\?[^\s]*)?$~i', $linkedinUrl)) {
+        $errors[] = 'Le lien doit être un profil LinkedIn valide.';
     }
+    if (!in_array($paymentMethod, ['MTN', 'ORANGE', 'CHARIOW'], true)) $errors[] = 'Mode de paiement invalide.';
     if ($packageId <= 0 && $bundleId <= 0) $errors[] = 'Veuillez sélectionner une formule d\'optimisation ou un pack visibilité.';
-    if (empty($paymentPhone)) $errors[] = 'Le numéro de téléphone utilisé pour le paiement est requis.';
-    if (empty($transactionRef)) $errors[] = 'La référence / ID de la transaction est requise.';
+    if (!$international && empty($paymentPhone)) $errors[] = 'Le numéro de téléphone utilisé pour le paiement est requis.';
+    if (!$international && empty($transactionRef)) $errors[] = 'La référence / ID de la transaction est requise.';
+
+    if (empty($positionStatus) || empty($mainObjective) || empty($targetJob) || empty($targetSector)) $errors[] = 'Veuillez remplir tous les champs obligatoires avant de continuer.';
+    foreach (['cv_file' => ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'], 'payment_proof' => ['pdf', 'jpg', 'jpeg', 'png']] as $field => $extensions) {
+        $file = $_FILES[$field] ?? null;
+        if (!$file || $file['error'] === UPLOAD_ERR_NO_FILE) {
+            if ($field === 'cv_file') $errors[] = 'Veuillez joindre votre CV.';
+            continue;
+        }
+        if ($file['error'] !== UPLOAD_ERR_OK || $file['size'] <= 0 || $file['size'] > 10 * 1024 * 1024 || !in_array(strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)), $extensions, true)) $errors[] = 'Fichier invalide ou supérieur à 10 Mo.';
+        elseif (!in_array((new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']), UPLOAD_MIME_MAP[strtolower(pathinfo($file['name'], PATHINFO_EXTENSION))] ?? [], true)) $errors[] = 'Fichier invalide ou supérieur à 10 Mo.';
+    }
 
     if (!empty($errors)) {
         echo json_encode(['success' => false, 'message' => implode(' ', $errors)]);
@@ -88,12 +113,18 @@ try {
         $stmtB->execute([$bundleId]);
         $bundle = $stmtB->fetch();
 
+        if (!$bundle) {
+            echo json_encode(['success' => false, 'message' => 'Le pack sélectionné est invalide.']);
+            exit;
+        }
         if ($bundle) {
             // Find corresponding LinkedIn package for reference (e.g., Pack Pro)
-            if ($packageId <= 0) {
-                $pkgPro = $pdo->query("SELECT id FROM linkedin_packages WHERE slug = 'pro'")->fetch();
-                $packageId = $pkgPro ? (int)$pkgPro['id'] : 2;
+            $pkgPro = $pdo->query("SELECT id FROM linkedin_packages WHERE slug = 'pro' AND is_active = 1")->fetch();
+            if (!$pkgPro) {
+                echo json_encode(['success' => false, 'message' => 'Le pack sélectionné est indisponible.']);
+                exit;
             }
+            $packageId = (int)$pkgPro['id'];
 
             $bPrice = (float)$bundle['bundle_price'];
             $totalAmount += $bPrice;
@@ -187,7 +218,7 @@ try {
         $stmtP->execute([$submittedPromoCode, $today, $today]);
         $promo = $stmtP->fetch();
 
-        if ($promo) {
+        if ($promo && ($promo['usage_limit'] === null || $promo['usage_count'] < $promo['usage_limit'])) {
             if ($promo['discount_type'] === 'percent') {
                 $discountAmount = round($totalAmount * ((float)$promo['discount_value'] / 100));
             } else {
@@ -195,8 +226,7 @@ try {
             }
             $totalAmount = max(0.00, $totalAmount - $discountAmount);
 
-            // Increment usage_count
-            $pdo->prepare("UPDATE promo_codes SET usage_count = usage_count + 1 WHERE id = ?")->execute([$promo['id']]);
+
         } else {
             $submittedPromoCode = null;
         }
@@ -238,7 +268,7 @@ try {
             $uploadedCvName = $file['name'];
             $uploadedCvSize = (int)$file['size'];
             $uploadedCvType = $ext;
-        }
+        } else { throw new RuntimeException('CV upload failed'); }
     }
 
     $uploadedProofPath = null;
@@ -251,12 +281,17 @@ try {
             $destPath = $uploadDir . $safeProofName;
             if (move_uploaded_file($file['tmp_name'], $destPath)) {
                 $uploadedProofPath = 'uploads/linkedin/' . $safeProofName;
-            }
+            } else { throw new RuntimeException('Proof upload failed'); }
         }
     }
 
     // 4. Begin DB Transaction
     $pdo->beginTransaction();
+    if ($submittedPromoCode) {
+        $claim = $pdo->prepare("UPDATE promo_codes SET usage_count = usage_count + 1 WHERE id = ? AND (usage_limit IS NULL OR usage_count < usage_limit)");
+        $claim->execute([$promo['id']]);
+        if ($claim->rowCount() !== 1) throw new RuntimeException('Promo unavailable');
+    }
 
     $uuid = generateUuid();
     $reference = generateOrderReference($pdo);
@@ -267,13 +302,13 @@ try {
         position_status, target_profile_type, linkedin_url, main_objective, target_job,
         target_sector, target_companies, target_locations, experience_level, career_goals,
         package_id, promo_code, discount_amount, total_amount, payment_status, order_status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PAYMENT_SUBMITTED', 'PAIEMENT_EN_VERIFICATION')");
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     $stmtOrder->execute([
         $uuid, $reference, $accessToken, $name, $firstName, $phone, $email, $city, $country,
         $positionStatus, $targetProfileType, $linkedinUrl, $mainObjective, $targetJob,
         $targetSector, $targetCompanies, $targetLocations, $experienceLevel, $careerGoals,
-        $packageId, $submittedPromoCode, $discountAmount, $totalAmount
+        $packageId, $submittedPromoCode, $discountAmount, $totalAmount, $international ? 'PENDING' : 'PAYMENT_SUBMITTED', $international ? 'COMMANDE_RECUE' : 'PAIEMENT_EN_VERIFICATION'
     ]);
 
     $orderId = $pdo->lastInsertId();
@@ -303,8 +338,8 @@ try {
     }
 
     // Insert Payment Record
-    $stmtPay = $pdo->prepare("INSERT INTO linkedin_payments (order_id, payment_method, phone_number, transaction_ref, proof_file, status) VALUES (?, ?, ?, ?, ?, 'SUBMITTED')");
-    $stmtPay->execute([$orderId, $paymentMethod, $paymentPhone, $transactionRef, $uploadedProofPath]);
+    $stmtPay = $pdo->prepare("INSERT INTO linkedin_payments (order_id, payment_method, phone_number, transaction_ref, proof_file, status) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmtPay->execute([$orderId, $paymentMethod, $paymentPhone, $transactionRef, $uploadedProofPath, $international ? 'PENDING' : 'SUBMITTED']);
 
     // Insert CV Upload Record
     if ($uploadedCvPath) {
@@ -316,13 +351,20 @@ try {
     $stmtHist = $pdo->prepare("INSERT INTO linkedin_order_history (order_id, action, note, created_by) VALUES (?, ?, ?, 'Client')");
     $stmtHist->execute([$orderId, 'COMMANDE_CREEE', 'Commande créée (Total: ' . number_format($totalAmount, 0, ',', ' ') . ' FCFA, Réf Tx: ' . $transactionRef . ')']);
 
+    if (preg_match('/^[a-f0-9]{64}$/', $_POST['lead_token'] ?? '')) {
+        $pdo->prepare("UPDATE linkedin_checkout_leads SET status=?,order_reference=?,last_step=5 WHERE token_hash=?")->execute([$international ? 'awaiting_payment' : 'converted',$reference,hash('sha256',$_POST['lead_token'])]);
+    }
+    if (!$international) queue_order_event($pdo, 'linkedin', ['id' => $orderId, 'reference' => $reference, 'name' => $name, 'first_name' => $firstName, 'total_amount' => $totalAmount, 'access_token' => $accessToken], 'completed');
     $pdo->commit();
+    send_order_notifications($pdo);
 
     // 5. Success Response
     echo json_encode([
         'success' => true,
         'reference' => $reference,
         'access_token' => $accessToken,
+        'checkout_url' => $checkoutUrl,
+        'total_amount' => $totalAmount,
         'redirect_url' => 'linkedin/commande.php?ref=' . $reference . '&token=' . $accessToken,
         'message' => 'Votre commande a été enregistrée avec succès.'
     ]);
@@ -334,7 +376,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'Une erreur est survenue lors de l\'enregistrement : ' . $e->getMessage()
+        'message' => 'Une erreur est survenue lors de l\'enregistrement. Veuillez réessayer.'
     ]);
 }
 ?>

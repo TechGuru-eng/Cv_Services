@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "scripts": { "test": "node --test --test-concurrency=1 *.test.cjs" },
+  "devDependencies": { "jsdom": "^30.1.2" }
+}
